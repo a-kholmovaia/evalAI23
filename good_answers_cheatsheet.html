@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Criteria for Good Answers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* White background */
+            color: #333;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .criteria {
+            width: 45%; /* Set the width of each box to occupy less than half of the container's width */
+            margin-bottom: 20px; /* Add some space between the rows */
+            background-color: #f0f0f0; /* Slight background color for the box */
+            border: 1px solid #ccc; /* Border for the box */
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
+        }
+        h2 {
+            width: 100%;
+            text-align: center;
+        }
+        h3 {
+            color: #000;
+            padding: 5px;
+        }
+        .accordion {
+            cursor: pointer;
+            padding: 10px;
+            width: calc(100% - 20px); /* Adjust width to account for padding */
+            background-color: #9ad4fc;
+            color: #000;
+            text-align: left;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .accordion:after {
+            content: '▼';
+            font-size: 20px;
+            float: right;
+        }
+        .accordion.active:after {
+            content: '▲';
+        }
+        .active, .accordion:hover {
+            background-color: #58acf6;
+        }
+        .panel {
+            padding: 0 18px;
+            background-color: #e0f7ff;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+        .panel p {
+            margin: 10px 0;
+        }
+        .detail {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Criteria for Good Answers</h2>
+
+<div class="criteria">
+    <h3> 🔍 Clarity and Coherence</h3>
+    <p>Detail: Effective responses should be clear and structured, avoiding vagueness and providing specific details.</p>
+    <button class="accordion">Examples</button>
+    <div class="panel">
+        <p><span class="emoji">✅</span> "The lecturer used clear, well-structured explanations to cover complex statistical concepts, making it easier to understand. For instance, the step-by-step breakdown of the regression analysis was particularly effective."</p>
+        <p><span class="emoji">✅</span> "In the team project, communication was key. Our team leader organized weekly meetings that were well-structured, allowing each member to share progress and concerns effectively."</p>
+        <p><span class="emoji">❌</span> "The lecture was good. I liked the statistics stuff."</p>
+        <p><span class="emoji">❌</span> "Teamwork was fine. We did stuff together."</p>
+    </div>
+</div>
+
+<div class="criteria">
+    <h3>🎯 Relevance</h3>
+    <p>Detail: Responses should directly address the questionnaire item, focusing on the lecture or teaching methods.</p>
+    <button class="accordion">Examples</button>
+    <div class="panel">
+        <p><span class="emoji">✅</span> "The lecture's focus on statistical software application was highly relevant to our coursework, allowing us to directly apply what we learned in class to our assignments."</p>
+        <p><span class="emoji">✅</span> "The question on how roles were distributed within our team is relevant, as it highlights our strategy of leveraging individual strengths for task allocation, which significantly improved our efficiency."</p>
+        <p><span class="emoji">❌</span> "I think the university needs more parking spaces. It's hard to find a spot before class."</p>
+        <p><span class="emoji">❌</span> "I think the cafeteria food could be better. It's not related, but it's important."</p>
+    </div>
+</div>
+
+<div class="criteria">
+    <h3>🤔 Depth of Reflection</h3>
+    <p>Detail: Reflective responses should show deep engagement with the material, demonstrating critical thinking.</p>
+    <button class="accordion">Examples</button>
+    <div class="panel">
+        <p><span class="emoji">✅</span> "The lecture prompted me to think critically about the ethical implications of statistical analysis in research, particularly in terms of data privacy and consent, which I hadn't considered deeply before."</p>
+        <p><span class="emoji">✅</span> "Reflecting on our team dynamics, I realized the importance of active listening. When we encountered a conflict, it was the ability to genuinely understand each other's viewpoints that led to a constructive resolution."</p>
+        <p><span class="emoji">❌</span> "The lecture was long and had lots of numbers."</p>
+        <p><span class="emoji">❌</span> "We just did our parts. Not much else to say."</p>
+    </div>
+</div>
+
+<div class="criteria">
+    <h3>📌 Specific Examples</h3>
+    <p>Detail: Good responses tie feedback to specific instances from the lecture, offering clear, contextualized examples.</p>
+    <button class="accordion">Examples</button>
+    <div class="panel">
+        <p><span class="emoji">✅</span> "In response to the question about the clarity of statistical concepts presented, I appreciated the detailed breakdown of the 'Central Limit Theorem' in week 3's lecture, where the professor used the class's average quiz scores as a practical example to explain the concept."</p>
+        <p><span class="emoji">✅</span> "When addressing the question on conflict resolution, I recall a specific instance where there was a disagreement on the project design. We resolved it by combining elements from each proposal, leading to a more innovative solution."</p>
+        <p><span class="emoji">❌</span> "The professor explained statistical concepts well."</p>
+        <p><span class="emoji">❌</span> "We had some disagreements, but it was nothing."</p>
+    </div>
+</div>
+
+<div class="criteria">
+    <h3>🛠️ Constructive Criticism</h3>
+    <p>Detail: Criticism should identify improvement areas and offer specific, actionable suggestions.</p>
+    <button class="accordion">Examples</button>
+    <div class="panel">
+        <p><span class="emoji">✅</span> "While the lecture covered a lot of ground, some complex topics like hypothesis testing were rushed. It might be helpful to allocate more time to these areas or provide supplemental materials for further reading."</p>
+        <p><span class="emoji">✅</span> "Although our team worked well on the whole, we could have benefited from a more structured approach to brainstorming sessions. Perhaps using a digital collaboration tool would help organize and record our ideas more effectively."</p>
+        <p><span class="emoji">❌</span> "I didn't get hypothesis testing. It was confusing."</p>
+        <p><span class="emoji">❌</span> "I think some team members were lazy but I'm not sure who."</p>
+    </div>
+</div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+    }
+</script>
+
+</body>
+</html>
