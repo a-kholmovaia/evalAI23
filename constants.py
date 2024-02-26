@@ -1,5 +1,5 @@
 # Constants
-WIDTH, HEIGHT = 1000, 600
+WIDTH, HEIGHT = 800, 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (4,101,121)

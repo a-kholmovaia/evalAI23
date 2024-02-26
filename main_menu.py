@@ -11,8 +11,8 @@ font = pygame.font.Font(None, 32)
 
 # Main menu loop
 def main_menu(screen):
-    username_input = TextInputBox(500, 250, 200, 40, font)
-    full_name_input = TextInputBox(500, 350, 200, 40, font)
+    username_input = TextInputBox(400, 250, 200, 40, font)
+    full_name_input = TextInputBox(400, 350, 200, 40, font)
     start_button = Button(WIDTH - 300, HEIGHT - 100, 200, 50, BLUE, "START", WHITE, font)
     background_img = pygame.transform.scale(pygame.image.load("img/username_menu.png"), (WIDTH, HEIGHT))
 

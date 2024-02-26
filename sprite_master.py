@@ -2,7 +2,7 @@ import pygame
 
 class SpriteMaster:
 
-    def __init__(self, player_sprite_sheet_path : str, player_sprite_width : int, player_sprite_height : int, animation_speed=0.2):
+    def __init__(self, actions_frames: dict, player_sprite_sheet_path : str, player_sprite_width : int, player_sprite_height : int, animation_speed=0.2):
         # Load character sprites
         self.player_sprite_sheet = pygame.image.load(player_sprite_sheet_path).convert_alpha()
         # Set player's sprite height and width
@@ -14,20 +14,11 @@ class SpriteMaster:
 
         # Adjust as necessary for smooth animation
         self.animation_speed = animation_speed
-
         # Map sheet rows to actions
-        self.player_actions = {
-            'idle_1': {'row': 0, 'frames': 2},
-            'idle_2': {'row': 0, 'frames': 2},
-            'move_up': {'row': 3, 'frames': 8},
-            'move_down': {'row': 3, 'frames': 8},
-            'move_left': {'row': 3, 'frames': 8},
-            'move_right': {'row': 3, 'frames': 8},
-            'fight': {'row': 8, 'frames': 8},
-        }
+        self.player_actions = actions_frames
 
     
-    def get_player_sprite_frame(self, action):
+    def get_sprite_frame(self, action):
         """Extracts and returns a specific frame from the sprite sheet."""
 
         # Update frame index
