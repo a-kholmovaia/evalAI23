@@ -4,9 +4,12 @@ from player import Player
 from sprite_master import SpriteMaster
 from enemy import Enemy
 from constants import BLACK, WHITE
+from main_menu import main_menu
+from welcome_menu import welcome_menu
+from play_intro import play_intro_video
 class Game:
 
-    def __init__(self, screen, FPS=60, img_path=""):
+    def __init__(self, FPS=60, img_path=""):
 
         # Initialize Pygame
         pygame.init()
@@ -14,7 +17,7 @@ class Game:
 
         # Screen dimensions
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 800, 600
-        self.screen = screen
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
 
         # Colors
         self.BLACK = (0, 0, 0)
@@ -55,6 +58,12 @@ class Game:
         self.background_health = pygame.transform.scale(pygame.image.load(self.img_path + "back_text.png"), (240, 80))
 
     def run_game_loop(self):
+        pygame.display.set_caption("AI-Lab: the final Battle")
+        welcome_menu(self.screen)
+        main_menu(self.screen)
+        play_intro_video()
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+
         running = True
         while running:
             for event in pygame.event.get():
