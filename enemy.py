@@ -13,7 +13,7 @@ class Enemy:
         if self.health <= 0:
             self.current_position = (-100, -100)
         # Randomly decide to attack or stay idle
-        if random.randint(0, 25) == 1:  # Adjust randomness as needed
+        if random.randint(0, 100) == 1:  # Adjust randomness as needed
             self.current_action = 'fight'
         else:
             self.current_action = 'idle'

@@ -8,7 +8,6 @@ from main_menu import main_menu
 from welcome_menu import welcome_menu
 from play_intro import play_intro_video
 class Game:
-
     def __init__(self, FPS=60, img_path=""):
 
         # Initialize Pygame
@@ -19,17 +18,24 @@ class Game:
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 800, 600
         self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
 
-        # Colors
-        self.BLACK = (0, 0, 0)
-
         # Frame rate
         self.FPS = FPS
         self.clock = pygame.time.Clock()
-
+        self.img_path = img_path
         # Set player's start position
         self.start_position_player = pygame.Vector2(self.SCREEN_WIDTH / 5, self.SCREEN_HEIGHT * 0.7)
         self.start_position_enemy = pygame.Vector2(self.SCREEN_WIDTH * 0.8, self.SCREEN_HEIGHT * 0.7)
 
+
+        self.background = pygame.transform.scale(pygame.image.load(img_path + "background0.png"),
+                                                 (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.background_text = pygame.transform.scale(pygame.image.load(self.img_path + "back_text.png"), (280, 140))
+        self.background_health = pygame.transform.scale(pygame.image.load(self.img_path + "back_text.png"), (240, 80))
+
+        self.set_player()
+        self.set_enemy()
+
+    def set_player(self):
         # Initialize sprite master
         actions_dict = {
             'idle_1': {'row': 0, 'frames': 2},
@@ -41,21 +47,17 @@ class Game:
             'jump': {'row': 5, 'frames': 8},
             'fight': {'row': 8, 'frames': 8},
         }
+        sprite_master_player = SpriteMaster(actions_dict, self.img_path + 'AnimationSheet_Character.png', 32, 32)
+        self.player = Player(self.screen, self.start_position_player, sprite_master_player)
+
+    def set_enemy(self):
         actions_enemy_dict = {
             'idle': {'row': 0, 'frames': 4},
             'fight': {'row': 1, 'frames': 4},
         }
-        self.img_path = img_path
-        sprite_master_player = SpriteMaster(actions_dict, img_path + 'AnimationSheet_Character.png', 32, 32)
-        sprite_master_enemy = SpriteMaster(actions_enemy_dict, img_path + 'monster-pre.png', 32, 32)
-        # Initialize player's representation
-        self.player = Player(self.screen, self.start_position_player, sprite_master_player)
+        sprite_master_enemy = SpriteMaster(actions_enemy_dict, self.img_path + 'monster-pre.png', 32, 32,
+                                           animation_speed=0.01)
         self.enemy = Enemy(self.screen, self.start_position_enemy, sprite_master_enemy)
-
-        self.background = pygame.transform.scale(pygame.image.load(img_path + "background0.png"),
-                                                 (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.background_text = pygame.transform.scale(pygame.image.load(self.img_path + "back_text.png"), (280, 140))
-        self.background_health = pygame.transform.scale(pygame.image.load(self.img_path + "back_text.png"), (240, 80))
 
     def run_game_loop(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
@@ -70,7 +72,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-            self.screen.fill(self.BLACK)
+            self.screen.fill(BLACK)
             self.screen.blit(self.background, (0, 0))
 
             keys = pygame.key.get_pressed()

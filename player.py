@@ -35,14 +35,6 @@ class Player:
     
     def __handle_control_input(self, keys):
         # Handle input
-        '''
-        if keys[pygame.K_UP]:
-            self.current_position[1] -= self.character_speed
-            self.current_action = 'move_up'
-        elif keys[pygame.K_DOWN]:
-            self.current_position[1] += self.character_speed
-            self.current_action = 'move_down'
-        '''
         if keys[pygame.K_LEFT] and self.current_position[0] > 0:
             self.current_position[0] -= self.character_speed
             self.current_action = 'move_left'
