@@ -1,20 +1,19 @@
 import pygame
 import sys
 import psycopg2
-# Initialize Pygame
-pygame.init()
-from constants import WHITE, BLUE, WIDTH, HEIGHT, OUTPUT_FILE_PATH
+from constants import WHITE, BLUE, OUTPUT_FILE_PATH
 from tools import TextInputBox, Button
-# Font
-font = pygame.font.Font(None, 32)
-
 
 # Main menu loop
 def main_menu(screen):
+    
+    # Font
+    font = pygame.font.Font(None, 32)
+
     username_input = TextInputBox(400, 250, 200, 40, font)
     full_name_input = TextInputBox(400, 350, 200, 40, font)
-    start_button = Button(WIDTH - 300, HEIGHT - 100, 200, 50, BLUE, "START", WHITE, font)
-    background_img = pygame.transform.scale(pygame.image.load("img/username_menu.png"), (WIDTH, HEIGHT))
+    start_button = Button(screen.get_width() - 300, screen.get_height() - 100, 200, 50, BLUE, "START", WHITE, font)
+    background_img = pygame.transform.scale(pygame.image.load("img/username_menu.png"), (screen.get_width(), screen.get_height()))
 
     while True:
         for event in pygame.event.get():

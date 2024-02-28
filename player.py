@@ -1,5 +1,5 @@
 import pygame
-from constants import WIDTH, HEIGHT
+
 class Player:
 
     def __init__(self, game_screen, start_position, sprite_master, character_speed=5):
@@ -46,7 +46,7 @@ class Player:
         if keys[pygame.K_LEFT] and self.current_position[0] > 0:
             self.current_position[0] -= self.character_speed
             self.current_action = 'move_left'
-        elif keys[pygame.K_RIGHT] and self.current_position[0] < WIDTH:
+        elif keys[pygame.K_RIGHT] and self.current_position[0] < self.game_screen.get_width():
             self.current_position[0] += self.character_speed
             self.current_action = 'move_right'
         elif keys[pygame.K_SPACE]:

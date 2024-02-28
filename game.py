@@ -3,7 +3,7 @@ import sys
 from player import Player
 from sprite_master import SpriteMaster
 from enemy import Enemy
-from constants import BLACK, WHITE
+from constants import BLACK
 from main_menu import main_menu
 from welcome_menu import welcome_menu
 from play_intro import play_intro_video

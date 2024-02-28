@@ -1,20 +1,18 @@
 import pygame
 import sys
 from tools import Button
-from constants import WIDTH, HEIGHT, WHITE, BLACK, BLUE
-# Initialize Pygame
-pygame.init()
-
-# Font
-title_font = pygame.font.Font(None, 48)
-text_font = pygame.font.Font(None, 24)
+from constants import WHITE, BLUE
 
 # Main menu
 def welcome_menu(screen):
-    # Load background image
-    background_img = pygame.transform.scale(pygame.image.load("img/welcome_menu.png"), (WIDTH, HEIGHT))
+    # Font
+    title_font = pygame.font.Font(None, 48)
+    text_font = pygame.font.Font(None, 24)
 
-    start_button = Button(WIDTH-300, HEIGHT-100, 200, 50, BLUE, "START", WHITE, title_font)
+    # Load background image
+    background_img = pygame.transform.scale(pygame.image.load("img/welcome_menu.png"), (screen.get_width(), screen.get_height()))
+
+    start_button = Button(screen.get_width()-300, screen.get_height()-100, 200, 50, BLUE, "START", WHITE, title_font)
 
     while True:
         for event in pygame.event.get():
