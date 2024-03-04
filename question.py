@@ -1,6 +1,6 @@
 import pygame
-import openai
 from constants import IMG_PATH
+
 class Question:
     def __init__(self, screen, question_text, question_type="open"):
         self.screen = screen

@@ -1,21 +1,23 @@
 import pygame
 
-class SpriteMaster:
+class SpriteMaster():
 
-    def __init__(self, actions_frames: dict, player_sprite_sheet_path : str, player_sprite_width : int, player_sprite_height : int, animation_speed=0.2):
-        # Load character sprites
-        self.player_sprite_sheet = pygame.image.load(player_sprite_sheet_path).convert_alpha()
+    def __init__(self, actions_to_rows : dict, sprite_sheet_path : str, frame_width : int, frame_height : int, animation_speed=0.2):
+        # Load sprite
+        self.sprite_sheet = pygame.image.load(sprite_sheet_path).convert_alpha()
+
         # Set player's sprite height and width
-        self.player_sprite_height = player_sprite_height
-        self.player_sprite_width = player_sprite_width
+        self.frame_height = frame_height
+        self.frame_width = frame_width
 
         # Default frame index
         self.frame_index = 0
 
         # Adjust as necessary for smooth animation
         self.animation_speed = animation_speed
-        # Map sheet rows to actions
-        self.player_actions = actions_frames
+
+        # Set specific actions_to_rows dict
+        self.actions_to_rows = actions_to_rows
 
     
     def get_sprite_frame(self, action):
@@ -23,12 +25,13 @@ class SpriteMaster:
 
         # Update frame index
         self.frame_index += self.animation_speed
-        if self.frame_index >= self.player_actions[action]['frames']:
+        if self.frame_index >= self.actions_to_rows[action]['frames']:
             self.frame_index = 0
 
+        # Cut the frame out of the png sheet
         frame = int(self.frame_index)
-        row = self.player_actions[action]['row']
-        y = row * self.player_sprite_height
-        x = frame * self.player_sprite_width
-        return self.player_sprite_sheet.subsurface(pygame.Rect(x, y, self.player_sprite_width, self.player_sprite_height))
+        row = self.actions_to_rows[action]['row']
+        y = row * self.frame_height
+        x = frame * self.frame_width
+        return self.sprite_sheet.subsurface(pygame.Rect(x, y, self.frame_width, self.frame_height))
     

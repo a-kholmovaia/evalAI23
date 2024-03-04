@@ -1,6 +1,7 @@
 import pygame
 import openai
 from constants import IMG_PATH
+
 class LLMResponseHandler:
     def __init__(self, screen, context):
         self.screen = screen
