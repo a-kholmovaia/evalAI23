@@ -1,5 +1,4 @@
 from game import Game
-import pygame
 from question import Question
 from multiscale import MultiScaleQuestion
 from LLMResponse import LLMResponseHandler
@@ -7,7 +6,7 @@ from constants import OUTPUT_FILE_PATH
 if __name__ == "__main__":
     # Initialize game
     game = Game(img_path="img/")
-    game.run_game_loop()
+    game.run()
     print("the game has succesfully ended")
 
     # Pygame setup

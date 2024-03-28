@@ -13,19 +13,22 @@ class Game:
         self.font = pygame.font.Font("font.TTF", 24)
 
         # Screen dimensions
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 800, 600
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.screen_width, self.screen_height = 800, 600
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
         # Frame rate
         self.FPS = FPS
         self.clock = pygame.time.Clock()
 
-    def run_game_loop(self):
+        self.img_path = img_path
+
+    def run(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
         welcome_menu(self.screen)
         main_menu(self.screen)
         play_intro_video()
-        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+
+        level1 = Level([Scene("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)])
 
         running = True
         while running:
@@ -33,8 +36,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
             
-            scene_test = Scene("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)
-            scene_test.run()
+            level1.run()
 
             pygame.display.flip()
             self.clock.tick(self.FPS)
