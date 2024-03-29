@@ -3,10 +3,12 @@ from sprite_master import SpriteMaster
 from player import Player
 from enemy import Enemy
 from constants import BLACK
+from typing import List
 
 class Scene:
 
     def __init__(self, scene_path : str, player_sheet_path : str, enemy_sheet_path : str, game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
+        
         # Set current game screen
         self.game_screen = game_screen
 
@@ -33,8 +35,8 @@ class Scene:
 
         # Set characters
         # To do: make out of that one method __set_char (player and enemy classes should be changed, maybe they should have the same parent)
-        self.__set_player(player_sheet_path)
-        self.__set_enemy(enemy_sheet_path)
+        self.player = self.__get_player(player_sheet_path)
+        self.enemies = self.__get_enemies(enemy_sheet_path)
 
         # Set frame rate and clock
         self.FPS = FPS
@@ -59,20 +61,23 @@ class Scene:
 
             keys = pygame.key.get_pressed()
             self.player.take_action(keys)
-            self.enemy.take_action()
+            for enemy in self.enemies:
+                enemy.take_action()
 
-            if self.enemy.current_action == 'fight' and self.__detect_collision(self.player.current_position, self.enemy.current_position):
-                self.player.health -= 1  # Reduce player health by 5 points
-            if self.player.current_action == 'fight' and self.__detect_collision(self.player.current_position, self.enemy.current_position):
-                self.enemy.health -= 1 # Reduce player health by 5 points
+                if enemy.current_action == 'fight' and self.__detect_collision(self.player.current_position, enemy.current_position):
+                    self.player.health -= 1  # Reduce player health by 5 points
+                if self.player.current_action == 'fight' and self.__detect_collision(self.player.current_position, enemy.current_position):
+                    enemy.health -= 1 # Reduce player health by 5 points
 
-            self.__draw_health_bars(self.player.health, self.enemy.health)
+                self.__draw_health_bars(self.player.health, enemy.health)
+            
             self.__draw_instructions()
 
             pygame.display.flip()
             self.clock.tick(self.FPS)
 
     def __parse_config(self, file_path : str):
+
         #Initialize parsed config string to value dictionary
         config_values = {
             "default_player_pos" : pygame.Vector2(self.game_screen.get_width() / 5, self.game_screen.get_height() * 0.7),
@@ -99,7 +104,8 @@ class Scene:
         return config        
 
 
-    def __set_player(self, sheet_path : str):
+    def __get_player(self, sheet_path : str) -> Player:
+
         actions_dict = {
             'idle_1': {'row': 0, 'frames': 2},
             'idle_2': {'row': 0, 'frames': 2},
@@ -110,17 +116,17 @@ class Scene:
             'jump': {'row': 5, 'frames': 8},
             'fight': {'row': 8, 'frames': 8},
         }
-        sprite_master = SpriteMaster(actions_dict, sheet_path, 32, 32)
-        self.player = Player(self.game_screen, self.player_pos, sprite_master)
 
-    def __set_enemy(self, sheet_path):
+        return Player(self.game_screen, self.player_pos, SpriteMaster(actions_dict, sheet_path, 32, 32))
+
+    def __get_enemies(self, sheet_path : str) -> List[Enemy]:
+
         actions_dict = {
             'idle': {'row': 0, 'frames': 4},
             'fight': {'row': 1, 'frames': 4},
         }
-        sprite_master = SpriteMaster(actions_dict, sheet_path, 32, 32,
-                                           animation_speed=0.01)
-        self.enemy = Enemy(self.game_screen, self.enemy_pos, sprite_master)
+        
+        return [Enemy(self.game_screen, self.enemy_pos, SpriteMaster(actions_dict, sheet_path, 32, 32, animation_speed=0.01))]
 
     def __draw_health_bars(self, player_health, enemy_health):
         max_health_width = 200  # Width of the health bar at full health
