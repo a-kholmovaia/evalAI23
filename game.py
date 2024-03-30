@@ -1,9 +1,9 @@
 import pygame
-from main_menu import main_menu
-from welcome_menu import welcome_menu
+from menu.main_menu import main_menu
+from menu.welcome_menu import welcome_menu
 from play_intro import play_intro_video
 from level import Level
-from scene import Scene
+from scene00 import ScenePrelevel0
 
 class Game:
     def __init__(self, FPS=60, img_path=""):
@@ -28,7 +28,8 @@ class Game:
         main_menu(self.screen)
         play_intro_video()
 
-        level1 = Level([Scene("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)])
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        level1 = Level([ScenePrelevel0("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)])
 
         running = True
         paused = False

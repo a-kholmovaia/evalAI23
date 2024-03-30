@@ -1,25 +1,39 @@
 import pygame
 import random
 class Enemy:
-    def __init__(self, game_screen, start_position, sprite_master, character_speed=2):
+    def __init__(self, game_screen, start_position, sprite_master):
         self.game_screen = game_screen
         self.current_position = start_position
         self.sprite_master = sprite_master
-        self.character_speed = character_speed
+        self.speed = self.sprite_master.animation_speed
         self.current_action = 'idle'
         self.health = 100
+        self.death_counter = len(self.sprite_master.death_images)
+        self.fight_counter = len(self.sprite_master.attack_images)
+
 
     def take_action(self):
-        if self.health <= 0:
-            self.current_position = (-100, -100)
         # Randomly decide to attack or stay idle
-        if random.randint(0, 100) == 1:  # Adjust randomness as needed
+        if self.current_action=="fight" or random.randint(0, 1000) == 1:  # Adjust randomness as needed
             self.current_action = 'fight'
+            self.fight_counter -= self.speed
+            if self.fight_counter <= 0:
+                self.fight_counter = len(self.sprite_master.attack_images)
+                self.current_action="idle"
+        elif self.health<=0 and self.death_counter>0:
+            self.current_action = "death"
+            self.death_counter -= self.speed     
         else:
-            self.current_action = 'idle'
+            if self.health > 10:
+                self.current_action = 'idle'
+            else:
+                self.current_action = 'hurt'
+        if self.health<=0 and self.death_counter<=0:
+            self.current_position = (-100, -100)
         self.__draw_current_action()
 
     def __draw_current_action(self):
-        enemy_sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (86, 86))
+        enemy_sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (128, 128))
+        enemy_sprite = pygame.transform.flip(enemy_sprite, True, False)
         self.game_screen.blit(enemy_sprite, self.current_position)
 
