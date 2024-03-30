@@ -3,8 +3,8 @@ from question import Question
 from typing import Optional
 
 class MultiScaleQuestion(Question):
-    def __init__(self, screen, level="teamwork"):
-        super().__init__(screen, question_text=None, question_type="scale")
+    def __init__(self, screen, img_path, level="teamwork"):
+        super().__init__(screen, img_path, question_text=None, question_type="scale")
         self.font = pygame.font.Font(None, 24)
         self.font_options = pygame.font.Font(None, 25)
         self.level = level

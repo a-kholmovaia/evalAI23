@@ -22,7 +22,8 @@ class LLMResponseHandler:
         self.request_sent_llm = False
 
     def fetch_response(self):
-        openai.api_key = "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"
+        # Remove the api key before pushing into the repo
+        openai.api_key = ""
         self.waiting_for_response = True
         prompt = f"""
         You are a helpful assistant, represented by a benevolent AI spirit, in a teaching evaluation game for the AI Lab seminar. The player has provided an answer regarding their experiences with teamwork, the project undertaken in the AI Lab, and the provided learning materials and workshops.

@@ -2,7 +2,7 @@ import pygame
 from constants import IMG_PATH
 
 class Question:
-    def __init__(self, screen, question_text, question_type="open"):
+    def __init__(self, screen, img_path : str, question_text, question_type="open"):
         self.screen = screen
         self.question_text = question_text
         self.question_type = question_type  # "open" or "scale"
@@ -18,7 +18,7 @@ class Question:
 
         self.continue_button_rect = pygame.Rect(screen.get_width() * 0.7, screen.get_height() * 0.85, 180, 40)
 
-        self.background = pygame.transform.scale(pygame.image.load(IMG_PATH + "back_text.png"),
+        self.background = pygame.transform.scale(pygame.image.load(img_path + "back_text.png"),
                                                  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.continue_clicked = False
         self.line_height = self.font.get_height()

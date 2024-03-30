@@ -1,4 +1,4 @@
 pygame
 psycopg2
 moviepy
-openai
+openai==0.28
