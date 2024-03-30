@@ -31,11 +31,12 @@ class Game:
         level1 = Level([Scene("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)])
 
         running = True
+        paused = False
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-            
+                    
             level1.run()
 
             pygame.display.flip()
