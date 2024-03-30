@@ -1,0 +1,19 @@
+TeamToxin:
+Ah, you think working together is your strength? In my world, trust breaks easily,
+and teamwork falls apart. Let's see how long you last.
+
+Sir Code-A-Lot:
+Don't worry! TeamToxin's words are just tricks. Being together and learning from each other is our real power.
+I've got some questions for you to gear up. Answer well, and I'll give you magic tools to beat TeamToxin. Ready?
+Let's prove him wrong.
+
+Artefacts:
+static:
+Collaboration Crystal - Health Gain - 20 points - teamwork part - 7/40 points gained
+Alliance Amulet - Attack Strength - 10 points - mentor part - 7/40 points gained
+Comrade's Compass - -10 Health enemy   - teamwork part - 20/40 points gained
+
+usable:
+Resilience Ring - Enemy immobilized for 3 sec  - mentor part - 25/40 points gained
+Synergy Stone - restore 50 points Health - teamwork part - 30/40 points gained
+

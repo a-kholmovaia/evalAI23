@@ -1,1 +1,73 @@
-d, de, ed, dd, dw, we, ee, we, ee, we, ww, we, we, ee, e
+Question: Wie war es Teamarbeit?
+Player's answer: Die Teamarbeit war gut!
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Strongly Disagree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Neutral 
+ Q:All team members were actively and equally involved in the work process., A: Disagree 
+
+"Clarity and Coherence: 5 points
+Relevance: 7 points
+Specific Examples: 1 points
+Constructive Criticism: 1 points
+
+Feedback: Thank you for your response. Your answer was clear and relevant to the question about teamwork. However, it lacked specific examples and constructive criticism. It would be more helpful if you could provide details about your experiences with teamwork in the AI Lab, such as how tasks were assigned, how the team combined diverse skills and knowledge, and how active and equal the involvement of all team members was. 
+
+Refining Questions: 
+1. Could you provide specific examples of how tasks were assigned within your team? 
+2. How did your team manage to combine diverse skills and knowledge to achieve your goals? 
+3. Could you elaborate on why you believe all team members were not actively and equally involved in the work process? 
+4. What could have been done to improve the team dynamics and ensure equal participation?"
+Question: Wie war es Teamarbeit?
+Player's answer: die Teamarbeit war gut!
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Disagree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Neutral 
+ Q:All team members were actively and equally involved in the work process., A: Strongly Disagree 
+
+"Clarity and Coherence: 4 points
+Relevance: 8 points
+Specific Examples: 2 points
+Constructive Criticism: 2 points
+
+Feedback: Thank you for your response. Your answer was relevant to the question about teamwork, but it lacked clarity, specific examples, and constructive criticism. It would be beneficial to provide more details about your experience with the team, including challenges, successes, and areas for improvement. 
+
+Refining Questions: 
+1. Can you elaborate on why you disagreed with the statement that tasks were fairly and appropriately assigned to team members? 
+2. You mentioned that the team was neutral in combining diverse skills and knowledge to achieve your goals. Can you provide specific examples of how this played out in your project?
+3. You strongly disagreed that all team members were actively and equally involved in the work process. Can you share more about this and suggest how the team might improve in this area?"
+Question: Wie war es Teamarbeit?
+Player's answer: die Teamarbeit war gut.
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Neutral 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Agree 
+ Q:All team members were actively and equally involved in the work process., A: Neutral 
+
+"Clarity and Coherence: 2 points
+Relevance: 3 points
+Specific Examples: 1 points
+Constructive Criticism: 1 points
+
+Feedback: Thank you for your response. While it is clear that you found the teamwork to be good, your response lacks detail and specific examples that could provide a deeper understanding of your experience. It would also be beneficial to include constructive criticism that highlights areas for improvement and suggests actionable steps to enhance the team's performance.
+
+Refining Questions: 
+1. Can you provide specific examples of situations where the team worked well together?
+2. Were there any challenges or disagreements within the team? If so, how were they resolved?
+3. How could the teamwork be improved in future projects?"
+Question: Wie war die Teamarbeit?
+Player's answer: Die Teamarbeit war gut!
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Disagree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Neutral 
+ Q:All team members were actively and equally involved in the work process., A: Disagree 
+
+"Clarity and Coherence: 3 points
+Relevance: 4 points
+Specific Examples: 1 points
+Constructive Criticism: 1 points
+
+Feedback: Thank you for your response. However, your answer could benefit from more detail and specificity. While your response was clear and relevant to the question about teamwork, it lacked specific examples and constructive criticism. It would be helpful to know more about your experiences, challenges, and suggestions for improvement in the team project.
+
+Refining Questions: 
+1. Can you provide specific examples of what went well and what could be improved in your team's collaboration?
+2. How did the team handle task distribution, and why do you believe it was not fair or appropriate?
+3. Could you elaborate on how your team could have better utilized diverse skills and knowledge to achieve your goals?"

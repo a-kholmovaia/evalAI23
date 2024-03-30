@@ -1,6 +1,5 @@
 import pygame
 import sys
-import psycopg2
 from constants import WHITE, BLUE, OUTPUT_FILE_PATH
 from tools import TextInputBox, Button
 

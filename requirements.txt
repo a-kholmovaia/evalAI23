@@ -1,0 +1,4 @@
+pygame
+psycopg2
+moviepy
+openai==0.28
