@@ -3,11 +3,10 @@ from questions.question import Question
 from typing import Optional
 
 class MultiScaleQuestion(Question):
-    def __init__(self, screen, img_path, level="teamwork"):
-        super().__init__(screen, img_path, question_text=None, question_type="scale")
+    def __init__(self, screen, level:int, round_:int):
+        super().__init__(screen,level=level, round_=round_, question_type="scale")
         self.font = pygame.font.Font(None, 24)
         self.font_options = pygame.font.Font(None, 25)
-        self.level = level
         self.questions = self.get_scale_questions()  # Use the provided list of question texts
         self.options = ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]  # Scale options for each question
         self.user_inputs = [""] * len(self.questions)  # Initialize user inputs for each question
@@ -98,8 +97,9 @@ class MultiScaleQuestion(Question):
         return self.user_inputs  # Return user inputs for all questions
 
     def get_scale_questions(self):
-        if self.level == "teamwork":
-            return self.get_scale_questions_teamwork()
+        if self.level == 1:
+            if self.round == 0:
+                return self.get_scale_questions_teamwork()
 
     def get_scale_questions_teamwork(self):
         questions = [

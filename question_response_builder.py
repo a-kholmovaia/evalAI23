@@ -4,32 +4,75 @@ from questions.LLMResponse import LLMResponseHandler
 from constants import OUTPUT_FILE_PATH
 import pygame
 
-class QuestionResponseBuilder:
-        
-    def __init__(self) -> None:
+class QAEvaluator:      
+    def __init__(self, level: int, screen: pygame.Surface) -> None:
+        self.screen = screen
         pygame.display.set_caption("Question Screen")
+        self.round = 0
+        self.level = level
 
-        # Create question instances
-        questions= [ "Wie war die Teamarbeit?"]
-        open_question = Question(self.game_screen, self.scene_path, questions[0])
+    def _init_level(self):
+        if self.level == 1:
+            self._init_level1()
+        
+    def _init_level1(self):
+        self.open_question = Question(self.screen, self.level, self.round)
+        self.multi_scale_question = MultiScaleQuestion(self.screen, self.level, self.round)
 
-        multi_scale_question = MultiScaleQuestion(self.game_screen, self.scene_path)
-        responses = multi_scale_question.run()
-        print(responses)
-
-        answer_open = open_question.run()
-
-        context = f"\nQuestion: {questions[0]}\n" \
+    def get_answers(self):
+        responses = self.multi_scale_question.run()
+        answer_open = self.open_question.run()
+        context = f"\nQuestion: {self.open_question.get_question_text()[self.round]}\n" \
                 f"Player's answer: {answer_open}\n" \
                 f"Other questions answered: \n"
-        questions_scale = multi_scale_question.get_scale_questions_teamwork()
+        questions_scale = self.multi_scale_question.get_scale_questions()
         for question, option in zip(questions_scale, responses):
             context += f" Q:{question}, A: {option} \n"
-        print(context)
+        self.context = context
+    
+    def handle_answer(self):
         # Initialize the GPTResponseHandler with the screen and your OpenAI API key
-        llm_handler = LLMResponseHandler(self.game_screen, context)
+        self.llm_handler = LLMResponseHandler(self.screen, self.context, self.level, self.round)
         # Run the game loop
-        llm_response = llm_handler.run()
-        context += "\n" + llm_response
-        with open(OUTPUT_FILE_PATH,"a") as f:
-            f.write(context)
+        llm_response, self.refine = self.llm_handler.run()
+        self.scores = self.get_points(llm_response)
+        self.get_refining_questions(llm_response)
+        self.context += "\n" + llm_response
+    
+    def get_points(self, response):
+        response = response.split('Feedback:')[0].split('point')[:4]
+        print(response)
+        scores = []
+        for i in response:
+            score = i.split(':')[1]
+            scores.append(int(score))
+        print(scores)
+        return scores
+    
+    def get_refining_questions(self, llm_response):
+        self.refining_questions = llm_response.split('Refining Questions:')[-1]
+    
+    def refine_answer(self):
+        self.refining_question = Question(self.screen, self.level, self.round)
+        self.refining_question.set_question_text(self.refining_questions)
+        self.context += self.refining_question.run()
+        self.llm_handler.refine_evaluate(self.context)
+        llm_answer = self.llm_handler.answer
+        self.context += llm_answer
+        self.scores_refining = self.get_points(llm_answer)
+    
+    def run(self):
+        while(self.round<2):
+            self._init_level() 
+            self.get_answers()
+            self.handle_answer()
+            if self.refine:
+                self.refine_answer()
+
+            with open(OUTPUT_FILE_PATH,"a") as f:
+                f.write(self.context)
+
+            self.round += 1 
+
+        
+
