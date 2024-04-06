@@ -2,7 +2,7 @@ import pygame
 from constants import IMG_PATH
 
 class Question:
-    def __init__(self, screen, level:int, round_:int, question_type="open"):
+    def __init__(self, screen, level:int, round_:int, question_type="open", refine=False):
         self.screen = screen
         self.level = level
         self.round = round_
@@ -12,7 +12,10 @@ class Question:
 
         self.user_input = ""
         self.font_button = pygame.font.Font('font.TTF', 36)
-        self.font = pygame.font.Font(None, 36)
+        if refine:
+            self.font = pygame.font.Font(None, 18)
+        else:
+            self.font = pygame.font.Font(None, 36)
 
         # Enlarged text box for multiline input
         self.text_box_rect = pygame.Rect(screen.get_width() * 0.1, screen.get_height() * 0.3,

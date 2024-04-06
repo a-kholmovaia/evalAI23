@@ -4,7 +4,7 @@ from menu.welcome_menu import welcome_menu
 from play_intro import play_intro_video
 from level import Level
 from scene00 import ScenePrelevel0
-from question_response_builder import QAEvaluator
+from qa_evaluator import QAEvaluator
 
 class Game:
     def __init__(self, FPS=60, img_path=""):

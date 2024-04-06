@@ -12,10 +12,6 @@ class QAEvaluator:
         self.level = level
 
     def _init_level(self):
-        if self.level == 1:
-            self._init_level1()
-        
-    def _init_level1(self):
         self.open_question = Question(self.screen, self.level, self.round)
         self.multi_scale_question = MultiScaleQuestion(self.screen, self.level, self.round)
 
@@ -33,7 +29,7 @@ class QAEvaluator:
     def handle_answer(self):
         # Initialize the GPTResponseHandler with the screen and your OpenAI API key
         self.llm_handler = LLMResponseHandler(self.screen, self.context, self.level, self.round)
-        # Run the game loop
+
         llm_response, self.refine = self.llm_handler.run()
         self.scores = self.get_points(llm_response)
         self.get_refining_questions(llm_response)
@@ -53,10 +49,11 @@ class QAEvaluator:
         self.refining_questions = llm_response.split('Refining Questions:')[-1]
     
     def refine_answer(self):
-        self.refining_question = Question(self.screen, self.level, self.round)
+        self.refining_question = Question(self.screen, self.level, self.round, refine=True)
         self.refining_question.set_question_text(self.refining_questions)
         self.context += self.refining_question.run()
-        self.llm_handler.refine_evaluate(self.context)
+        self.llm_handler.set_context(self.context)
+        self.llm_handler.refine_evaluate()
         llm_answer = self.llm_handler.answer
         self.context += llm_answer
         self.scores_refining = self.get_points(llm_answer)

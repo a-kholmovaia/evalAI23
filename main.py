@@ -6,6 +6,6 @@ if __name__ == "__main__":
     game.run()
     print("the game has succesfully ended")
 
-# to Do - separate subclass for refining questions - adjust prompt, so no more than 3 ref. questions.
+# to Do - multiline question text display for refining questions 
 
 

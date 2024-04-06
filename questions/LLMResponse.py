@@ -36,13 +36,13 @@ Context:
 The AI Lab is a project-based seminar focusing on AI & Society, where students collaborate in teams on a project. Each team typically has a mentor responsible for guiding the team, structuring their work, providing essential information, and assigning specific tasks to each team member. Additionally, the seminar offers online learning materials and workshops on topics such as "Introduction to Machine Learning and LLMs," Python, Machine Learning, and support hours (Tutorien) where students can seek help and support for their projects.
 
 Task:
-Please evaluate the player's answer based on the following criteria: Clarity and Coherence, Relevance, Specific Examples, and Constructive Criticism. Below are detailed descriptions of each criterion along with examples of good and bad responses. Each criterion is worth 1 to 10 points. If you identify areas for improvement in any of the criteria, please pose 2-3 refining questions to help the player enhance their answer. 
+Please evaluate the player's answer based on the following criteria: Clarity and Coherence, Relevance, Specific Examples, and Constructive Criticism. Below are detailed descriptions of each criterion along with examples of good and bad responses. Each criterion is worth 1 to 10 points. If you identify areas for improvement in any of the criteria, please pose no more than 3 refining questions to help the player enhance their answer. 
 Refining questions should be in the same language as the response. Additionally, based on the answers provided, you may ask extra questions found in the "Other questions" section. Below are examples of refining questions you might consider asking, based on the player's responses:
 
 Refining Questions Examples:
 {self.get_extra_questions()}
 
-You could also ask extra questions based on the answers in the "Other questions" section. Use the directions provided by the questions above as a basis for generating your refining questions.
+Please pose no more than 3 refining questions. Your questions should be specific. You could also ask extra questions based on the answers in the "Other questions" section. Use the directions provided by the questions above as a basis for generating your refining questions.
 
 Criteria:
 
@@ -83,7 +83,7 @@ Relevance: _ points
 Specific Examples: _ points
 Constructive Criticism: _ points
 
-Feedback: write 3-4 sentences what was good in the response and what needs improvement.
+Feedback: write something positive about the response and then point out what needs improvement.
 Refining Questions: ask 2-3 questions that help to improve the player's answer.
 "
 Your Feedback:
@@ -222,7 +222,7 @@ Your Feedback:
 - Fair Work: "Were tasks distributed based on individuals' strengths or areas they wished to develop?"  
         """
     
-    def refine_evaluate(self, context):
+    def refine_evaluate(self):
         prompt = f"""
         You are a helpful assistant, represented by a benevolent AI spirit, in a teaching evaluation game for the AI Lab seminar. The player has provided an answer regarding their experiences with teamwork, the project undertaken in the AI Lab, and the provided learning materials and workshops.
 
@@ -291,4 +291,7 @@ Your Feedback:
         except Exception as e:
             print(f"An error occurred: {e}")
             return "Unable to evaluate the answer at this time."
+        
+    def set_context(self, context):
+        self.context = context
 
