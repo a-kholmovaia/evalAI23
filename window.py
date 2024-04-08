@@ -13,7 +13,7 @@ class Window:
         self.clock = pygame.time.Clock()
     
     def show_screen(self):
-        self.screen = pygame.display.set_mode((self.last_height, self.last_width), RESIZABLE)
+        self.screen = pygame.display.set_mode((self.height, self.width), RESIZABLE)
         self.screen.fill(constants.BLACK)
 
     def update(self):
@@ -26,5 +26,14 @@ class Window:
         self.height = self.screen.get_height()
         self.width = self.screen.get_width()
     
+    def blit(self, object: pygame.Surface, dest: tuple[int,int]):
+        self.screen.blit(object, dest)
+
     def get_screen(self):
         return self.screen
+    
+    def get_height(self):
+        return self.height
+    
+    def get_width(self):
+        return self.width
