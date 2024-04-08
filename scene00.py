@@ -1,7 +1,5 @@
 import pygame
-from sprite_master import SpriteMaster
 from sprite_master_enemy import EnemySprite
-from player import Player
 from enemy import Enemy
 from constants import BLACK
 from typing import List

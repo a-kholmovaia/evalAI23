@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import RESIZABLE
 from menu.main_menu import main_menu
 from menu.welcome_menu import welcome_menu
 from play_intro import play_intro_video
@@ -14,7 +15,7 @@ class Game:
 
         # Screen dimensions
         self.screen_width, self.screen_height = 800, 600
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), RESIZABLE)
 
         # Frame rate
         self.FPS = FPS
@@ -28,7 +29,7 @@ class Game:
         main_menu(self.screen)
         play_intro_video()
 
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), RESIZABLE)
         level1 = Level([ScenePrelevel0("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.screen, self.clock, self.font)])
 
         running = True

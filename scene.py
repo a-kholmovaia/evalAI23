@@ -1,6 +1,5 @@
 import pygame
 from sprite_master import SpriteMaster
-from sprite_master_enemy import EnemySprite
 from player import Player
 from enemy import Enemy
 from constants import BLACK
@@ -33,7 +32,7 @@ class Scene:
         # Set font
         self.font = font
 
-        self.player = self.get_player(player_sheet_path)
+        self.player = self.__get_player(player_sheet_path)
 
         
     def run(self):
@@ -68,7 +67,7 @@ class Scene:
         return config        
 
 
-    def get_player(self, sheet_path : str) -> Player:
+    def __get_player(self, sheet_path : str) -> Player:
         actions_dict = {
             'idle_1': {'row': 0, 'frames': 2},
             'idle_2': {'row': 0, 'frames': 2},
@@ -109,4 +108,7 @@ class Scene:
 
    
     def __detect_collision(self, position1, position2):
+        pass
+    
+    def __resize_scene():
         pass
