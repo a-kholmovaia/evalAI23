@@ -110,12 +110,14 @@ Your Feedback:
         self.screen.fill((200, 200, 200))  # Fill the background
         self.screen.blit(self.background, (0, 0))
         if not self.visible:
+            self.screen.fill((200, 200, 200))  # Fill the background
+            self.screen.blit(self.background, (0, 0))
             waiting_text = self.font.render("AI Spirit is thinking... Wait a moment...", True, (0, 0, 0))
-            self.screen.blit(waiting_text, (self.SCREEN_WIDTH*0.2, self.SCREEN_HEIGHT*0.3))  # Adjust position as needed
-
-        if not self.request_sent_llm:
-            self.fetch_response()
-            self.request_sent_llm = True
+            self.screen.blit(waiting_text, (self.SCREEN_WIDTH*0.2, self.SCREEN_HEIGHT*0.3))  # Adjust position as neede
+            if not self.request_sent_llm:
+                pygame.display.flip()
+                self.fetch_response()
+                self.request_sent_llm = True
 
         if self.visible:
             rendered_answer = self.answer.split("Feedback:")[1]

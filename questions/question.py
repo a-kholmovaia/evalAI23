@@ -13,15 +13,15 @@ class Question:
         self.user_input = ""
         self.font_button = pygame.font.Font('font.TTF', 36)
         if refine:
-            self.font = pygame.font.Font(None, 18)
-        else:
+            self.font = pygame.font.Font(None, 26)
+        else: 
             self.font = pygame.font.Font(None, 36)
 
         # Enlarged text box for multiline input
-        self.text_box_rect = pygame.Rect(screen.get_width() * 0.1, screen.get_height() * 0.3,
+        self.text_box_rect = pygame.Rect(screen.get_width() * 0.1, screen.get_height() * 0.35,
                                          screen.get_width() * 0.8, self.SCREEN_HEIGHT * 0.5)
 
-        self.continue_button_rect = pygame.Rect(screen.get_width() * 0.7, screen.get_height() * 0.85, 180, 40)
+        self.continue_button_rect = pygame.Rect(screen.get_width() * 0.7, screen.get_height() * 0.87, 180, 40)
 
         self.background = pygame.transform.scale(pygame.image.load("questions/back_text.png"),
                                                  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
@@ -50,25 +50,26 @@ class Question:
 
     def split_text_into_lines(self, text, max_width):
         lines = []
-        current_line = ""
-        for word in text.split(' '):
-            if self.font.size(word)[0] > max_width:
-                # If the word itself exceeds the max width, split the word
-                if current_line:
-                    lines.append(current_line)  # Add the current line to lines
-                    current_line = ""  # Start a new line
-                lines.extend(self.split_long_word(word, max_width))  # Split the long word into lines
-            else:
-                # Check if adding the word exceeds the max width
-                test_line = f"{current_line} {word}".strip()
-                if self.font.size(test_line)[0] <= max_width:
-                    current_line = test_line
+        for paragraph in text.split('\n'):  # Split the text into paragraphs based on newline characters
+            current_line = ""
+            for word in paragraph.split(' '):
+                if self.font.size(word)[0] > max_width:
+                    # If the word itself exceeds the max width, split the word
+                    if current_line:
+                        lines.append(current_line)  # Add the current line to lines
+                        current_line = ""  # Start a new line
+                    lines.extend(self.split_long_word(word, max_width))  # Split the long word into lines
                 else:
-                    lines.append(current_line)  # Add the current line to lines
-                    current_line = word  # Start a new line with the current word
+                    # Check if adding the word exceeds the max width
+                    test_line = f"{current_line} {word}".strip()
+                    if self.font.size(test_line)[0] <= max_width:
+                        current_line = test_line
+                    else:
+                        lines.append(current_line)  # Add the current line to lines
+                        current_line = word  # Start a new line with the current word
 
-        if current_line:  # Add the last line
-            lines.append(current_line)
+            if current_line:  # Add the last line of the paragraph
+                lines.append(current_line)
         return lines
 
     def split_long_word(self, word, max_width):
@@ -124,9 +125,18 @@ class Question:
                 # Potentially call a method to handle the continue action
 
     def display_question(self):
-        question_surface = self.font.render(self.question_text, True, (0, 0, 0))
-        question_rect = question_surface.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 5))
-        self.screen.blit(question_surface, question_rect)
+        # Calculate where to start drawing the text
+        start_y = self.screen.get_height() * 0.13  # Start drawing the question near the top of the screen
+        
+        # Get lines of text that fit the screen width
+        lines = self.split_text_into_lines(self.question_text, self.SCREEN_WIDTH - 80)  # Adjust for some padding
+        print(lines)
+        
+        # Draw each line of text
+        for i, line in enumerate(lines):
+            question_surface = self.font.render(line, True, (0, 0, 0))
+            question_rect = question_surface.get_rect(center=(self.screen.get_width() // 2, start_y + i * self.line_height))
+            self.screen.blit(question_surface, question_rect)
 
     def draw_continue_button(self):
         continue_surface = self.font_button.render('Continue', True, (255, 255, 255))

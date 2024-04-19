@@ -1,6 +1,8 @@
 from questions.question import Question
 from questions.multiscale import MultiScaleQuestion
 from questions.LLMResponse import LLMResponseHandler
+from questions.introduction_screen import IntroductionScreen
+from questions.outro_screen import Artifact
 from constants import OUTPUT_FILE_PATH
 import pygame
 
@@ -14,6 +16,8 @@ class QAEvaluator:
     def _init_level(self):
         self.open_question = Question(self.screen, self.level, self.round)
         self.multi_scale_question = MultiScaleQuestion(self.screen, self.level, self.round)
+        self.introduction_screen = IntroductionScreen(self.screen, self.level, self.round)
+        self.artifact = Artifact(screen=self.screen, level=self.level)
 
     def get_answers(self):
         responses = self.multi_scale_question.run()
@@ -59,8 +63,9 @@ class QAEvaluator:
         self.scores_refining = self.get_points(llm_answer)
     
     def run(self):
-        while(self.round<2):
+        while(self.round<1):
             self._init_level() 
+            self.introduction_screen.run()
             self.get_answers()
             self.handle_answer()
             if self.refine:
@@ -70,6 +75,9 @@ class QAEvaluator:
                 f.write(self.context)
 
             self.round += 1 
+        self.artifact.run()
+        
+        
 
         
 
