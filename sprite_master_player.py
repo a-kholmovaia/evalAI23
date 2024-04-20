@@ -1,10 +1,10 @@
 import pygame
 
-class SpriteMaster():
-
-    def __init__(self, actions_to_rows : dict, sprite_sheet_path : str, frame_width : int, frame_height : int, animation_speed=0.2):
+class SpriteMasterPlayer:
+    SPRITE_PATH = "img/player_sheet.png"
+    def __init__(self, actions_to_rows : dict, frame_width : int, frame_height : int, animation_speed=0.2):
         # Load sprite
-        self.sprite_sheet = pygame.image.load(sprite_sheet_path).convert_alpha()
+        self.sprite_sheet = pygame.image.load(self.SPRITE_PATH).convert_alpha()
 
         # Set player's sprite height and width
         self.frame_height = frame_height

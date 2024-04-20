@@ -1,14 +1,13 @@
 import pygame
-from sprite_master import SpriteMaster
+from sprite_master_player import SpriteMasterPlayer
 from sprite_master_enemy import EnemySprite
 from player import Player
 from enemy import Enemy
-from constants import BLACK
+from constants import BLACK, BACK_TEXT_PATH, GREEN
 from typing import List
 
 class Scene:
-
-    def __init__(self, scene_path : str, player_sheet_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
+    def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
         # Set current game screen
         self.game_screen = game_screen
@@ -21,7 +20,9 @@ class Scene:
             elif key == "enemy_start_pos":
                 self.enemy_pos = config[key]
         
-        self.background_health = pygame.transform.scale(pygame.image.load(scene_path + "back_text.png"), (240, 80))
+        self.background_text = pygame.transform.scale(pygame.image.load(BACK_TEXT_PATH), (240, 80))
+
+        self.background_text_instruction = pygame.transform.scale(self.background_text, (280, 140))
 
         # Set frame rate and clock
         self.FPS = FPS
@@ -33,7 +34,12 @@ class Scene:
         # Set font
         self.font = font
 
-        self.player = self.get_player(player_sheet_path)
+        self.player = self.get_player()
+
+        self.continue_button_rect = pygame.Rect(self.game_screen.get_width() * 0.6, 
+                                                self.game_screen.get_height() * 0.6, 120, 40)
+        
+        self.platforms = []
 
         
     def run(self):
@@ -68,7 +74,7 @@ class Scene:
         return config        
 
 
-    def get_player(self, sheet_path : str) -> Player:
+    def get_player(self) -> Player:
         actions_dict = {
             'idle_1': {'row': 0, 'frames': 2},
             'idle_2': {'row': 0, 'frames': 2},
@@ -80,25 +86,23 @@ class Scene:
             'fight': {'row': 8, 'frames': 8},
         }
 
-        return Player(self.game_screen, self.player_pos, SpriteMaster(actions_dict, sheet_path, 32, 32))
-
-    def __get_enemy(self, sheet_path : str) -> List[Enemy]:
-        pass
+        return Player(self.game_screen, self.player_pos, SpriteMasterPlayer(actions_dict, 32, 32))
 
     def draw_health_bars(self, player_health, enemy_health):
+        # draws health bars on the top of a screen
         max_health_width = 200  # Width of the health bar at full health
         health_bar_height = 20
         border_padding = 15
 
         # Player health bar
-        self.game_screen.blit(self.background_health, (0, 0))
+        self.game_screen.blit(self.background_text, (0, 0))
         pygame.draw.rect(self.game_screen, (255, 0, 0),
                          (border_padding, border_padding, max_health_width, health_bar_height))
         pygame.draw.rect(self.game_screen, (0, 255, 0), (border_padding, border_padding, player_health*2, health_bar_height))
         your_health = self.font.render("  your  health", True, BLACK)
         self.game_screen.blit(your_health, (border_padding, border_padding + 5 + health_bar_height))
         # Enemy health bar
-        self.game_screen.blit(self.background_health, (self.game_screen.get_width()-240, 0))
+        self.game_screen.blit(self.background_text, (self.game_screen.get_width()-240, 0))
         pygame.draw.rect(self.game_screen, (255, 0, 0), (
         self.game_screen.get_width() - max_health_width - border_padding, border_padding, max_health_width, health_bar_height))
         pygame.draw.rect(self.game_screen, (0, 255, 0), (
@@ -108,5 +112,54 @@ class Scene:
         self.game_screen.blit(enemys_health, (self.game_screen.get_width() - 13*border_padding, border_padding  + 5 + health_bar_height))
 
    
-    def __detect_collision(self, position1, position2):
-        pass
+    def won(self):
+            self.background_text_won = pygame.transform.scale(self.background_text, (280, 140))
+            won_text = self.font.render("You   won!", True, GREEN)
+            self.game_screen.blit(self.background_text_won,
+                         (self.game_screen.get_width()//2.2, self.game_screen.get_height()//2.1))
+            self.game_screen.blit(won_text,
+                         (self.game_screen.get_width()//2 + 10, self.game_screen.get_height()//2 + 10))
+            self.draw_continue_button()
+
+    def draw_instructions(self):
+        border_padding = 35
+        instructions1 = self.font.render("use  LEFT  RIGHT  UP", True, BLACK)
+        instructions2 = self.font.render("arrow  to  move", True, BLACK)
+        instructions3 = self.font.render("space  key  to  attack", True, BLACK)
+        self.game_screen.blit(self.background_text_instruction,
+                         (border_padding-20, border_padding * 2 + 30))
+
+        self.game_screen.blit(instructions1, (border_padding, border_padding * 2 + 45))
+        self.game_screen.blit(instructions2, (border_padding, border_padding * 2 + 85))
+        self.game_screen.blit(instructions3, (border_padding, border_padding * 2 + 120))    
+
+    def detect_collision(self, position1, position2):
+        # Simple collision detection (can be improved)
+        distance = position1.distance_to(position2)
+        return distance < 50  # Adjust threshold according to your game's scale
+    
+    def handle_platform_collisions(self):
+        # Assume the player's sprite dimensions are known (width, height)
+        player_width = 86
+        player_height = 86
+
+        # Create a Rect for collision detection based on current Vector2 position
+        player_rect = pygame.Rect(self.player.current_position.x, self.player.current_position.y, player_width, player_height)
+
+        for platform in self.platforms:
+            if player_rect.colliderect(platform[1]):  # Assuming each platform is stored as (image, rect)
+                # Collision detected, adjust player position
+                if self.player.velocity_y > 0:  # Only adjust if falling down
+                    self.player.current_position.y = platform[1].top - player_height
+                    self.player.velocity_y = 0
+                    self.player.is_jumping = False
+    
+    def draw_platforms(self):
+        if len(self.platforms) != 0:
+            for img, rect in self.platforms:
+                self.game_screen.blit(img, rect)
+
+    def draw_continue_button(self):
+        continue_surface = self.font.render('Continue', True, (255, 255, 255))
+        pygame.draw.rect(self.game_screen, (0, 128, 0), self.continue_button_rect)  # Green button
+        self.game_screen.blit(continue_surface, (self.continue_button_rect.x + 10, self.continue_button_rect.y+10))
