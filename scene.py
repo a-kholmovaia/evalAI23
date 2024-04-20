@@ -139,20 +139,27 @@ class Scene:
         return distance < 50  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
-        # Assume the player's sprite dimensions are known (width, height)
-        player_width = 86
-        player_height = 86
+        player_width = self.player.width
+        player_height = self.player.height
 
         # Create a Rect for collision detection based on current Vector2 position
         player_rect = pygame.Rect(self.player.current_position.x, self.player.current_position.y, player_width, player_height)
 
         for platform in self.platforms:
             if player_rect.colliderect(platform[1]):  # Assuming each platform is stored as (image, rect)
-                # Collision detected, adjust player position
-                if self.player.velocity_y > 0:  # Only adjust if falling down
+                # Collision detected, adjust player position if falling down
+                if self.player.velocity_y > 0:
+                    self.standing = True
+                    player_rect.bottom = platform[1].top
+                    self.player.current_position.y = player_rect.top  # Correcting the assignment here
+                    # If hovering issue, adjust y position here:
                     self.player.current_position.y = platform[1].top - player_height
                     self.player.velocity_y = 0
                     self.player.is_jumping = False
+                    break  # Break after handling collision to avoid multiple conflicting adjustments
+
+        # Update the player's position Rectangle for continued accurate collision detection
+        self.player.current_position_rect = player_rect
     
     def draw_platforms(self):
         if len(self.platforms) != 0:

@@ -34,10 +34,10 @@ class ScenePrelevel0(Scene):
         scaled_height = int(scaled_width * aspect_ratio)
         
         # Define platform positions (x position, y height)
-        positions = [(450, 150), (650, 250), (300, 330)]
+        positions = [(450, 170), (650, 270), (300, 360)]
         for pos in positions:
             scaled_image = pygame.transform.scale(original_platform_image, (scaled_width, scaled_height))
-            rect = scaled_image.get_rect(topleft=pos)
+            rect = scaled_image.get_rect(bottomleft=pos)
             self.platforms.append((scaled_image, rect))
 
     def run(self):
@@ -56,8 +56,7 @@ class ScenePrelevel0(Scene):
 
             keys = pygame.key.get_pressed()
             self.player.take_action(keys)
-            if self.player.is_jumping:
-                self.handle_platform_collisions()  # Handle collisions after player movement
+            self.handle_platform_collisions()  # Handle collisions after player movement
             self.enemy.take_action()
 
             if self.enemy.current_action == 'fight' and self.detect_collision(self.player.current_position, self.enemy.current_position):
