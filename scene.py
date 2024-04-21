@@ -5,13 +5,15 @@ from enemy import Enemy
 from constants import BLACK
 from typing import List
 from window import Window
-from drawable_objects.player_healthbar import PlayerHealthbar
-from drawable_objects.enemy_healthbar import EnemyHealthbar
+from event_handler import EventHandler
 
 class Scene:
 
-    def __init__(self, scene_path : str, player_sheet_path : str,  window : Window, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
+    def __init__(self, event_handler: EventHandler, scene_path : str, player_sheet_path : str,  window : Window, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
+        self.event_handler = event_handler
+
+
         # Set window
         self.window = window
 
@@ -36,12 +38,18 @@ class Scene:
 
         self.player = self.__get_player(player_sheet_path)
 
-        self.player_healthbar = PlayerHealthbar(scene_path, font)
-        self.enemy_healthbar = EnemyHealthbar(scene_path, font)
+        #List[DrawableObject] to draw when resizing window
+        self.drawable_objects = [] 
 
         
     def run(self):
+        while self.event_handler.listen_events():
+            self.run_scenario()
+        
+    def run_scenario(self):
+        #Abstract method to be overriden in subclasses
         pass
+        
     
 
     def __parse_config(self, file_path : str):
@@ -92,5 +100,6 @@ class Scene:
     def __detect_collision(self, position1, position2):
         pass
     
-    def __resize_scene():
-        pass
+    def __resize_scene(self):
+        for o in self.drawable_objects:
+            o.draw()

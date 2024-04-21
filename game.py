@@ -6,6 +6,7 @@ from play_intro import play_intro_video
 from level import Level
 from scene00 import ScenePrelevel0
 from window import Window
+from event_handler import EventHandler
 
 class Game:
     def __init__(self, FPS=60, img_path=""):
@@ -18,6 +19,10 @@ class Game:
         self.screen_width, self.screen_height = 800, 600
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), RESIZABLE)
 
+        self.window = Window()
+
+        self.event_handler = EventHandler(self.window)
+
         # Frame rate
         self.FPS = FPS
         self.clock = pygame.time.Clock()
@@ -25,23 +30,16 @@ class Game:
         self.img_path = img_path
 
     def run(self):
-        pygame.display.set_caption("AI-Lab: the final Battle")
-        welcome_menu(self.screen)
-        main_menu(self.screen)
-        play_intro_video()
+        #pygame.display.set_caption("AI-Lab: the final Battle")
+        #welcome_menu(self.screen)
+        #main_menu(self.screen)
+        #play_intro_video()
 
-        window = Window()
-        window.show_screen()
-        level1 = Level([ScenePrelevel0("levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", window, self.clock, self.font)])
+        self.window.show_screen()
+        level1 = Level([ScenePrelevel0(self.event_handler, "levels/level_1/scene_1/", "img/AnimationSheet_Character.png", "img/monster-pre.png", self.window, self.clock, self.font)])
 
-        running = True
         paused = False
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                    
+        while self.event_handler.listen_events():
+            self.window.update()
             level1.run()
 
-            pygame.display.flip()
-            self.clock.tick(self.FPS)

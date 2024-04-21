@@ -1,16 +1,16 @@
 import pygame
-from idrawable import IDrawable
+from drawable_objects.drawable_object import DrawableObject
 from window import Window
 
-class Background(IDrawable):
+class Background(DrawableObject):
 
     def __init__(self, scene_path: str, window: Window):
-        self.window = window
-        self.rect = pygame.transform.scale(pygame.image.load(scene_path + "background0.png"),
-                                                 (self.window.get_width(), self.window.get_height()))
-       
-    def draw(self, window: Window):
-        self.window.blit(self.rect, (0, 0))
-    
-    def resize(self, window: Window):
-        pass
+        super().__init__(window, 0, 0, window.get_width(), window.get_height())
+        self.scene_path = scene_path
+        self.image = pygame.image.load(scene_path + "background0.png")
+
+
+    def draw(self):
+        surface = pygame.transform.scale(self.image,
+                                                 (self.width, self.height))
+        self.window.blit(surface, (self.x, self.y))
