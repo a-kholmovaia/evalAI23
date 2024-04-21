@@ -1,8 +1,10 @@
 import pygame
+from character import Character
 
-class Player:
+class Player(Character):
 
     def __init__(self, game_screen, start_position, sprite_master, character_speed=5, size=(86,86)):
+        super().__init__()
         # Pygame's screen
         self.game_screen = game_screen
 

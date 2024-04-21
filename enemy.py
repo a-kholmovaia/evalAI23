@@ -1,7 +1,10 @@
 import pygame
 import random
-class Enemy:
+from character import Character
+
+class Enemy(Character):
     def __init__(self, game_screen, start_position, sprite_master):
+        super().__init__()
         self.game_screen = game_screen
         self.current_position = start_position
         self.sprite_master = sprite_master
@@ -14,7 +17,7 @@ class Enemy:
 
     def take_action(self):
         # Randomly decide to attack or stay idle
-        if self.current_action=="fight" or random.randint(0, 1000) == 1:  # Adjust randomness as needed
+        if self.current_action=="fight" or random.randint(0, 10) == 1:  # Adjust randomness as needed
             self.current_action = 'fight'
             self.fight_counter -= self.speed
             if self.fight_counter <= 0:

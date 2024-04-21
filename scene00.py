@@ -56,13 +56,9 @@ class ScenePrelevel0(Scene):
 
             keys = pygame.key.get_pressed()
             self.player.take_action(keys)
-            self.handle_platform_collisions()  # Handle collisions after player movement
             self.enemy.take_action()
 
-            if self.enemy.current_action == 'fight' and self.detect_collision(self.player.current_position, self.enemy.current_position):
-                self.player.health -= 1  # Reduce player health by 5 points
-            if self.player.current_action == 'fight' and self.detect_collision(self.player.current_position, self.enemy.current_position):
-                self.enemy.health -= 1 # Reduce player health by 5 points
+            self.handle_collisions()
 
             self.draw_health_bars(self.player.health, self.enemy.health)
             

@@ -4,7 +4,7 @@ from sprite_master_enemy import EnemySprite
 from player import Player
 from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN
-from typing import List
+from typing import List, Optional, Literal
 
 class Scene:
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
@@ -136,14 +136,11 @@ class Scene:
     def detect_collision(self, position1, position2):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
-        return distance < 50  # Adjust threshold according to your game's scale
+        return distance < 70  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
-        player_width = self.player.width
-        player_height = self.player.height
-
         # Create a Rect for collision detection based on current Vector2 position
-        player_rect = pygame.Rect(self.player.current_position.x, self.player.current_position.y, player_width, player_height)
+        player_rect = self.player.current_position_rect
 
         for platform in self.platforms:
             if player_rect.colliderect(platform[1]):  # Assuming each platform is stored as (image, rect)
@@ -169,3 +166,20 @@ class Scene:
         continue_surface = self.font.render('Continue', True, (255, 255, 255))
         pygame.draw.rect(self.game_screen, (0, 128, 0), self.continue_button_rect)  # Green button
         self.game_screen.blit(continue_surface, (self.continue_button_rect.x + 10, self.continue_button_rect.y+10))
+
+    
+    def handle_fight_collisions(self, object: Literal["player", "enemy"]):
+        if object=="player":
+            object = self.enemy
+            subject = self.player
+        else: 
+            subject = self.enemy
+            object = self.player
+        
+        if subject.current_action == 'fight' and self.detect_collision(object.current_position, subject.current_position):
+            object.handle_damage(subject.get_damage()) # damage: int 
+    
+    def handle_collisions(self): 
+        self.handle_platform_collisions()
+        self.handle_fight_collisions("player")
+        self.handle_fight_collisions("enemy")
