@@ -152,8 +152,7 @@ class Scene:
                     self.standing = True
                     player_rect.bottom = platform[1].top
                     self.player.current_position.y = player_rect.top  # Correcting the assignment here
-                    # If hovering issue, adjust y position here:
-                    self.player.current_position.y = platform[1].top - player_height
+
                     self.player.velocity_y = 0
                     self.player.is_jumping = False
                     break  # Break after handling collision to avoid multiple conflicting adjustments
