@@ -9,6 +9,9 @@ from typing import List, Optional, Literal
 class Scene:
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
+        # Set the flag to continue the game loop
+        self.do_continue_game_loop = True
+
         # Set current game screen
         self.game_screen = game_screen
 
@@ -183,3 +186,6 @@ class Scene:
         self.handle_platform_collisions()
         self.handle_fight_collisions("player")
         self.handle_fight_collisions("enemy")
+
+    def event_end_game_loop(self):
+        self.do_continue_game_loop = False
