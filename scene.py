@@ -6,7 +6,10 @@ from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN
 from typing import List, Optional, Literal
 
+
+
 class Scene:
+
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
         # Set the flag to continue the game loop
@@ -188,4 +191,15 @@ class Scene:
         self.handle_fight_collisions("enemy")
 
     def event_end_game_loop(self):
+        print("Quit event succesfully handled")
         self.do_continue_game_loop = False
+
+    def listen_events(self):
+        for event in pygame.event.get():
+            print(f"event of the type {event.type} was fired")
+            if event.type == 768:#pygame.QUIT:
+                print("QUIT event fired")
+                self.event_end_game_loop()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.enemy.health <= 0 and self.continue_button_rect.collidepoint(event.pos):
+                    self.event_end_game_loop()
