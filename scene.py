@@ -1,5 +1,4 @@
 import pygame
-from sprite_master_player import SpriteMasterPlayer
 from sprite_master import SpriteMaster
 from player import Player
 from enemy import Enemy
