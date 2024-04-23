@@ -1,11 +1,13 @@
 import pygame
 from character import Character
 from typing import Literal
+from constants import DEAD_POS
+
 
 class Player(Character):
 
-    def __init__(self, game_screen, start_position, sprite_master, character_speed=5, size=(86,86)):
-        super().__init__()
+    def __init__(self, game_screen, start_position, sprite_master, speed_factor=50, size=(86,86)):
+        super().__init__(sprite_master)
         # Pygame's screen
         self.game_screen = game_screen
 
@@ -13,15 +15,6 @@ class Player(Character):
         self.current_position = start_position
 
         self.ground_level = start_position[1]
-
-        # Player's default action
-        self.current_action = 'idle_1'
-
-        # Sprite master
-        self.sprite_master = sprite_master
-
-        # Define character speed
-        self.character_speed = character_speed
 
         # Default frame index
         self.frame_index = 0
@@ -40,20 +33,34 @@ class Player(Character):
         self.width, self.height = size
         self.current_position_rect = pygame.Rect(self.current_position.x, self.current_position.y, self.width, self.height)
         self.standing = False
+        self.speed_factor = speed_factor
 
     def take_action(self, keys):
-        self.__draw_current_action()
-        self.update_physics()
-        self.current_action = "idle_1"
+        if self.current_action != "dead":
+            self.update_physics()
+            self.draw_current_action()
+        
+            if self.health > 10:
+                self.current_action = 'idle'
+            elif self.health > 0:
+                self.current_action = 'hurt'
+            elif self.health<=0 and self.death_counter>0:
+                self.current_action = "death"
+                self.current_position.y = self.ground_level
+                self.death_counter -= self.speed
+            else:
+                self.current_action = "dead"
+                self.current_position = DEAD_POS
+            self.current_action = "idle"
     
     def event_key_pressed(self, type: Literal["left", "right", "fight", "jump"]) -> None:
         if type == "left" and self.current_position[0] > 0:
-            self.current_position[0] -= self.character_speed
-            self.current_action = 'move_left'
+            self.current_position[0] -= self.speed * self.speed_factor
+            self.current_action = 'walk'
             self.reflect = True
         elif type == "right" and self.current_position[0] < self.game_screen.get_width() - self.padding:
-            self.current_position[0] += self.character_speed
-            self.current_action = 'move_right'
+            self.current_position[0] += self.speed * self.speed_factor
+            self.current_action = 'walk'
             self.reflect = False
         elif type == "fight":
             self.current_action = 'fight'
@@ -62,7 +69,6 @@ class Player(Character):
             self.is_jumping = True
             self.current_action = 'jump'
             self.jump_direction = (type == "left", type == "right") 
-
         if self.is_jumping:
             self.__jump()
 
@@ -108,9 +114,9 @@ class Player(Character):
 
             # Horizontal movement during jump
             if self.jump_direction[0]:  # Left
-                self.current_position.x -= self.character_speed
+                self.current_position.x -= self.speed
             elif self.jump_direction[1]:  # Right
-                self.current_position.x += self.character_speed
+                self.current_position.x += self.speed
         else:
             # Reset jump mechanics
             self.reset_jump()
@@ -121,15 +127,6 @@ class Player(Character):
         self.jump_direction = (False, False)  # Reset direction after jump
         # Do not reset y position here; let gravity handle it to smooth out the landing
 
-    def __draw_current_action(self):
-        # Draw current player's action on the game screen
-        player_sprite = pygame.transform.scale(
-            self.sprite_master.get_sprite_frame(self.current_action), 
-            (self.width, self.height))
-        if self.reflect:
-            player_sprite = pygame.transform.flip(player_sprite, True, False)
-        self.game_screen.blit(player_sprite, self.current_position)
-    
         
 
 

@@ -1,7 +1,7 @@
 import pygame
 import os
 
-class EnemySprite:
+class SpriteMaster:
     def __init__(self, path, idle: int, walk:int, attack:int, hurt:int, death:int, animation_speed=0.1):
         # Load images for different animations
         self.idle_images = [pygame.image.load(os.path.join(path, f'idle{i}.png')) for i in range(idle)]

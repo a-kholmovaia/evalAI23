@@ -1,6 +1,5 @@
 import pygame
-from sprite_master_player import SpriteMasterPlayer
-from sprite_master_enemy import EnemySprite
+from sprite_master import SpriteMaster
 from player import Player
 from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN
@@ -57,8 +56,8 @@ class Scene:
 
         #Initialize parsed config string to value dictionary
         config_values = {
-            "default_player_pos" : pygame.Vector2(self.game_screen.get_width()*0.25, self.game_screen.get_height() * 0.7),
-            "default_enemy_pos" : pygame.Vector2(self.game_screen.get_width()*0.8, self.game_screen.get_height() * 0.65)
+            "default_player_pos" : pygame.Vector2(self.game_screen.get_width()*0.25, self.game_screen.get_height() * 0.66),
+            "default_enemy_pos" : pygame.Vector2(self.game_screen.get_width()*0.8, self.game_screen.get_height() * 0.66)
         } 
 
         # Initialize an empty dictionary to store the key-value pairs
@@ -82,18 +81,8 @@ class Scene:
 
 
     def get_player(self) -> Player:
-        actions_dict = {
-            'idle_1': {'row': 0, 'frames': 2},
-            'idle_2': {'row': 0, 'frames': 2},
-            'move_up': {'row': 3, 'frames': 8},
-            'move_down': {'row': 3, 'frames': 8},
-            'move_left': {'row': 3, 'frames': 8},
-            'move_right': {'row': 3, 'frames': 8},
-            'jump': {'row': 5, 'frames': 8},
-            'fight': {'row': 8, 'frames': 8},
-        }
-
-        return Player(self.game_screen, self.player_pos, SpriteMasterPlayer(actions_dict, 32, 32))
+        sprite = SpriteMaster("levels/player", idle=2, walk=6, attack=4, hurt=4, death=10)
+        return Player(self.game_screen, self.player_pos, sprite)
 
     def draw_health_bars(self, player_health, enemy_health):
         # draws health bars on the top of a screen

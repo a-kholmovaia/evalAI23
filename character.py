@@ -1,11 +1,24 @@
-
+import pygame
+from sprite_master import SpriteMaster
 class Character():
-    def __init__(self):
+    def __init__(self, sprite_master:SpriteMaster):
         self.health = 100
         self.damage = 1
+        self.sprite_master = sprite_master
+        self.current_action = 'idle'
+        self.speed = self.sprite_master.animation_speed
+        self.death_counter = len(self.sprite_master.death_images)
+        self.fight_counter = len(self.sprite_master.attack_images)
+        self.reflect = True
 
     def handle_damage(self, damage: int):
         self.health -= damage
 
     def get_damage(self):
         return self.damage
+    
+    def draw_current_action(self):
+        sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (128, 128))
+        if self.reflect:
+            sprite = pygame.transform.flip(sprite, True, False)
+        self.game_screen.blit(sprite, self.current_position)
