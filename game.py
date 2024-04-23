@@ -37,4 +37,5 @@ class Game:
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
+
         first_scene.run()

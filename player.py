@@ -1,6 +1,9 @@
 import pygame
 from character import Character
+from typing import Literal
 from constants import DEAD_POS
+
+
 class Player(Character):
 
     def __init__(self, game_screen, start_position, sprite_master, speed_factor=50, size=(86,86)):
@@ -34,28 +37,9 @@ class Player(Character):
 
     def take_action(self, keys):
         if self.current_action != "dead":
-            self.__handle_control_input(keys)
             self.update_physics()
             self.draw_current_action()
-    
-    def __handle_control_input(self, keys):
-        # Handle input
-        if keys[pygame.K_LEFT] and self.current_position[0] > 0:
-            self.current_position[0] -= self.speed * self.speed_factor
-            self.current_action = 'walk'
-            self.reflect = True
-        elif keys[pygame.K_RIGHT] and self.current_position[0] < self.game_screen.get_width() - self.padding:
-            self.current_position[0] += self.speed * self.speed_factor
-            self.current_action = 'walk'
-            self.reflect = False
-        elif keys[pygame.K_SPACE]:
-            self.current_action = 'fight'
-        elif keys[pygame.K_UP] and not self.is_jumping:
-            # Initiate jump only if the player is not already jumping
-            self.is_jumping = True
-            self.current_action = 'jump'
-            self.jump_direction = (keys[pygame.K_LEFT], keys[pygame.K_RIGHT]) 
-        else:
+        
             if self.health > 10:
                 self.current_action = 'idle'
             elif self.health > 0:
@@ -67,8 +51,28 @@ class Player(Character):
             else:
                 self.current_action = "dead"
                 self.current_position = DEAD_POS
+            self.current_action = "idle"
+    
+    def event_key_pressed(self, type: Literal["left", "right", "fight", "jump"]) -> None:
+        if type == "left" and self.current_position[0] > 0:
+            self.current_position[0] -= self.speed * self.speed_factor
+            self.current_action = 'walk'
+            self.reflect = True
+        elif type == "right" and self.current_position[0] < self.game_screen.get_width() - self.padding:
+            self.current_position[0] += self.speed * self.speed_factor
+            self.current_action = 'walk'
+            self.reflect = False
+        elif type == "fight":
+            self.current_action = 'fight'
+        elif type == "jump" and not self.is_jumping:
+            # Initiate jump only if the player is not already jumping
+            self.is_jumping = True
+            self.current_action = 'jump'
+            self.jump_direction = (type == "left", type == "right") 
         if self.is_jumping:
             self.__jump()
+
+        
     
     def update_position(self):
         # Method to update the Rect based on the Vector2 position

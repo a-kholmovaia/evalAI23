@@ -41,14 +41,8 @@ class ScenePrelevel0(Scene):
             self.platforms.append((scaled_image, rect))
 
     def run(self):
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.enemy.health <= 0 and self.continue_button_rect.collidepoint(event.pos):
-                        return
+        while self.do_continue_game_loop:
+            self.listen_events()
             
             self.game_screen.fill(BLACK)
             self.game_screen.blit(self.background, (0, 0))
@@ -74,3 +68,4 @@ class ScenePrelevel0(Scene):
     def __get_enemy(self) -> List[Enemy]:
         sprite = SpriteMaster("levels/level0/enemy", idle=3, walk=5, attack=4, hurt=2, death=5)
         return Enemy(self.game_screen, self.enemy_pos, sprite)
+    
