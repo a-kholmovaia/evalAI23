@@ -1,5 +1,5 @@
 import pygame
-from sprite_master_enemy import EnemySprite
+from sprite_master import SpriteMaster
 from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH
 from typing import List
@@ -34,7 +34,7 @@ class ScenePrelevel0(Scene):
         scaled_height = int(scaled_width * aspect_ratio)
         
         # Define platform positions (x position, y height)
-        positions = [(450, 170), (650, 270), (300, 360)]
+        positions = [(450, 170), (670, 310), (300, 360)]
         for pos in positions:
             scaled_image = pygame.transform.scale(original_platform_image, (scaled_width, scaled_height))
             rect = scaled_image.get_rect(bottomleft=pos)
@@ -72,5 +72,5 @@ class ScenePrelevel0(Scene):
             self.clock.tick(self.FPS)  
 
     def __get_enemy(self) -> List[Enemy]:
-        sprite = EnemySprite("levels/level0/enemy", idle=3, walk=5, attack=4, hurt=2, death=5)
+        sprite = SpriteMaster("levels/level0/enemy", idle=3, walk=5, attack=4, hurt=2, death=5)
         return Enemy(self.game_screen, self.enemy_pos, sprite)
