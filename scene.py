@@ -5,6 +5,7 @@ from player import Player
 from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN
 from typing import List, Optional, Literal
+import constants
 
 
 
@@ -197,7 +198,7 @@ class Scene:
     def listen_events(self):
         for event in pygame.event.get():
             print(f"event of the type {event.type} was fired")
-            if event.type == 768:#pygame.QUIT:
+            if event.type == constants.ESC_DOWN_CODE:
                 print("QUIT event fired")
                 self.event_end_game_loop()
             elif event.type == pygame.MOUSEBUTTONDOWN:
