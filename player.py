@@ -1,5 +1,6 @@
 import pygame
 from character import Character
+from typing import Literal
 
 class Player(Character):
 
@@ -41,32 +42,31 @@ class Player(Character):
         self.standing = False
 
     def take_action(self, keys):
-        self.__handle_control_input(keys)
         self.__draw_current_action()
         self.update_physics()
+        self.current_action = "idle_1"
     
-    def __handle_control_input(self, keys):
-        # Handle input
-        if keys[pygame.K_LEFT] and self.current_position[0] > 0:
+    def event_key_pressed(self, type: Literal["left", "right", "fight", "jump"]) -> None:
+        if type == "left" and self.current_position[0] > 0:
             self.current_position[0] -= self.character_speed
             self.current_action = 'move_left'
             self.reflect = True
-        elif keys[pygame.K_RIGHT] and self.current_position[0] < self.game_screen.get_width() - self.padding:
+        elif type == "right" and self.current_position[0] < self.game_screen.get_width() - self.padding:
             self.current_position[0] += self.character_speed
             self.current_action = 'move_right'
             self.reflect = False
-        elif keys[pygame.K_SPACE]:
+        elif type == "fight":
             self.current_action = 'fight'
-        elif keys[pygame.K_UP] and not self.is_jumping:
+        elif type == "jump" and not self.is_jumping:
             # Initiate jump only if the player is not already jumping
             self.is_jumping = True
             self.current_action = 'jump'
-            self.jump_direction = (keys[pygame.K_LEFT], keys[pygame.K_RIGHT]) 
-        else:
-            self.current_action = 'idle_1'
+            self.jump_direction = (type == "left", type == "right") 
 
         if self.is_jumping:
             self.__jump()
+
+        
     
     def update_position(self):
         # Method to update the Rect based on the Vector2 position

@@ -196,11 +196,23 @@ class Scene:
         self.do_continue_game_loop = False
 
     def listen_events(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            self.event_end_game_loop()
+            return
+        if keys[pygame.K_RIGHT]:
+            self.player.event_key_pressed("right")
+        if keys[pygame.K_LEFT]:
+            self.player.event_key_pressed("left")
+        if keys[pygame.K_SPACE]:
+            self.player.event_key_pressed("fight")
+        if keys[pygame.K_UP]:
+            self.player.event_key_pressed("jump")
+
         for event in pygame.event.get():
             print(f"event of the type {event.type} was fired")
-            if event.type == constants.ESC_DOWN_CODE:
-                print("QUIT event fired")
-                self.event_end_game_loop()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.enemy.health <= 0 and self.continue_button_rect.collidepoint(event.pos):
                     self.event_end_game_loop()
+        
+        
