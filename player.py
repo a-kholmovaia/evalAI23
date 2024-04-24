@@ -72,46 +72,6 @@ class Player(Character):
                 self.current_position = DEAD_POS
         if self.is_jumping:
             self.__jump()
-
-    """
-    def take_action(self, keys):
-        if self.current_action != "dead":
-            self.update_physics()
-            self.draw_current_action()
-        
-            if self.health > 10:
-                self.current_action = 'idle'
-            elif self.health > 0:
-                self.current_action = 'hurt'
-            elif self.health<=0 and self.death_counter>0:
-                self.current_action = "death"
-                self.current_position.y = self.ground_level
-                self.death_counter -= self.speed
-            else:
-                self.current_action = "dead"
-                self.current_position = DEAD_POS
-            self.current_action = "idle"
-    
-    def event_key_pressed(self, type: Literal["left", "right", "fight", "jump"]) -> None:
-        if type == "left" and self.current_position[0] > 0:
-            self.current_position[0] -= self.speed * self.speed_factor
-            self.current_action = 'walk'
-            self.reflect = True
-        elif type == "right" and self.current_position[0] < self.game_screen.get_width() - self.padding:
-            self.current_position[0] += self.speed * self.speed_factor
-            self.current_action = 'walk'
-            self.reflect = False
-        elif type == "fight":
-            self.current_action = 'fight'
-        elif type == "jump" and not self.is_jumping:
-            # Initiate jump only if the player is not already jumping
-            self.is_jumping = True
-            self.current_action = 'jump'
-            self.jump_direction = (type == "left", type == "right") 
-        if self.is_jumping:
-            self.__jump()
-    """
-        
     
     def update_position(self):
         # Method to update the Rect based on the Vector2 position
