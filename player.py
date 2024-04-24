@@ -37,6 +37,45 @@ class Player(Character):
 
     def take_action(self, keys):
         if self.current_action != "dead":
+            self.set_current_action(keys)
+            self.update_physics()
+            self.draw_current_action()
+    
+    def set_current_action(self, keys):
+        # Handle input
+        if keys[pygame.K_LEFT] and self.current_position[0] > 0:
+            self.current_position[0] -= self.speed * self.speed_factor
+            self.current_action = 'walk'
+            self.reflect = True
+        elif keys[pygame.K_RIGHT] and self.current_position[0] < self.game_screen.get_width() - self.padding:
+            self.current_position[0] += self.speed * self.speed_factor
+            self.current_action = 'walk'
+            self.reflect = False
+        elif keys[pygame.K_SPACE]:
+            self.current_action = 'fight'
+        elif keys[pygame.K_UP] and not self.is_jumping:
+            # Initiate jump only if the player is not already jumping
+            self.is_jumping = True
+            self.current_action = 'jump'
+            self.jump_direction = (keys[pygame.K_LEFT], keys[pygame.K_RIGHT]) 
+        else:
+            if self.health > 10:
+                self.current_action = 'idle'
+            elif self.health > 0:
+                self.current_action = 'hurt'
+            elif self.health<=0 and self.death_counter>0:
+                self.current_action = "death"
+                self.current_position.y = self.ground_level
+                self.death_counter -= self.speed
+            else:
+                self.current_action = "dead"
+                self.current_position = DEAD_POS
+        if self.is_jumping:
+            self.__jump()
+
+    """
+    def take_action(self, keys):
+        if self.current_action != "dead":
             self.update_physics()
             self.draw_current_action()
         
@@ -71,7 +110,7 @@ class Player(Character):
             self.jump_direction = (type == "left", type == "right") 
         if self.is_jumping:
             self.__jump()
-
+    """
         
     
     def update_position(self):
