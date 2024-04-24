@@ -42,11 +42,9 @@ class ScenePrelevel0(Scene):
 
     def run(self):
         while self.do_continue_game_loop:
+            self.draw_scene()
+
             self.listen_events()
-            
-            self.game_screen.fill(BLACK)
-            self.game_screen.blit(self.background, (0, 0))
-            self.draw_platforms()
 
             keys = pygame.key.get_pressed()
             self.player.take_action(keys)
@@ -59,11 +57,9 @@ class ScenePrelevel0(Scene):
             if self.display_instructions:
                 self.draw_instructions()
 
-            if self.enemy.health <= 0: 
-                self.won()
-
             pygame.display.flip()
-            self.clock.tick(self.FPS)  
+            self.clock.tick(self.FPS) 
+        return self.done
 
     def __get_enemy(self) -> List[Enemy]:
         sprite = SpriteMaster("levels/level0/enemy", idle=3, walk=5, attack=4, hurt=2, death=5)

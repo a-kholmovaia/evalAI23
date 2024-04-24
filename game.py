@@ -30,12 +30,14 @@ class Game:
         #play_intro_video()
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        #evaluator = QAEvaluator(screen=self.screen, level=1)
-        #evaluator.run()
+        evaluator = QAEvaluator(screen=self.screen, level=1)
+        evaluator.run()
 
-        first_scene = ScenePrelevel0(scene_path=self.SCENE_PATHS + "level0/", 
+        done = False
+        while not done:
+            first_scene = ScenePrelevel0(scene_path=self.SCENE_PATHS + "level0/", 
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
-
-        first_scene.run()
+        
+            done = first_scene.run()

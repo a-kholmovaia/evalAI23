@@ -257,3 +257,28 @@ Refining Questions:
 1. Can you provide a specific example of a situation where your team worked well together?
 2. How did your team handle any disagreements or conflicts that arose during the project?
 3. Could you elaborate on how tasks were assigned within your team, and if this process was effective?"r, re, wewe, ewfrd, srr, eee, we, we, we, ee, w4, re, we, wh, jhe, wew, wee, w3, 2e, we, es, we, ee, we, we, e
+Question: W
+Player's answer: gut!
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Strongly Agree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Strongly Agree 
+ Q:All team members were actively and equally involved in the work process., A: Strongly Agree 
+
+"
+Clarity and Coherence: 1 point
+Relevance: 1 point
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: While your response is positive, it lacks detail and specificity. It would be helpful to elaborate on your experiences in the team, the project, and the learning materials and workshops provided. 
+
+Refining Questions: 
+1. Could you provide specific examples of how tasks were fairly and appropriately assigned to team members? 
+2. How did your team successfully combine diverse skills and knowledge to achieve your goals? 
+3. Can you share a specific instance where all team members were actively and equally involved in the work process?
+"This was good!"Clarity and Coherence: 1 point
+Relevance: 1 point
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: Your response is still lacking in detail and specificity. The answer does not provide any clear understanding of your experiences or any constructive criticism. Please try to provide more specific examples and actionable suggestions for improvement."

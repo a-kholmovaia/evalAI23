@@ -9,7 +9,6 @@ import constants
 
 
 class Scene:
-
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
         # Set the flag to continue the game loop
@@ -27,6 +26,7 @@ class Scene:
                 self.enemy_pos = config[key]
         
         self.background_text = pygame.transform.scale(pygame.image.load(BACK_TEXT_PATH), (240, 80))
+        self.pause_img = pygame.image.load("img/pause.png")
 
         self.background_text_instruction = pygame.transform.scale(self.background_text, (280, 140))
 
@@ -42,10 +42,13 @@ class Scene:
 
         self.player = self.get_player()
 
-        self.continue_button_rect = pygame.Rect(self.game_screen.get_width() * 0.6, 
-                                                self.game_screen.get_height() * 0.6, 120, 40)
+        self.continue_button_rect = pygame.Rect(self.game_screen.get_width() * 0.58 , 
+                                                self.game_screen.get_height() * 0.58, 120, 40)
         
         self.platforms = []
+
+        self.intro = True
+        self.done = False
 
         
     def run(self):
@@ -108,14 +111,23 @@ class Scene:
         self.game_screen.blit(enemys_health, (self.game_screen.get_width() - 13*border_padding, border_padding  + 5 + health_bar_height))
 
    
-    def won(self):
-            self.background_text_won = pygame.transform.scale(self.background_text, (280, 140))
-            won_text = self.font.render("You   won!", True, GREEN)
-            self.game_screen.blit(self.background_text_won,
-                         (self.game_screen.get_width()//2.2, self.game_screen.get_height()//2.1))
-            self.game_screen.blit(won_text,
-                         (self.game_screen.get_width()//2 + 10, self.game_screen.get_height()//2 + 10))
-            self.draw_continue_button()
+    def battle_info(self, text:str):
+            text = self.font.render(text, True, GREEN)
+            self.draw_widget()
+            self.game_screen.blit(text,
+                         (self.game_screen.get_width()//2.1, self.game_screen.get_height()//2))
+            
+    def draw_pause_screen(self):
+        pause_img = pygame.transform.scale(self.pause_img, (100, 30))
+        self.draw_widget()
+        self.game_screen.blit(pause_img,
+                         (self.game_screen.get_width()//2.1, self.game_screen.get_height()//2))
+
+    def draw_widget(self):
+        self.background_text_info = pygame.transform.scale(self.background_text, (300, 150))
+        self.game_screen.blit(self.background_text_info,
+                         (self.game_screen.get_width()//2.5, self.game_screen.get_height()//2.3))
+        self.draw_continue_button()
 
     def draw_instructions(self):
         border_padding = 35
@@ -179,18 +191,50 @@ class Scene:
         self.handle_platform_collisions()
         self.handle_fight_collisions("player")
         self.handle_fight_collisions("enemy")
+    
+
 
     def event_end_game_loop(self):
         print("Quit event succesfully handled")
         self.do_continue_game_loop = False
 
     def listen_events(self):
+        if self.intro:
+            self.battle_info("Defeat the enemy!")
+        if self.enemy.health <= 0: 
+            self.battle_info("You   won!")
+            self.done = True
+        elif self.player.health <= 0: 
+            self.battle_info("You  lose!")
+
         for event in pygame.event.get():
             print(f"event of the type {event.type} was fired")
             if event.type == pygame.QUIT:
+                self.done = True
                 self.event_end_game_loop()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.enemy.health <= 0 and self.continue_button_rect.collidepoint(event.pos):
-                    self.event_end_game_loop()
+            elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.pause = True
+                        self.set_game_on_pause()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.continue_button_rect.collidepoint(event.pos):
+                    if self.intro:
+                        self.intro = False
+                    if (self.enemy.health <= 0 or self.player.health <= 0):
+                        self.event_end_game_loop() 
+
+    def set_game_on_pause(self):
+        self.draw_pause_screen()
+        pygame.display.flip()
+        while self.pause:
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.continue_button_rect.collidepoint(event.pos):
+                            self.pause = False
+
+    def draw_scene(self):
+        self.game_screen.fill(BLACK)
+        self.game_screen.blit(self.background, (0, 0))
+        self.draw_platforms() 
         
         
