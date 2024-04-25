@@ -2,14 +2,17 @@ import pygame
 import os
 
 class SpriteMaster:
-    def __init__(self, path, idle: int, walk:int, attack:int, hurt:int, death:int, animation_speed=0.1):
+    def __init__(self, path, 
+                 idle: int, walk:int, attack:int, 
+                 hurt:int, death:int, block: int,
+                 animation_speed=0.1):
         # Load images for different animations
         self.idle_images = [pygame.image.load(os.path.join(path, f'idle{i}.png')) for i in range(idle)]
         self.attack_images = [pygame.image.load(os.path.join(path, f'attack{i}.png')) for i in range(attack)]
         self.walk_images = [pygame.image.load(os.path.join(path, f'walk{i}.png')) for i in range(walk)]
         self.hurt_images = [pygame.image.load(os.path.join(path, f'hurt{i}.png')) for i in range(hurt)]
         self.death_images = [pygame.image.load(os.path.join(path, f'death{i}.png')) for i in range(death)]
-
+        self.block_images = [pygame.image.load(os.path.join(path, f'push{i}.png')) for i in range(block)]
         self.animation_speed = animation_speed
         # Default frame index
         self.frame_index = 0
@@ -27,6 +30,8 @@ class SpriteMaster:
             self.current_images = self.hurt_images
         elif action == 'death':
             self.current_images = self.death_images
+        elif action == 'block':
+            self.current_images = self.block_images
         
 
         # Update frame index

@@ -30,8 +30,8 @@ class Game:
         #play_intro_video()
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-        evaluator = QAEvaluator(screen=self.screen, level=1)
-        evaluator.run()
+        #evaluator = QAEvaluator(screen=self.screen, level=1)
+        #evaluator.run()
 
         done = False
         while not done:

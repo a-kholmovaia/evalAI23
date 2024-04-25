@@ -7,33 +7,27 @@ from constants import DEAD_POS
 class Player(Character):
 
     def __init__(self, game_screen, start_position, sprite_master, speed_factor=50, size=(86,86)):
-        super().__init__(sprite_master)
-        # Pygame's screen
-        self.game_screen = game_screen
-
-        # Player's start position on the screen
-        self.current_position = start_position
-
-        self.ground_level = start_position[1]
-
-        # Default frame index
-        self.frame_index = 0
-
-        self.health = 100
-        # New attributes for jumping
-        self.is_jumping = False
+        super().__init__(sprite_master, game_screen, start_position)
+        # attributes for jumping
         self.jump_speed = 10
         self.jump_height = 5
         self.velocity_y = 0
         self.gravity = 0.5
         self.ground_level = start_position[1]
         self.initial_position_y = start_position[1]
+
         self.padding = self.game_screen.get_width()*0.1
-        self.reflect = False
         self.width, self.height = size
         self.current_position_rect = pygame.Rect(self.current_position.x, self.current_position.y, self.width, self.height)
+        
+        # State booleans
+        self.is_jumping = False
+        self.reflect = False
         self.standing = False
+        
         self.speed_factor = speed_factor
+        self.block_capacity = 10
+        self.health = 100
 
     def take_action(self, keys):
         if self.current_action != "dead":
@@ -57,21 +51,26 @@ class Player(Character):
             # Initiate jump only if the player is not already jumping
             self.is_jumping = True
             self.current_action = 'jump'
-            self.jump_direction = (keys[pygame.K_LEFT], keys[pygame.K_RIGHT]) 
+            self.jump_direction = (keys[pygame.K_LEFT], keys[pygame.K_RIGHT])
+        elif keys[pygame.K_b]: 
+            self.current_action = "block"
         else:
-            if self.health > 10:
-                self.current_action = 'idle'
-            elif self.health > 0:
-                self.current_action = 'hurt'
-            elif self.health<=0 and self.death_counter>0:
-                self.current_action = "death"
-                self.current_position.y = self.ground_level
-                self.death_counter -= self.speed
-            else:
-                self.current_action = "dead"
-                self.current_position = DEAD_POS
+            self.set_idle()
         if self.is_jumping:
             self.__jump()
+
+    def set_idle(self):
+        if self.health > 10:
+            self.current_action = 'idle'
+        elif self.health > 0:
+            self.current_action = 'hurt'
+        elif self.health<=0 and self.death_counter>0:
+            self.current_action = "death"
+            self.current_position.y = self.ground_level
+            self.death_counter -= self.speed
+        else:
+            self.current_action = "dead"
+            self.current_position = DEAD_POS
     
     def update_position(self):
         # Method to update the Rect based on the Vector2 position

@@ -4,10 +4,7 @@ from character import Character
 
 class Enemy(Character):
     def __init__(self, game_screen, start_position, sprite_master):
-        super().__init__(sprite_master)
-        self.game_screen = game_screen
-        self.current_position = start_position
-
+        super().__init__(sprite_master, game_screen, start_position)
         self.health = 100
 
 

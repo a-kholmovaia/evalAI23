@@ -49,6 +49,7 @@ class Scene:
 
         self.intro = True
         self.done = False
+        self.pause = False
 
         
     def run(self):
@@ -84,7 +85,10 @@ class Scene:
 
 
     def get_player(self) -> Player:
-        sprite = SpriteMaster("levels/player", idle=2, walk=6, attack=4, hurt=4, death=10)
+        sprite = SpriteMaster("levels/player", 
+                              idle=2, walk=6, attack=4, 
+                              hurt=4, death=10, block=3,
+                              )
         return Player(self.game_screen, self.player_pos, sprite)
 
     def draw_health_bars(self, player_health, enemy_health):
@@ -199,14 +203,6 @@ class Scene:
         self.do_continue_game_loop = False
 
     def listen_events(self):
-        if self.intro:
-            self.battle_info("Defeat the enemy!")
-        if self.enemy.health <= 0: 
-            self.battle_info("You   won!")
-            self.done = True
-        elif self.player.health <= 0: 
-            self.battle_info("You  lose!")
-
         for event in pygame.event.get():
             print(f"event of the type {event.type} was fired")
             if event.type == pygame.QUIT:
@@ -216,21 +212,37 @@ class Scene:
                     if event.key == pygame.K_ESCAPE:
                         self.pause = True
                         self.set_game_on_pause()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if self.continue_button_rect.collidepoint(event.pos):
-                    if self.intro:
-                        self.intro = False
-                    if (self.enemy.health <= 0 or self.player.health <= 0):
-                        self.event_end_game_loop() 
+
+    def display_system_info(self):
+        text = None
+        if self.intro:
+            text = "Defeat the enemy!"
+        elif self.enemy.health <= 0: 
+            text = "You   won!"
+            self.done = True
+        elif self.player.health <= 0: 
+            text = "You  lose!"
+        
+        if text is not None:
+            self.battle_info(text)
+            self.set_game_on_pause()
 
     def set_game_on_pause(self):
-        self.draw_pause_screen()
+        if self.pause:
+            self.draw_pause_screen()
         pygame.display.flip()
-        while self.pause:
+        pause = True
+        while pause:
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if self.continue_button_rect.collidepoint(event.pos):
-                            self.pause = False
+                            pause = False
+                            if not self.pause and not self.intro: # game was not pause by esc and it's not an intro widget
+                                self.event_end_game_loop()  # => player either won or lose
+                            else: 
+                                self.intro = False 
+                                self.pause = False
+
 
     def draw_scene(self):
         self.game_screen.fill(BLACK)
