@@ -2,7 +2,7 @@ import pygame
 from sprite_master import SpriteMaster
 from player import Player
 from enemy import Enemy
-from constants import BLACK, BACK_TEXT_PATH, GREEN
+from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
 from typing import List, Optional, Literal
 import constants
 
@@ -42,8 +42,13 @@ class Scene:
 
         self.player = self.get_player()
 
+        padding = (self.game_screen.get_width() * 0.1, self.game_screen.get_height() * 0.1)
+
         self.continue_button_rect = pygame.Rect(self.game_screen.get_width() * 0.58 , 
                                                 self.game_screen.get_height() * 0.58, 120, 40)
+        
+        self.skip_button_rect = pygame.Rect(self.continue_button_rect.x, 
+                                                self.continue_button_rect.y - padding[1], 120, 40)
         
         self.platforms = []
 
@@ -122,10 +127,11 @@ class Scene:
                          (self.game_screen.get_width()//2.1, self.game_screen.get_height()//2))
             
     def draw_pause_screen(self):
-        pause_img = pygame.transform.scale(self.pause_img, (100, 30))
+        pause_img = pygame.transform.scale(self.pause_img, (90, 30))
         self.draw_widget()
         self.game_screen.blit(pause_img,
-                         (self.game_screen.get_width()//2.1, self.game_screen.get_height()//2))
+                         (self.game_screen.get_width()//2.4, self.game_screen.get_height()//1.8))
+        self.draw_skip_button()
 
     def draw_widget(self):
         self.background_text_info = pygame.transform.scale(self.background_text, (300, 150))
@@ -166,6 +172,11 @@ class Scene:
         continue_surface = self.font.render('Continue', True, (255, 255, 255))
         pygame.draw.rect(self.game_screen, (0, 128, 0), self.continue_button_rect)  # Green button
         self.game_screen.blit(continue_surface, (self.continue_button_rect.x + 10, self.continue_button_rect.y+10))
+
+    def draw_skip_button(self):
+        skip_surface = self.font.render('Skip', True, (255, 255, 255))
+        pygame.draw.rect(self.game_screen, BLUE, self.skip_button_rect) 
+        self.game_screen.blit(skip_surface, (self.skip_button_rect.x + 10, self.skip_button_rect.y+10))
 
     
     def handle_fight_collisions(self, object: Literal["player", "enemy"]):
@@ -230,6 +241,12 @@ class Scene:
                             else: 
                                 self.intro = False 
                                 self.pause = False
+                        elif self.skip_button_rect.collidepoint(event.pos):
+                            if self.pause:
+                                pause = False
+                                self.done = True
+                                self.event_end_game_loop()
+
 
 
     def draw_scene(self):

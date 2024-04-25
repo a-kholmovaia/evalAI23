@@ -61,6 +61,17 @@ class ScenePrelevel00(Scene):
             self.clock.tick(self.FPS) 
         return self.done
     
+    def draw_instructions(self):
+        border_padding = 35
+        instructions1 = self.font.render("use  UP   RIGHT   LEFT", True, BLACK)
+        instructions2 = self.font.render("arrows  to  move", True, BLACK)
+        instructions3 = self.font.render("space  key  to  attack", True, BLACK)
+        self.game_screen.blit(self.background_text_instruction,
+                         (border_padding-20, border_padding * 2 + 30))
+
+        self.game_screen.blit(instructions1, (border_padding, border_padding * 2 + 45))
+        self.game_screen.blit(instructions2, (border_padding, border_padding * 2 + 85))
+        self.game_screen.blit(instructions3, (border_padding, border_padding * 2 + 120))
     
 
     def __get_enemy(self) -> List[Enemy]:

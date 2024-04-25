@@ -34,7 +34,8 @@ class Game:
         """
         #evaluator = QAEvaluator(screen=self.screen, level=1)
         #evaluator.run()
-
+        """
+        # REFACTOR!!!!!
         done = False
         while not done:
             scene = ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", 
@@ -43,7 +44,6 @@ class Game:
                                      )
         
             done = scene.run()
-        """
         done = False
         while not done:
             scene = ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", 
