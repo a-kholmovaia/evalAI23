@@ -5,7 +5,7 @@ from constants import BLACK, BACK_TEXT_PATH
 from typing import List
 from scene import Scene
 
-class ScenePrelevel00(Scene):
+class ScenePrelevel01(Scene):
     def __init__(self, scene_path : str, game_screen : pygame.Surface, 
                  clock : pygame.time.Clock, font : pygame.font.Font, FPS=60, display_instructions=True):
         super().__init__(scene_path=scene_path, 
@@ -24,17 +24,19 @@ class ScenePrelevel00(Scene):
         self.display_instructions = display_instructions
 
         self.load_platforms()
+        platform_pos = self.platforms[1][1]
+        self.enemy.current_position = pygame.Vector2(
+            platform_pos[0] + platform_pos[2]*0.5, 
+            platform_pos[1] - platform_pos[3]*1.2)
 
     def load_platforms(self):
         platform_image_path = self.scene_path + "platform.png"
         original_platform_image = pygame.image.load(platform_image_path)
-        scaled_width = 100  # Define the desired width
-        # Assuming you want to maintain the aspect ratio
-        aspect_ratio = original_platform_image.get_height() / original_platform_image.get_width()
-        scaled_height = int(scaled_width * aspect_ratio)
-        
+        scaled_width = 170  # Define the desired width
+        scaled_height = 75
+       
         # Define platform positions (x position, y height)
-        positions = [(450, 170), (670, 310), (300, 360)]
+        positions = [(300, 380), (600, 360)]
         for pos in positions:
             scaled_image = pygame.transform.scale(original_platform_image, (scaled_width, scaled_height))
             rect = scaled_image.get_rect(bottomleft=pos)
@@ -61,12 +63,21 @@ class ScenePrelevel00(Scene):
             self.clock.tick(self.FPS) 
         return self.done
     
-    
+    def draw_instructions(self):
+        border_padding = 35
+        instructions1 = self.font.render("use  B  key", True, BLACK)
+        instructions2 = self.font.render("to  block", True, BLACK)
+        instructions3 = self.font.render("space  key  to  attack", True, BLACK)
+        self.game_screen.blit(self.background_text_instruction,
+                         (border_padding-20, border_padding * 2 + 30))
+
+        self.game_screen.blit(instructions1, (border_padding, border_padding * 2 + 45))
+        self.game_screen.blit(instructions2, (border_padding, border_padding * 2 + 85))
+        self.game_screen.blit(instructions3, (border_padding, border_padding * 2 + 120))
 
     def __get_enemy(self) -> List[Enemy]:
         sprite = SpriteMaster("levels/level0/enemy", 
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0,
                               )
-        return Enemy(self.game_screen, self.enemy_pos, sprite)
-    
+        return Enemy(self.game_screen, self.enemy_pos, sprite, attack_prob=200)

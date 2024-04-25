@@ -2,7 +2,8 @@ import pygame
 from menu.main_menu import main_menu
 from menu.welcome_menu import welcome_menu
 from menu.play_intro import play_intro_video
-from scene00 import ScenePrelevel0
+from scene00 import ScenePrelevel00
+from scene01 import ScenePrelevel01
 from questions.qa_evaluator import QAEvaluator
 
 class Game:
@@ -30,14 +31,25 @@ class Game:
         #play_intro_video()
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        """
         #evaluator = QAEvaluator(screen=self.screen, level=1)
         #evaluator.run()
 
         done = False
         while not done:
-            first_scene = ScenePrelevel0(scene_path=self.SCENE_PATHS + "level0/", 
+            scene = ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", 
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
         
-            done = first_scene.run()
+            done = scene.run()
+        """
+        done = False
+        while not done:
+            scene = ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", 
+                                     game_screen=self.screen, clock=self.clock,
+                                     font=self.font, FPS=self.FPS
+                                     )
+        
+            done = scene.run()
+        
