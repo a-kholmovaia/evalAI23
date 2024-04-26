@@ -1,7 +1,7 @@
 import pygame
 from sprite_master import SpriteMaster
 from enemy import Enemy
-from constants import BLACK, BACK_TEXT_PATH
+from constants import BLACK
 from typing import List
 from scene import Scene
 
@@ -42,26 +42,24 @@ class ScenePrelevel01(Scene):
             rect = scaled_image.get_rect(bottomleft=pos)
             self.platforms.append((scaled_image, rect))
 
-    def run(self):
-        while self.do_continue_game_loop:
-            self.draw_scene()
-            self.display_system_info()
-            self.listen_events()
+    def take_step(self):
+        """
+        Contain the unique behaviour of this implementation of the class scene
+        Parameters:
+        ---
+        Returns:
+        Void
+        """
+        keys = pygame.key.get_pressed()
+        self.player.take_action(keys)
+        self.enemy.take_action(self.player.current_position)
 
-            keys = pygame.key.get_pressed()
-            self.player.take_action(keys)
-            self.enemy.take_action(self.player.current_position)
+        self.handle_collisions()
 
-            self.handle_collisions()
-
-            self.draw_health_bars(self.player.health, self.enemy.health)
+        self.draw_health_bars(self.player.health, self.enemy.health)
             
-            if self.display_instructions:
-                self.draw_instructions()
-
-            pygame.display.flip()
-            self.clock.tick(self.FPS) 
-        return self.done
+        if self.display_instructions:
+            self.draw_instructions()
     
     def draw_instructions(self):
         border_padding = 35

@@ -3,12 +3,12 @@ from sprite_master import SpriteMaster
 from player import Player
 from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
-from typing import List, Optional, Literal
-import constants
+from typing import List, Literal
+from abc import ABC, abstractmethod
 
 
 
-class Scene:
+class Scene(ABC):
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
         # Set the flag to continue the game loop
@@ -58,8 +58,36 @@ class Scene:
 
         
     def run(self):
-        pass
+        """
+        Run the game loop of the scene and call the overridden method __take_step() of the subscene class
+        
+        Parameters:
+        ---
+        Returns:
+        True if the scene was successfully completed, otherwise False
+        """
+        while self.do_continue_game_loop:
+            self.draw_scene()
+            self.display_system_info()
+            self.listen_events()
+
+            self.take_step()
+
+            pygame.display.flip()
+            self.clock.tick(self.FPS)
+        return self.done
     
+    @abstractmethod
+    def take_step(self):
+        """
+        Contain the unique behaviour of some implementation of the class scene
+        Need to be overriden by some implementation of the class scene
+        Parameters:
+        ---
+        Returns:
+        Void
+        """
+        pass
 
     def __parse_config(self, file_path : str):
 
