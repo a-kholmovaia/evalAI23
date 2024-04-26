@@ -10,6 +10,9 @@ class ScenePrelevel01(Scene):
                  clock : pygame.time.Clock, font : pygame.font.Font, FPS=60, display_instructions=True):
         super().__init__(scene_path=scene_path, 
                        game_screen=game_screen, clock=clock, font=font, FPS=FPS)
+        
+        # Set ID 
+        self.id = 101
 
         # Draw background
         self.background = pygame.transform.scale(pygame.image.load(scene_path + "background0.png"),

@@ -11,6 +11,10 @@ from abc import ABC, abstractmethod
 class Scene(ABC):
     def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
         
+        # Set ID of the scene 
+        # (a number should consist of three digits: the first one is the level number)
+        self.id = 0
+
         # Set the flag to continue the game loop
         self.do_continue_game_loop = True
 
@@ -281,5 +285,20 @@ class Scene(ABC):
         self.game_screen.fill(BLACK)
         self.game_screen.blit(self.background, (0, 0))
         self.draw_platforms() 
+    
+    def getID(self) -> int:
+        """
+        Returns the scene's id 
+        """
+        if self.id == 0:
+            raise NotImplementedError("getID() call in the abtract class Scene")
+        
+        return self.id
+    
+    def isDone(self):
+        """
+        Returns the scene's status if it was successfully completed
+        """
+        return self.done
         
         
