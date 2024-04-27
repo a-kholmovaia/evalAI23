@@ -6,6 +6,7 @@ from scene import Scene
 from scene00 import ScenePrelevel00
 from scene01 import ScenePrelevel01
 from questions.qa_evaluator import QAEvaluator
+from save_master import SaveMaster
 
 
 class Game:
@@ -27,9 +28,13 @@ class Game:
         # Set a number of scenes
         self.biggest_scene_id = 101
 
+        # Set the path to the images
         self.img_path = img_path
 
-    def run(self):
+        # Initialize the save master
+        self.save_master = SaveMaster()
+
+    def bootstrap(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
         #welcome_menu(self.screen)
         #main_menu(self.screen)
@@ -62,15 +67,20 @@ class Game:
 
         if prev_scene_done:
             next_scene_id += 1
+        else:
+            # If the previous scene was not completed then the last checkpoint should be loaded
+            value = self.save_master.load_checkpoint()
+            # If load_checkpoint returns 0 then the first scene should be built
+            next_scene_id = value if value != 0 else 100
         
         if self.biggest_scene_id >= next_scene_id:
             if next_scene_id == 100:
-                return ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", 
+                return ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master, 
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 101:
-                return ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", 
+                return ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )

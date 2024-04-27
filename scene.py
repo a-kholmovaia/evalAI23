@@ -5,15 +5,19 @@ from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
 from typing import List, Literal
 from abc import ABC, abstractmethod
+from save_master import SaveMaster
 
 
 
 class Scene(ABC):
-    def __init__(self, scene_path : str,  game_screen : pygame.Surface, clock : pygame.time.Clock, font : pygame.font.Font, FPS=60):
+    def __init__(self, scene_path: str, save_master: SaveMaster,  game_screen: pygame.Surface, clock: pygame.time.Clock, font: pygame.font.Font, FPS=60):
         
         # Set ID of the scene 
         # (a number should consist of three digits: the first one is the level number)
         self.id = 0
+
+        # Set the save master
+        self.save_master = save_master
 
         # Set the flag to continue the game loop
         self.do_continue_game_loop = True
@@ -70,6 +74,7 @@ class Scene(ABC):
         Returns:
         True if the scene was successfully completed, otherwise False
         """
+        self.save_master.save_checkpoint(self.id)
         while self.do_continue_game_loop:
             self.draw_scene()
             self.display_system_info()
@@ -243,6 +248,10 @@ class Scene(ABC):
                     if event.key == pygame.K_ESCAPE:
                         self.pause = True
                         self.set_game_on_pause()
+                    # Only to debug loading the checkpoint
+                    if event.key == pygame.K_r:
+                        self.done = False
+                        self.event_end_game_loop()
 
     def display_system_info(self):
         text = None
