@@ -5,3 +5,4 @@ __pycache__/
 result.txt
 .env
 /questions/.env
+/saves/

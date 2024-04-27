@@ -8,6 +8,57 @@ class SaveMaster:
         # The path to the directory containing the .txt file with the saved flags
         self.directory = directory
 
+
+    def save_checkpoint(self, scene_id: int) -> None:
+        """
+        Save the current state of the game (so far only the ID of a current scene)
+
+        Parameters:
+        scene_id: int - the scene's ID number
+        Returns:
+        Void
+        """
+        # Ensure the directory exists
+        if not os.path.exists(self.directory):
+            os.makedirs(self.directory)
+
+        # Define the path for the new file
+        file_path = os.path.join(self.directory, "checkpoint.txt")
+
+        # Open the file and write the current scene's ID
+        with open(file_path, 'w') as file:
+            file.write(f"Scene ID: {scene_id}\n")
+
+    def load_checkpoint(self) -> int:
+        """
+        Load the last state of the game (so far only the ID of the last scene)
+
+        Parameters:
+        ---
+        Returns
+        the last played scene's ID if the checkpoint isn't empty, otherwise 0
+        """
+
+        # Construct the file path
+        file_path = os.path.join(self.directory, f"checkpoint.txt")
+
+        # Check if the file exists
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Checkpoint file not found.")
+
+        value = 0
+
+        # Read the data from the file
+        with open(file_path, 'r') as file:
+            try:
+                line = file.readlines().pop()
+                _, value = line.strip().split(": ")
+            except IndexError:
+                print("Checkpoint file empty")
+
+        return int(value)
+
+
     def save_scene_flags(self, scene_id: int, flags: dict[str, bool]) -> None:
         """
         Save flags of some scene and its scene id
