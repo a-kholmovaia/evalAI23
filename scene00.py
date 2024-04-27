@@ -4,12 +4,13 @@ from enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH
 from typing import List
 from scene import Scene
+from save_master import SaveMaster
 
 class ScenePrelevel00(Scene):
-    def __init__(self, scene_path : str, game_screen : pygame.Surface, 
+    def __init__(self, scene_path: str, save_master: SaveMaster, game_screen: pygame.Surface, 
                  clock : pygame.time.Clock, font : pygame.font.Font, FPS=60, display_instructions=True):
-        super().__init__(scene_path=scene_path, 
-                       game_screen=game_screen, clock=clock, font=font, FPS=FPS)
+        super().__init__(scene_path=scene_path, save_master=save_master, 
+                         game_screen=game_screen, clock=clock, font=font, FPS=FPS)
 
         # Set ID 
         self.id = 100
