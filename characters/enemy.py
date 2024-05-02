@@ -1,31 +1,25 @@
-import pygame
-import random
 from characters.character import Character
+from scenes.scene_state import SceneState
 
 class Enemy(Character):
-    def __init__(self, game_screen, start_position, sprite_master, attack_prob = 10_000):
+    def __init__(self, game_screen, start_position, sprite_master):
         super().__init__(sprite_master, game_screen, start_position)
         self.health = 100
-        self.attack_prob = attack_prob
 
 
-    def take_action(self, player_pos):
-        # Randomly decide to attack or stay idle
-        if self.cal_distance2player(player_pos):
-            if random.randint(0, self.attack_prob) == 1:  # Adjust randomness as needed
-                self.current_action = 'fight'
-                self.fight_counter -= self.speed
-        elif self.health<=0 and self.death_counter>0:
-            self.current_action = "death"
-            self.death_counter -= self.speed     
-        else:
-            if self.health > 10:
-                self.current_action = 'idle'
-            else:
-                self.current_action = 'hurt'
-        if self.health<=0 and self.death_counter<=0:
-            self.current_position = (-100, -100)
+    def take_action(self, scene_state: SceneState) -> None:
+        self.current_action = self.policy(scene_state)
         self.draw_current_action()
+
+    def policy(self, scene_state: SceneState) -> str:
+        """
+        Evaluates the current state to return the next action to take
+        Parameters:
+        scene_state: SceneState - a state the policy is basing on to select an action
+        Returns:
+        next_action: String - the next action to take based on the SceneState instance 
+        """
+        pass
 
     
     def cal_distance2player(self, player_position):

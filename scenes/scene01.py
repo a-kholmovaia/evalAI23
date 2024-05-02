@@ -1,6 +1,6 @@
 import pygame
 from masters.sprite_master import SpriteMaster
-from characters.enemy import Enemy
+from characters.prelevel_enemy1 import PrelevelEnemy1
 from constants import BLACK
 from typing import List
 from scenes.scene import Scene
@@ -57,8 +57,8 @@ class ScenePrelevel01(Scene):
         keys = pygame.key.get_pressed()
         self.player.take_action(keys)
         for enemy in self.enemies:
-            enemy.take_action(self.player.current_position)
-
+            enemy.take_action(self.scene_state)
+            
         self.handle_collisions()
 
         self.draw_health_bars(self.player.health, self.enemies[0].health)
@@ -78,9 +78,9 @@ class ScenePrelevel01(Scene):
         self.game_screen.blit(instructions2, (border_padding, border_padding * 2 + 85))
         self.game_screen.blit(instructions3, (border_padding, border_padding * 2 + 120))
 
-    def __get_enemy(self) -> List[Enemy]:
+    def __get_enemy(self) -> PrelevelEnemy1:
         sprite = SpriteMaster("levels/level0/enemy", 
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0,
                               )
-        return Enemy(self.game_screen, self.enemy_pos, sprite, attack_prob=200)
+        return PrelevelEnemy1(self.game_screen, self.enemy_pos, sprite, attack_prob=200)

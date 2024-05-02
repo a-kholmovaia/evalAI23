@@ -6,6 +6,7 @@ from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
 from typing import List, Literal
 from abc import ABC, abstractmethod
 from masters.save_master import SaveMaster
+from scenes.scene_state import SceneState
 
 
 class Scene(ABC):
@@ -17,6 +18,9 @@ class Scene(ABC):
 
         # Set the save master
         self.save_master = save_master
+
+        # Initialize the scene state
+        self.scene_state = None
 
         # Set the flag to continue the game loop
         self.do_continue_game_loop = True
@@ -81,7 +85,9 @@ class Scene(ABC):
             self.draw_scene()
             self.display_system_info()
             self.listen_events()
-
+            
+            # Update the scene state before taking step
+            self.scene_state = SceneState(self.player.current_position)
             self.take_step()
 
             pygame.display.flip()
@@ -181,6 +187,7 @@ class Scene(ABC):
     def detect_collision(self, position1, position2):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
+        print(f"detect_collision is entered with distance {distance}")
         return distance < 50  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
@@ -234,10 +241,13 @@ class Scene(ABC):
         
         for enemy in self.enemies:
             if enemy.current_action == 'fight':
+                print("Enemy is attacking")
                 if self.detect_collision(self.player.current_position, enemy.current_position):
                     self.player.handle_damage(enemy.get_damage())
     
     def handle_collisions(self): 
+        # Update the scene state before handling
+        self.scene_state = SceneState(self.player.current_position)
         self.handle_platform_collisions()
         self.handle_fight_collisions()
     
@@ -249,7 +259,6 @@ class Scene(ABC):
 
     def listen_events(self):
         for event in pygame.event.get():
-            print(f"event of the type {event.type} was fired")
             if event.type == pygame.QUIT:
                 self.done = True
                 self.event_end_game_loop()
