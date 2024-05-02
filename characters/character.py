@@ -1,5 +1,5 @@
 import pygame
-from sprite_master import SpriteMaster
+from masters.sprite_master import SpriteMaster
 class Character():
     def __init__(self, 
                  sprite_master:SpriteMaster, game_screen, 

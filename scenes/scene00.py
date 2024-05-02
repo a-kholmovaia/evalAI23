@@ -1,10 +1,10 @@
 import pygame
-from sprite_master import SpriteMaster
-from enemy import Enemy
+from masters.sprite_master import SpriteMaster
+from characters.enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH
 from typing import List
-from scene import Scene
-from save_master import SaveMaster
+from scenes.scene import Scene
+from masters.save_master import SaveMaster
 
 class ScenePrelevel00(Scene):
     def __init__(self, scene_path: str, save_master: SaveMaster, game_screen: pygame.Surface, 

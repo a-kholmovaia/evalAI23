@@ -1,11 +1,11 @@
 import pygame
-from sprite_master import SpriteMaster
-from player import Player
-from enemy import Enemy
+from masters.sprite_master import SpriteMaster
+from characters.player import Player
+from characters.enemy import Enemy
 from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
 from typing import List, Literal
 from abc import ABC, abstractmethod
-from save_master import SaveMaster
+from masters.save_master import SaveMaster
 
 
 

@@ -2,11 +2,11 @@ import pygame
 from menu.main_menu import main_menu
 from menu.welcome_menu import welcome_menu
 from menu.play_intro import play_intro_video
-from scene import Scene
-from scene00 import ScenePrelevel00
-from scene01 import ScenePrelevel01
+from scenes.scene import Scene
+from scenes.scene00 import ScenePrelevel00
+from scenes.scene01 import ScenePrelevel01
 from questions.qa_evaluator import QAEvaluator
-from save_master import SaveMaster
+from masters.save_master import SaveMaster
 
 
 class Game:

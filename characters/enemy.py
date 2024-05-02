@@ -1,6 +1,6 @@
 import pygame
 import random
-from character import Character
+from characters.character import Character
 
 class Enemy(Character):
     def __init__(self, game_screen, start_position, sprite_master, attack_prob = 10_000):

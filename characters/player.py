@@ -1,5 +1,5 @@
 import pygame
-from character import Character
+from characters.character import Character
 from typing import Literal
 from constants import DEAD_POS
 
