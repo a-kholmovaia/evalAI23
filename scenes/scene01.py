@@ -20,7 +20,7 @@ class ScenePrelevel01(Scene):
                                                  (self.game_screen.get_width(), self.game_screen.get_height()))
         # Set characters
         # To do: make out of that one method __set_char (player and enemy classes should be changed, maybe they should have the same parent)
-        self.enemy = self.__get_enemy()
+        self.enemies.append(self.__get_enemy())
 
         # Set scene path
         self.scene_path = scene_path
@@ -29,7 +29,7 @@ class ScenePrelevel01(Scene):
 
         self.load_platforms()
         platform_pos = self.platforms[1][1]
-        self.enemy.current_position = pygame.Vector2(
+        self.enemies[0].current_position = pygame.Vector2(
             platform_pos[0] + platform_pos[2]*0.5, 
             platform_pos[1] - platform_pos[3]*1.2)
 
@@ -56,12 +56,13 @@ class ScenePrelevel01(Scene):
         """
         keys = pygame.key.get_pressed()
         self.player.take_action(keys)
-        self.enemy.take_action(self.player.current_position)
+        for enemy in self.enemies:
+            enemy.take_action(self.player.current_position)
 
         self.handle_collisions()
 
-        self.draw_health_bars(self.player.health, self.enemy.health)
-            
+        self.draw_health_bars(self.player.health, self.enemies[0].health)
+                
         if self.display_instructions:
             self.draw_instructions()
     

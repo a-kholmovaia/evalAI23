@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 from masters.save_master import SaveMaster
 
 
-
 class Scene(ABC):
     def __init__(self, scene_path: str, save_master: SaveMaster,  game_screen: pygame.Surface, clock: pygame.time.Clock, font: pygame.font.Font, FPS=60):
         
@@ -49,6 +48,9 @@ class Scene(ABC):
         self.font = font
 
         self.player = self.get_player()
+
+        # Set of all Enemy-implementation instances in the scene in the order of their turn
+        self.enemies = []
 
         padding = (self.game_screen.get_width() * 0.1, self.game_screen.get_height() * 0.1)
 
@@ -216,21 +218,28 @@ class Scene(ABC):
         self.game_screen.blit(skip_surface, (self.skip_button_rect.x + 10, self.skip_button_rect.y+10))
 
     
-    def handle_fight_collisions(self, object: Literal["player", "enemy"]):
-        if object=="player":
-            object = self.enemy
-            subject = self.player
-        else: 
-            subject = self.enemy
-            object = self.player
+    def handle_fight_collisions(self):
+        """
+        Handles charaters' attacks beginning with the player's character
+        Parameters:
+        ---
+        Returns:
+        ---
+        """
         
-        if subject.current_action == 'fight' and self.detect_collision(object.current_position, subject.current_position):
-            object.handle_damage(subject.get_damage()) # damage: int 
+        if self.player.current_action == 'fight':
+            for enemy in self.enemies:
+                if self.detect_collision(enemy.current_position, self.player.current_position):
+                    enemy.handle_damage(self.player.get_damage())
+        
+        for enemy in self.enemies:
+            if enemy.current_action == 'fight':
+                if self.detect_collision(self.player.current_position, enemy.current_position):
+                    self.player.handle_damage(enemy.get_damage())
     
     def handle_collisions(self): 
         self.handle_platform_collisions()
-        self.handle_fight_collisions("player")
-        self.handle_fight_collisions("enemy")
+        self.handle_fight_collisions()
     
 
 
@@ -257,12 +266,11 @@ class Scene(ABC):
         text = None
         if self.intro:
             text = "Defeat the enemy!"
-        elif self.enemy.health <= 0: 
+        elif all([enemy.health <= 0 for enemy in self.enemies]): 
             text = "You   won!"
             self.done = True
         elif self.player.health <= 0: 
             text = "You  lose!"
-        
         if text is not None:
             self.battle_info(text)
             self.set_game_on_pause()
