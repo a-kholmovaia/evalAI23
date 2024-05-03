@@ -25,4 +25,4 @@ class Enemy(Character):
     def cal_distance2player(self, player_position):
         # Simple collision detection (can be improved)
         distance = self.current_position.distance_to(player_position)
-        return distance < 100  # Adjust threshold according to your game's scale
+        return distance  # Adjust threshold according to your game's scale
