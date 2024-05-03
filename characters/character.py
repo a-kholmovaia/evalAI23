@@ -24,6 +24,7 @@ class Character():
         self.reflect = True
 
     def handle_damage(self, damage: int):
+        print(f"handle_damage() entered with damage {damage}")
         if self.current_action == "block":
             damage_block_diff = damage - self.block_capacity
             damage = damage_block_diff if damage_block_diff > 0 else 0
