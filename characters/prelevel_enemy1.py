@@ -24,22 +24,8 @@ class PrelevelEnemy1(Enemy):
                 selected_action = 'idle'
             else:
                 selected_action = 'hurt'
-        if self.health<=0 and self.death_counter<=0:
-          
+        if self.health<=0 and self.death_counter<=0:     
             self.current_position = (-100, -100)
             return "death"
             
-        return selected_action
-
-    def close_attack(self):
-        if self.current_action == "fight": 
-                    # if the action was fight and the frame index is 0 again (action was executed)
-                if self.sprite_master.round_done:
-                    selected_action = 'idle'
-                else: # excetion was not executed, continue
-                    selected_action = 'fight'
-        elif random.random() > 0.97:  # probability to attack
-            selected_action = 'fight'
-        else:
-            selected_action = 'idle'
         return selected_action

@@ -1,10 +1,12 @@
 from characters.character import Character
 from scenes.scene_state import SceneState
+import random
 
 class Enemy(Character):
-    def __init__(self, game_screen, start_position, sprite_master):
+    def __init__(self, game_screen, start_position, sprite_master, attack_probability=0.97):
         super().__init__(sprite_master, game_screen, start_position)
         self.health = 100
+        self.attack_probability = attack_probability
 
 
     def take_action(self, scene_state: SceneState) -> None:
@@ -26,3 +28,16 @@ class Enemy(Character):
         # Simple collision detection (can be improved)
         distance = self.current_position.distance_to(player_position)
         return distance  # Adjust threshold according to your game's scale
+    
+    def close_attack(self):
+        if self.current_action == "fight": 
+                    # if the action was fight and the frame index is 0 again (action was executed)
+                if self.sprite_master.round_done:
+                    selected_action = 'idle'
+                else: # excetion was not executed, continue
+                    selected_action = 'fight'
+        elif random.random() > self.attack_probability:  # probability to attack
+            selected_action = 'fight'
+        else:
+            selected_action = 'idle'
+        return selected_action
