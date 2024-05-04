@@ -10,5 +10,9 @@ class DistantAttackTestScene(ScenePrelevel00):
                  clock : pygame.time.Clock, font : pygame.font.Font, FPS=60, display_instructions=True):
         super().__init__(scene_path, save_master, game_screen, clock, font)
         self.id = 102
+        self.enemy_pos = pygame.Vector2(self.game_screen.get_width()*0.75, self.game_screen.get_height() * 0.55)
         self.proj_pos = pygame.Vector2(self.enemy_pos[0], self.enemy_pos[1])
-        self.enemies = [Wizard(game_screen, self.enemy_pos, Projectile(game_screen, self.proj_pos))]
+        projectile = Projectile(game_screen, self.proj_pos)
+        self.enemies = [Wizard(game_screen, self.enemy_pos, projectile)]
+
+        projectile.current_position[1] = self.enemy_pos[1] + self.enemies[0].size * 0.2

@@ -8,7 +8,7 @@ class Wizard(Enemy):
 
     def __init__(self, game_screen, start_position, projectile: Projectile):
         super().__init__(game_screen, start_position, SpriteMaster("levels/test_levels/distant_attack/wizard", 
-                            idle=3, walk=5, attack=4, 
+                            idle=3, walk=6, attack=5, 
                             hurt=2, death=5, block=0, start_action="idle"))
         
         # Inject the projectile the wizard will use
@@ -16,6 +16,8 @@ class Wizard(Enemy):
 
         # The flag that indicates if the wizard has already shot
         self.has_shot = False
+
+        self.size = 220
     
     def policy(self, scene_state: SceneState) -> str:
         """

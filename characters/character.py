@@ -22,6 +22,7 @@ class Character():
         self.death_counter = len(self.sprite_master.death_images)
         self.fight_counter = len(self.sprite_master.attack_images)
         self.reflect = True
+        self.size = 128
 
     def handle_damage(self, damage: int):
         print(f"handle_damage() entered with damage {damage}")
@@ -34,7 +35,7 @@ class Character():
         return self.damage
     
     def draw_current_action(self):
-        sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (128, 128))
+        sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (self.size, self.size))
         if self.reflect:
             sprite = pygame.transform.flip(sprite, True, False)
         self.game_screen.blit(sprite, self.current_position)

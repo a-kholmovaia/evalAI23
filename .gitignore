@@ -11,3 +11,4 @@ result.txt
 .env
 /questions/.env
 /saves/
+.DS_Store
