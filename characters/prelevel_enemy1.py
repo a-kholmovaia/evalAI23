@@ -1,3 +1,4 @@
+import random
 from characters.enemy import Enemy
 from scenes.scene_state import SceneState
 import random
@@ -10,7 +11,6 @@ class PrelevelEnemy1(Enemy):
         self.attack_prob = attack_prob
     
     def policy(self, scene_state: SceneState) -> str:
-       
         selected_action = ""
          # Randomly decide to attack or stay idle
         if self.cal_distance2player(scene_state.get_player_pos()):
@@ -31,6 +31,8 @@ class PrelevelEnemy1(Enemy):
             else:
                 selected_action = 'hurt'
         if self.health<=0 and self.death_counter<=0:
+          
             self.current_position = (-100, -100)
-        print(f"policy returns {selected_action}")
-        return selected_action
+            return "death"
+            
+        return "idle"

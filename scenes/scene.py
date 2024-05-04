@@ -240,10 +240,11 @@ class Scene(ABC):
                     enemy.handle_damage(self.player.get_damage())
         
         for enemy in self.enemies:
-            if enemy.current_action == 'fight':
-                print("Enemy is attacking")
+            if enemy.current_action == 'hit':
                 if self.detect_collision(self.player.current_position, enemy.current_position):
                     self.player.handle_damage(enemy.get_damage())
+            elif enemy.current_action == "shoot":
+                self.enemies.append(enemy.get_projectile())
     
     def handle_collisions(self): 
         # Update the scene state before handling
