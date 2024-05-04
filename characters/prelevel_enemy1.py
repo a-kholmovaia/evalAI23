@@ -9,18 +9,21 @@ class PrelevelEnemy1(Enemy):
     def __init__(self, game_screen, start_position, sprite_master, attack_prob = 10_000):
         super().__init__(game_screen, start_position, sprite_master)
         self.attack_prob = attack_prob
+        self.damage = 10
     
     def policy(self, scene_state: SceneState) -> str:
         selected_action = ""
          # Randomly decide to attack or stay idle
-        if self.cal_distance2player(scene_state.get_player_pos()):
+        if self.cal_distance2player(scene_state.get_player_pos()) < 100:
             if self.current_action == "fight": 
                     # if the action was fight and the frame index is 0 again (action was executed)
                     if self.sprite_master.round_done:
                         selected_action = 'idle'
+                    elif self.sprite_master.frame_index > 2:
+                        selected_action = "hit"
                     else: # excetion was not executed, continue
                         selected_action = 'fight'
-            elif random.random() > 0.97:  # probability to attack
+            elif random.random() > 0.99:  # probability to attack
                 selected_action = 'fight'
             else:
                 selected_action = 'idle'

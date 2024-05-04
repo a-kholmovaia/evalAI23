@@ -81,6 +81,6 @@ class ScenePrelevel01(Scene):
     def __get_enemy(self) -> PrelevelEnemy1:
         sprite = SpriteMaster("levels/level0/enemy", 
                               idle=3, walk=5, attack=4, 
-                              hurt=2, death=5, block=0,
-                              )
+                              hurt=2, death=5, block=0)
+        
         return PrelevelEnemy1(self.game_screen, self.enemy_pos, sprite, attack_prob=200)
