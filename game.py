@@ -5,6 +5,7 @@ from menu.play_intro import play_intro_video
 from scenes.scene import Scene
 from scenes.scene00 import ScenePrelevel00
 from scenes.scene01 import ScenePrelevel01
+from scenes.distant_attack_test_scene import DistantAttackTestScene
 from questions.qa_evaluator import QAEvaluator
 from masters.save_master import SaveMaster
 
@@ -25,8 +26,9 @@ class Game:
         self.FPS = FPS
         self.clock = pygame.time.Clock()
 
-        # Set a number of scenes
-        self.biggest_scene_id = 101
+        # Set the biggest existing scene ID
+        # When adding a new scene keep this value valid!
+        self.biggest_scene_id = 102
 
         # Set the path to the images
         self.img_path = img_path
@@ -51,6 +53,7 @@ class Game:
             scene.run()
             scene = self.build_scene(scene.getID(), scene.isDone())
             if scene == None:
+                print("Game ends")
                 break
     
     def build_scene(self, prev_scene_id: int, prev_scene_done: bool) -> Scene:
@@ -73,6 +76,7 @@ class Game:
             # If load_checkpoint returns 0 then the first scene should be built
             next_scene_id = value if value != 0 else 100
         
+        print(f"The next scene's id is {next_scene_id}")
         if self.biggest_scene_id >= next_scene_id:
             if next_scene_id == 100:
                 return ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master, 
@@ -81,6 +85,11 @@ class Game:
                                      )
             if next_scene_id == 101:
                 return ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master,
+                                     game_screen=self.screen, clock=self.clock,
+                                     font=self.font, FPS=self.FPS
+                                     )
+            if next_scene_id == 102:
+                return DistantAttackTestScene(scene_path=self.SCENE_PATHS + "test_levels/distant_attack/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
