@@ -34,6 +34,8 @@ class Enemy(Character):
                     # if the action was fight and the frame index is 0 again (action was executed)
                 if self.sprite_master.round_done:
                     selected_action = 'idle'
+                elif self.sprite_master.frame_index > 2:
+                    selected_action = "hit"
                 else: # excetion was not executed, continue
                     selected_action = 'fight'
         elif random.random() > self.attack_probability:  # probability to attack

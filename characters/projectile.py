@@ -16,7 +16,7 @@ class Projectile(Enemy):
         Moves left and attacks constantly
         """
 
-        if self.cal_distance2player(scene_state.get_player_pos()) < 50:
+        if self.cal_distance2player(scene_state.get_player_pos()) < 49:
             self.health = 0
 
         if self.health<=0 and self.death_counter>0:
