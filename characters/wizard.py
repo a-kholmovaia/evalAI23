@@ -11,8 +11,10 @@ class Wizard(Enemy):
                             idle=3, walk=6, attack=5, 
                             hurt=2, death=5, block=0, start_action="idle"))
         
-        # Inject the projectile the wizard will use
+        # Inject the projectile the wizard will use and adjust its position
         self.projectile = projectile
+        self.projectile.current_position[1] = self.current_position[1] + self.size * 0.2
+
 
         # The flag that indicates if the wizard has already shot
         self.has_shot = False
