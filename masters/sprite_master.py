@@ -14,11 +14,13 @@ class SpriteMaster:
         self.death_images = [pygame.image.load(os.path.join(path, f'death{i}.png')) for i in range(death)]
         self.block_images = [pygame.image.load(os.path.join(path, f'push{i}.png')) for i in range(block)]
         self.animation_speed = animation_speed
+        self.round_done = False
         # Default frame index
         self.frame_index = 0
         self.image = self.get_sprite_frame("idle")
 
     def get_sprite_frame(self, action):
+        self.round_done = False
         # Update animation based on action
         if action == 'idle':
             self.current_images = self.idle_images
@@ -38,6 +40,7 @@ class SpriteMaster:
         self.frame_index += self.animation_speed
         if self.frame_index >= len(self.current_images):
             self.frame_index = 0
+            self.round_done = True
 
         # pick the correct frame
         frame = int(self.frame_index)
