@@ -22,7 +22,7 @@ class SpriteMaster:
         # Update animation based on action
         if action == 'idle':
             self.current_images = self.idle_images
-        elif action == 'fight' or action == "hit":
+        elif action == 'fight' or action == "hit" or action == "shoot":
             self.current_images = self.attack_images
         elif action == 'walk':
             self.current_images = self.walk_images

@@ -55,6 +55,8 @@ class ScenePrelevel00(Scene):
         keys = pygame.key.get_pressed()
         self.player.take_action(keys)
         for enemy in self.enemies:
+            if enemy.current_action == "death":
+                self.enemies.remove(enemy)
             enemy.take_action(self.scene_state)
 
         self.handle_collisions()
