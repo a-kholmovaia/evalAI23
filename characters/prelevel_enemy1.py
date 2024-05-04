@@ -1,6 +1,6 @@
 from characters.enemy import Enemy
 from scenes.scene_state import SceneState
-
+import random
 class PrelevelEnemy1(Enemy):
     """
     Enemy class for the ScenePrelevel101
@@ -10,11 +10,18 @@ class PrelevelEnemy1(Enemy):
         self.attack_prob = attack_prob
     
     def policy(self, scene_state: SceneState) -> str:
-        # Randomly decide to attack or stay idle (temporarily removed)
+       
         selected_action = ""
+         # Randomly decide to attack or stay idle
         if self.cal_distance2player(scene_state.get_player_pos()):
-            selected_action = 'fight'
-            self.fight_counter -= self.speed
+            if self.current_action == "fight": 
+                    # if the action was fight and the frame index is 0 again (action was executed)
+                    if self.sprite_master.frame_index == 0:
+                        selected_action = 'idle'
+                    else: # excetion was not executed, continue
+                        selected_action = 'fight'
+            if random.random() > 0.99:  # probability to attack
+                selected_action = 'fight'
         elif self.health<=0 and self.death_counter>0:
             selected_action = "death"
             self.death_counter -= self.speed     
