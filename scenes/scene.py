@@ -137,7 +137,7 @@ class Scene(ABC):
     def get_player(self) -> Player:
         sprite = SpriteMaster("levels/player", 
                               idle=2, walk=6, attack=4, 
-                              hurt=4, death=10, block=3,
+                              hurt=4, death=10, block=1,
                               )
         return Player(self.game_screen, self.player_pos, sprite)
 
