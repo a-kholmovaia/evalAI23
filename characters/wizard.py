@@ -9,8 +9,8 @@ class Wizard(Enemy):
 
     def __init__(self, game_screen, start_position, projectile: Projectile):
         super().__init__(game_screen, start_position, FirstBossSpriteMaster("levels/test_levels/distant_attack/wizard", 
-                            idle=3, walk=6, close_attack=5, distant_attack=5, 
-                            hurt=2, death=5, block=0, start_action="idle"))
+                            idle=3, walk=6, close_attack=12, distant_attack=5, 
+                            hurt=2, death=5, block=0, animation_speed=0.1, start_action="idle"))
         
         # Inject the projectile the wizard will use and adjust its position
         self.projectile = projectile
@@ -42,35 +42,46 @@ class Wizard(Enemy):
             self.current_position = (-100, -100)
             return "death"
 
-        if self.current_action in ["fight", "shoot"]:
-            # If it's one of the hit frames and it hasn't fired yet then return "shoot" instead of "fight"
-            if int(self.fight_counter) == len(self.sprite_master.attack_images) // 2 and not self.has_shot:
-                self.fight_counter -= self.speed
-                self.has_shot = True
-                return "shoot"
-            # If the attack animation isn't over yet then return "fight"
-            if self.fight_counter > 0:
-                self.fight_counter -= self.speed
-                return "fight"
-            # Otherwise return "idle"
-            else:
-                self.fight_counter = len(self.sprite_master.attack_images)
-                self.elapsed_time = 0
-                self.has_shot = False
-                print("I'm finished my attack")
+        # if self.current_action in ["distant_fight", "shoot"]:
+        #     # If it's one of the hit frames and it hasn't fired yet then return "shoot" instead of "fight"
+        #     if int(self.fight_counter) == len(self.sprite_master.shoot_images) // 2 and not self.has_shot:
+        #         self.fight_counter -= self.speed
+        #         self.has_shot = True
+        #         return "shoot"
+        #     # If the attack animation isn't over yet then return "fight"
+        #     if self.fight_counter > 0:
+        #         self.fight_counter -= self.speed
+        #         return "distant_fight"
+        #     # Otherwise return "idle"
+        #     else:
+        #         self.fight_counter = len(self.sprite_master.attack_images)
+        #         self.elapsed_time = 0
+        #         self.has_shot = False
+        #         print("I'm finished my attack")
+        #         return "idle"
+        # # If the current action is "idle" 
+        # # then update the elapsed time and check if it's bigger than the cooldown time 
+        # else:
+        #     self.elapsed_time += scene_state.get_elapsed_time()
+        #     print(f"elapsed time = {self.elapsed_time}")
+        #     # If the cooldown is over then return "fight" to begin a new attack
+        #     # otherwise keep waiting
+        #     if self.elapsed_time >= self.attack_cooldown:
+        #         return "distant_fight"
+        #     else:
+        #         print("I'm waiting")
+        #         return "idle"
+
+        if self.current_action in ["close_fight", "hit"]:
+            if self.sprite_master.round_done:
                 return "idle"
-        # If the current action is "idle" 
-        # then update the elapsed time and check if it's bigger than the cooldown time 
-        else:
-            self.elapsed_time += scene_state.get_elapsed_time()
-            print(f"elapsed time = {self.elapsed_time}")
-            # If the cooldown is over then return "fight" to begin a new attack
-            # otherwise keep waiting
-            if self.elapsed_time >= self.attack_cooldown:
-                return "fight"
+            elif 8.0 <= self.sprite_master.frame_index <= 9.0:
+                print("I'm hitting you!")
+                return "hit"
             else:
-                print("I'm waiting")
-                return "idle"
+                return "close_fight"
+        elif self.cal_distance2player(scene_state.get_player_pos()) < 100:
+            return "close_fight"
     
     def get_projectile(self):
         """

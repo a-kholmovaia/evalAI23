@@ -191,7 +191,7 @@ class Scene(ABC):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
         #print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
-        return distance < 50  # Adjust threshold according to your game's scale
+        return distance < 100  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
         # Create a Rect for collision detection based on current Vector2 position
