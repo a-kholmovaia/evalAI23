@@ -44,7 +44,8 @@ class SaveMaster:
 
         # Check if the file exists
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Checkpoint file not found.")
+            #raise FileNotFoundError(f"Checkpoint file not found.")
+            return 100
 
         value = 0
 
