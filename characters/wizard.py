@@ -56,18 +56,14 @@ class Wizard(Enemy):
 
     def policy(self, scene_state: SceneState) -> str:
         """
-        Shoots once per preset time
-        Dies when your health is less than or equal to 0
+        Has 4 phases of the fight: shooting, close combat, being weak, being alert
         """
         
-        if self.health<=0 and self.death_counter>0:
-            self.death_counter -= self.speed
+        if self.health<=0:
+            if self.sprite_master.round_done:
+                self.current_position= (-100, -100)
             return "death"   
-        
-        if self.health <= 0 and self.death_counter <= 0:
-            self.current_position = (-100, -100)
-            return "death"
-        
+    
         self.elapsed_time += scene_state.get_elapsed_time()
 
         if not self.shooting_phase_done:
