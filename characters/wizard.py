@@ -1,15 +1,15 @@
 import pygame
 from characters.enemy import Enemy
 from characters.projectile import Projectile
-from masters.sprite_master import SpriteMaster
+from masters.first_boss_sprite_master import FirstBossSpriteMaster
 from scenes.scene_state import SceneState
 
 
 class Wizard(Enemy):
 
     def __init__(self, game_screen, start_position, projectile: Projectile):
-        super().__init__(game_screen, start_position, SpriteMaster("levels/test_levels/distant_attack/wizard", 
-                            idle=3, walk=6, attack=5, 
+        super().__init__(game_screen, start_position, FirstBossSpriteMaster("levels/test_levels/distant_attack/wizard", 
+                            idle=3, walk=6, close_attack=5, distant_attack=5, 
                             hurt=2, death=5, block=0, start_action="idle"))
         
         # Inject the projectile the wizard will use and adjust its position
