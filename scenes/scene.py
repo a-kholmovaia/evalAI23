@@ -7,10 +7,10 @@ from typing import List, Literal
 from abc import ABC, abstractmethod
 from masters.save_master import SaveMaster
 from scenes.scene_state import SceneState
-
+from tools import Video
 
 class Scene(ABC):
-    def __init__(self, scene_path: str, save_master: SaveMaster,  game_screen: pygame.Surface, clock: pygame.time.Clock, font: pygame.font.Font, FPS=60):
+    def __init__(self, scene_path: str, save_master: SaveMaster,  game_screen: pygame.Surface, clock: pygame.time.Clock, font: pygame.font.Font, intro_video: Video = None, FPS=60):
         
         # Set ID of the scene 
         # (a number should consist of three digits: the first one is the level number)
@@ -69,6 +69,8 @@ class Scene(ABC):
         
         self.platforms = []
 
+        self.intro_video = intro_video
+
         self.intro = True
         self.done = False
         self.pause = False
@@ -83,6 +85,9 @@ class Scene(ABC):
         Returns:
         True if the scene was successfully completed, otherwise False
         """
+        if self.intro_video != None:
+            self.intro_video.play()
+        
         self.save_master.save_checkpoint(self.id)
         while self.do_continue_game_loop:
             self.draw_scene()

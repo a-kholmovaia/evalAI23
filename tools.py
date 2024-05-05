@@ -1,4 +1,19 @@
 import pygame
+from moviepy.editor import VideoFileClip
+
+
+class Video:
+
+    def __init__(self, game_screen: pygame.Surface, video_path: str):
+        self.video_instance = VideoFileClip(video_path)
+        self.game_screen = game_screen
+    
+    def play(self):
+        old_width, old_height = self.game_screen.get_width(), self.game_screen.get_height()
+        self.game_screen = pygame.display.set_mode((800, 800))
+        self.video_instance.preview()
+        self.video_instance.close()
+        self.game_screen = pygame.display.set_mode((old_width, old_height))
 
 class Button:
     def __init__(self, x, y, width, height, color, text, text_color, font, action=None):

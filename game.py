@@ -1,4 +1,5 @@
 import pygame
+import tools
 from menu.main_menu import main_menu
 from menu.welcome_menu import welcome_menu
 from menu.play_intro import play_intro_video
@@ -102,7 +103,7 @@ class Game:
             if next_scene_id == 102:
                 self.level = 1
                 return Scene02(scene_path=self.SCENE_PATHS + "level1/", save_master=self.save_master,
-                                     game_screen=self.screen, clock=self.clock,
+                                     game_screen=self.screen, clock=self.clock, intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 103:
