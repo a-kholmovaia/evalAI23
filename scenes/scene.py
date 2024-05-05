@@ -90,7 +90,7 @@ class Scene(ABC):
             self.listen_events()
             
             # Update the scene state before taking step
-            self.scene_state = SceneState(self.player.current_position)
+            self.scene_state = SceneState(self.player.current_position, self.clock.get_time())
             self.take_step()
 
             pygame.display.flip()
@@ -190,7 +190,7 @@ class Scene(ABC):
     def detect_collision(self, position1, position2):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
-        print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
+        #print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
         return distance < 50  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
@@ -251,7 +251,7 @@ class Scene(ABC):
     
     def handle_collisions(self): 
         # Update the scene state before handling
-        self.scene_state = SceneState(self.player.current_position)
+        self.scene_state = SceneState(self.player.current_position, self.clock.get_time())
         self.handle_platform_collisions()
         self.handle_fight_collisions()
     
