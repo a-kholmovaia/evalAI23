@@ -71,6 +71,8 @@ class Scene(ABC):
 
         self.intro_video = intro_video
 
+        self.scene_background_music_path = scene_path + "track.wav"
+
         self.intro = True
         self.done = False
         self.pause = False
@@ -88,6 +90,13 @@ class Scene(ABC):
         if self.intro_video != None:
             self.intro_video.play()
         
+        try:
+            pygame.mixer.music.load(self.scene_background_music_path)
+            pygame.mixer.music.play(loops=-1)
+        except Exception:
+            pass
+        
+
         self.save_master.save_checkpoint(self.id)
         while self.do_continue_game_loop:
             self.draw_scene()
@@ -100,6 +109,13 @@ class Scene(ABC):
 
             pygame.display.flip()
             self.clock.tick(self.FPS)
+        
+        try:
+            pygame.mixer.music.stop()
+            pygame.mixer.music.unload()
+        except Exception:
+            pass
+
         return self.done
     
     @abstractmethod
