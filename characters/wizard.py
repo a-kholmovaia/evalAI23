@@ -15,7 +15,7 @@ class Wizard(Enemy):
         # Inject the projectile the wizard will use and adjust its position
         self.projectile = projectile
         self.projectile.current_position[1] = self.current_position[1] + self.size * 0.2
-
+        self.collision_distance = 90
 
         # Flag that indicates if the wizard has already shot
         self.has_shot = False
@@ -57,7 +57,6 @@ class Wizard(Enemy):
                 self.fight_counter = len(self.sprite_master.attack_images)
                 self.elapsed_time = 0
                 self.has_shot = False
-                print("I'm finished my attack")
                 return "idle"
         # If the current action is "idle" 
         # then update the elapsed time and check if it's bigger than the cooldown time 
