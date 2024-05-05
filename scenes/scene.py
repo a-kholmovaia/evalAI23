@@ -187,11 +187,11 @@ class Scene(ABC):
                          (self.game_screen.get_width()//2.5, self.game_screen.get_height()//2.3))
         self.draw_continue_button()    
 
-    def detect_collision(self, position1, position2):
+    def detect_collision(self, position1, position2, collision_distance):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
-        #print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
-        return distance < 100  # Adjust threshold according to your game's scale
+        print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
+        return distance < collision_distance  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
         # Create a Rect for collision detection based on current Vector2 position
@@ -239,12 +239,12 @@ class Scene(ABC):
         
         if self.player.current_action == 'fight':
             for enemy in self.enemies:
-                if self.detect_collision(enemy.current_position, self.player.current_position):
+                if self.detect_collision(enemy.current_position, self.player.current_position, enemy.collision_distance):
                     enemy.handle_damage(self.player.get_damage())
         
         for enemy in self.enemies:
             if enemy.current_action == 'hit':
-                if self.detect_collision(self.player.current_position, enemy.current_position):
+                if self.detect_collision(self.player.current_position, enemy.current_position, enemy.collision_distance):
                     self.player.handle_damage(enemy.get_damage())
             elif enemy.current_action == "shoot":
                 self.enemies.append(enemy.get_projectile())
@@ -279,7 +279,7 @@ class Scene(ABC):
         text = None
         if self.intro:
             text = "Defeat the enemy!"
-        elif all([enemy.health <= 0 for enemy in self.enemies]): 
+        elif self.enemies[0].health <= 0: # in previous version you cant win, because the projectile that are not hit have full health 
             text = "You   won!"
             self.done = True
         elif self.player.health <= 0: 
