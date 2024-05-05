@@ -6,6 +6,8 @@ from scenes.scene import Scene
 from scenes.scene00 import ScenePrelevel00
 from scenes.scene01 import ScenePrelevel01
 from scenes.scene02 import Scene02
+from scenes.scene03 import Scene03
+from scenes.scene04 import Scene04
 from questions.qa_evaluator import QAEvaluator
 from masters.save_master import SaveMaster
 
@@ -28,7 +30,7 @@ class Game:
 
         # Set the biggest existing scene ID
         # When adding a new scene keep this value valid!
-        self.biggest_scene_id = 102
+        self.biggest_scene_id = 104
 
         # Set the path to the images
         self.img_path = img_path
@@ -48,7 +50,7 @@ class Game:
         #evaluator.run()
         """
 
-        scene = self.build_scene(100, False)
+        scene = self.build_scene(102, True)
         while True:
             scene.run()
             scene = self.build_scene(scene.getID(), scene.isDone())
@@ -89,7 +91,17 @@ class Game:
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 102:
-                return Scene02(scene_path=self.SCENE_PATHS + "test_levels/distant_attack/", save_master=self.save_master,
+                return Scene02(scene_path=self.SCENE_PATHS + "level1/", save_master=self.save_master,
+                                     game_screen=self.screen, clock=self.clock,
+                                     font=self.font, FPS=self.FPS
+                                     )
+            if next_scene_id == 103:
+                return Scene03(scene_path=self.SCENE_PATHS + "level2/", save_master=self.save_master,
+                                     game_screen=self.screen, clock=self.clock,
+                                     font=self.font, FPS=self.FPS
+                                     )
+            if next_scene_id == 104:
+                return Scene04(scene_path=self.SCENE_PATHS + "level3/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )

@@ -114,6 +114,9 @@ class Scene(ABC):
         #Initialize parsed config string to value dictionary
         config_values = {
             "default_player_pos" : pygame.Vector2(self.game_screen.get_width()*0.25, self.game_screen.get_height() * 0.66),
+            "player_pos_level1" : pygame.Vector2(self.game_screen.get_width()*0.20, self.game_screen.get_height() * 0.6),
+            "player_pos_level2" : pygame.Vector2(self.game_screen.get_width()*0.20, self.game_screen.get_height() * 0.61),
+            "player_pos_level3" : pygame.Vector2(self.game_screen.get_width()*0.20, self.game_screen.get_height() * 0.66),
             "default_enemy_pos" : pygame.Vector2(self.game_screen.get_width()*0.8, self.game_screen.get_height() * 0.66)
         } 
 
@@ -190,7 +193,6 @@ class Scene(ABC):
     def detect_collision(self, position1, position2, collision_distance):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
-        print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
         return distance < collision_distance  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):

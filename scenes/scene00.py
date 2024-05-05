@@ -1,6 +1,6 @@
 import pygame
 from masters.sprite_master import SpriteMaster
-from characters.prelevel_enemy0 import PrelevelEnemy0
+from characters.prelevel.prelevel_enemy0 import PrelevelEnemy0
 from constants import BLACK, BACK_TEXT_PATH
 from typing import List
 from scenes.scene import Scene
@@ -27,20 +27,23 @@ class ScenePrelevel00(Scene):
 
         self.display_instructions = display_instructions
 
+        self.platform_positions = [(450, 170), (670, 310), (300, 360)]
+        self.scaled_width_platforms = 100
+
+
         self.load_platforms()
 
     def load_platforms(self):
         platform_image_path = self.scene_path + "platform.png"
         original_platform_image = pygame.image.load(platform_image_path)
-        scaled_width = 100  # Define the desired width
         # Assuming you want to maintain the aspect ratio
         aspect_ratio = original_platform_image.get_height() / original_platform_image.get_width()
-        scaled_height = int(scaled_width * aspect_ratio)
+        scaled_height = int(self.scaled_width_platforms * aspect_ratio)
         
         # Define platform positions (x position, y height)
-        positions = [(450, 170), (670, 310), (300, 360)]
+        positions = self.platform_positions
         for pos in positions:
-            scaled_image = pygame.transform.scale(original_platform_image, (scaled_width, scaled_height))
+            scaled_image = pygame.transform.scale(original_platform_image, (self.scaled_width_platforms, scaled_height))
             rect = scaled_image.get_rect(bottomleft=pos)
             self.platforms.append((scaled_image, rect))
 

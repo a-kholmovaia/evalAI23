@@ -1,6 +1,6 @@
 import pygame
 from masters.sprite_master import SpriteMaster
-from characters.prelevel_enemy1 import PrelevelEnemy1
+from characters.prelevel.prelevel_enemy1 import PrelevelEnemy1
 from constants import BLACK
 from typing import List
 from scenes.scene import Scene
