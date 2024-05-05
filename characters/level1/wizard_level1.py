@@ -37,10 +37,10 @@ class Wizard(Enemy):
         self.close_combat_duration = 5000
 
         # Duration of the weakness phase in milliseconds 
-        self.weakness_duration = 200
+        self.weakness_duration = 2000
 
         # Duration of the combat alert phase in milliseconds 
-        self.combat_alert_duration = 200
+        self.combat_alert_duration = 500
 
         # Flag that indicates if the wizard has already shot within his distant attack
         self.has_shot = False
