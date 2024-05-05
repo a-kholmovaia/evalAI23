@@ -18,6 +18,8 @@ class Wizard(Enemy):
         
         self.size = 220
 
+        self.collision_distance = 90
+
         # Flag indicating that the wizard has already passed the shooting phase
         self.shooting_phase_done = False 
 
