@@ -4,7 +4,7 @@ from masters.save_master import SaveMaster
 from characters.projectile import Projectile
 from characters.wizard import Wizard
 
-class DistantAttackTestScene(ScenePrelevel00):
+class Scene02(ScenePrelevel00):
 
     def __init__(self, scene_path: str, save_master: SaveMaster, game_screen: pygame.Surface, 
                  clock : pygame.time.Clock, font : pygame.font.Font, FPS=60, display_instructions=True):

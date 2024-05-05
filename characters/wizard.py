@@ -27,8 +27,9 @@ class Wizard(Enemy):
         """
         
         # If it's the hitting frame then set the current action on "hit" instead of "fight"
-        if self.current_action == "fight" and int(self.fight_counter) == len(self.sprite_master.attack_images) // 2:
+        if self.current_action == "fight" and int(self.fight_counter) == len(self.sprite_master.attack_images) // 2 and not self.has_shot:
             self.fight_counter -= self.speed
+            self.has_shot = True
             return "shoot"
         
         # If it has been "fight" or "hit", the attack frames have left yet and it's currently not the hitting frame 
@@ -41,7 +42,6 @@ class Wizard(Enemy):
         # then set the current action on "fight" and the flag has_shot on True
         if not self.has_shot:
             self.fight_counter = len(self.sprite_master.attack_images)
-            self.has_shot = True
             return "fight"
             
         if self.health > 10:

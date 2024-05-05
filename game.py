@@ -5,7 +5,7 @@ from menu.play_intro import play_intro_video
 from scenes.scene import Scene
 from scenes.scene00 import ScenePrelevel00
 from scenes.scene01 import ScenePrelevel01
-from scenes.distant_attack_test_scene import DistantAttackTestScene
+from scenes.scene02 import Scene02
 from questions.qa_evaluator import QAEvaluator
 from masters.save_master import SaveMaster
 
@@ -89,7 +89,7 @@ class Game:
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 102:
-                return DistantAttackTestScene(scene_path=self.SCENE_PATHS + "test_levels/distant_attack/", save_master=self.save_master,
+                return Scene02(scene_path=self.SCENE_PATHS + "test_levels/distant_attack/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )

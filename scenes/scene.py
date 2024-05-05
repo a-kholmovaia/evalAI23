@@ -28,6 +28,9 @@ class Scene(ABC):
         # Set current game screen
         self.game_screen = game_screen
 
+        # Define the enemy position property 
+        self.enemy_pos = None
+
         # Parse and set up pre-written configurations
         config = self.__parse_config(scene_path + "config.txt")
         for key in config.keys():
@@ -187,7 +190,7 @@ class Scene(ABC):
     def detect_collision(self, position1, position2):
         # Simple collision detection (can be improved)
         distance = position1.distance_to(position2)
-        print(f"detect_collision is entered with distance {distance}")
+        print(f"detect_collision is entered with distance {distance}, len(enemies) = {len(self.enemies)}")
         return distance < 50  # Adjust threshold according to your game's scale
     
     def handle_platform_collisions(self):
