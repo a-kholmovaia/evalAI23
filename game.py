@@ -50,7 +50,7 @@ class Game:
         #evaluator.run()
         """
 
-        scene = self.build_scene(102, True)
+        scene = self.build_scene(101, True)
         while True:
             scene.run()
             scene = self.build_scene(scene.getID(), scene.isDone())
