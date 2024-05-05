@@ -9,7 +9,7 @@ class Projectile(Enemy):
                               hurt=0, death=3, block=0, start_action="hit"))
         self.current_action = "hit"
         self.damage = 10
-        self.speed = 0.5
+        self.speed = 3
 
     def policy(self, scene_state: SceneState) -> str:
         """
@@ -34,6 +34,6 @@ class Projectile(Enemy):
         """
         Copy constructor
         """
-        return Projectile(self.game_screen, self.current_position)
+        return Projectile(self.game_screen, self.current_position.copy())
 
 
