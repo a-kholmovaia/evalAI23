@@ -204,8 +204,11 @@ Your Feedback:
                 x += word_width + space_width
 
     def get_extra_questions(self):
-        if self.level==1 and self.round==0:
-            return self.get_extra_questions_teamwork()
+        if self.level==1:
+            if self.round==0:
+                return self.get_extra_questions_teamwork()
+            else: 
+                return self.get_extra_questions_mentorship()
 
     def get_extra_questions_teamwork(self):
         return """
@@ -224,6 +227,17 @@ Your Feedback:
 - Fair Work: "Were tasks distributed based on individuals' strengths or areas they wished to develop?"  
         """
     
+    def get_extra_questions_mentorship(self):
+        return """
+Mentor's Impact on Learning: "In what ways did your mentor enhance your understanding and skills relevant to the project?"
+Feedback Quality: "Can you describe an instance where the feedback from your mentor was particularly impactful to your project’s development?"
+Adaptability: "Discuss how your mentor adapted their style or methods in response to your team's evolving needs."
+Communication Dynamics: "What was the most effective part of your mentor's communication style, and why did it work well for you and your team?"
+Innovation and Creativity: "Describe a situation where your mentor encouraged innovation or creativity in your approach to the project."
+Challenge Management: "How did your mentor help you manage and navigate through the toughest phases of the project?"
+"""
+
+
     def refine_evaluate(self):
         prompt = f"""
         You are a helpful assistant, represented by a benevolent AI spirit, in a teaching evaluation game for the AI Lab seminar. The player has provided an answer regarding their experiences with teamwork, the project undertaken in the AI Lab, and the provided learning materials and workshops.

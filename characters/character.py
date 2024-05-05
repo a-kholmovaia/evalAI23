@@ -15,6 +15,7 @@ class Character():
         self.game_screen = game_screen
         self.current_position = start_position
         self.frame_index = 0
+        self.font = pygame.font.Font(None, 23)
 
         self.sprite_master = sprite_master
         self.current_action = 'idle'

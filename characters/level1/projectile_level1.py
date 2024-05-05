@@ -14,7 +14,6 @@ class Projectile(Enemy):
         self.collision_distance = 50
         self.current_position[1] += 20
         self.text = self.get_text_projectile()
-        self.font = pygame.font.Font(None, 23)
 
     def policy(self, scene_state: SceneState) -> str:
         """

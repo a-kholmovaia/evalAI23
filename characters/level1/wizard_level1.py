@@ -150,4 +150,13 @@ class Wizard(Enemy):
         Returns a copy of the injected projectile instance
         """
         return self.projectile.copy()
+
+    def draw_current_action(self):
+        sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (self.size, self.size))
+        if self.reflect:
+            sprite = pygame.transform.flip(sprite, True, False)
+        if self.current_action == "hurt":
+            rendered_text = self.font.render("I'm too tired to be your mentor", True, (255,0,0))
+            self.game_screen.blit(rendered_text, (self.current_position[0]-30, self.current_position[1]+30))
+        self.game_screen.blit(sprite, self.current_position)
     

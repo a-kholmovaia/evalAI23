@@ -100,6 +100,8 @@ class MultiScaleQuestion(Question):
         if self.level == 1:
             if self.round == 0:
                 return self.get_scale_questions_teamwork()
+            else:
+                return self.get_scale_questions_mentorship()
 
     def get_scale_questions_teamwork(self):
         questions = [
@@ -108,3 +110,11 @@ class MultiScaleQuestion(Question):
             "All team members were actively and equally involved in the work process."
         ]
         return questions
+
+    def get_scale_questions_mentorship(self):
+        return [
+            'Mentor was always available when I needed support.',
+            'Mentor gave a good introduction to the project topic.',
+            'Mentor was involved in the project work and helped us with technical and organisational problems.'
+        ]
+

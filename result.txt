@@ -282,3 +282,75 @@ Specific Examples: 1 point
 Constructive Criticism: 1 point
 
 Feedback: Your response is still lacking in detail and specificity. The answer does not provide any clear understanding of your experiences or any constructive criticism. Please try to provide more specific examples and actionable suggestions for improvement."
+Question: Wie war die Teamarbeit?
+Player's answer: gut!
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Strongly Agree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Strongly Agree 
+ Q:All team members were actively and equally involved in the work process., A: Strongly Agree 
+
+"Clarity and Coherence: 2 points
+Relevance: 2 points
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: It's great to hear that you had a positive experience with teamwork in the AI Lab seminar. However, your response is quite brief and lacks detail. To provide a more comprehensive evaluation, it would be helpful to elaborate on your experiences, providing specific examples and constructive feedback where possible.
+
+Refining Questions: 
+1. Can you provide specific examples of how tasks were fairly and appropriately assigned to team members?
+2. How did your team successfully combine diverse skills and knowledge to achieve your goals? 
+3. Can you describe a situation where all team members were actively and equally involved in the work process?"rwdklfmkle"Clarity and Coherence: 1 point
+Relevance: 2 points
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: Your response is very brief and lacks detail. It's good to hear that you found the teamwork to be good, but it would be more helpful if you could provide specific examples or instances that led you to this conclusion. Also, constructive criticism or suggestions for improvement are missing. Please consider the refining questions to provide a more comprehensive evaluation."
+Question: What aspects of teamwork could be improved in future seminars to increase collaboration and interdisciplinarity?
+Player's answer: idk...
+Other questions answered: 
+ Q:Tasks were fairly and appropriately assigned to team members., A: Strongly Agree 
+ Q:Our team was successful in combining diverse skills and knowledge to achieve our goals., A: Strongly Disagree 
+ Q:All team members were actively and equally involved in the work process., A: Neutral 
+
+"
+Clarity and Coherence: 1 point
+Relevance: 1 point
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: Thank you for your participation in this evaluation. However, your response to the question about teamwork improvement was not clear or detailed. It's important to provide specific examples from your experiences and offer constructive criticism to help improve future seminars. 
+
+Refining Questions: 
+1. Can you elaborate on your experiences with teamwork in the seminar? What specific aspects do you think could be improved?
+2. You mentioned that tasks were fairly assigned, but the team was not successful in combining diverse skills. Can you provide an example of a situation where this was the case?
+3. You were neutral about all team members being actively and equally involved. Could you explain why you feel this way and suggest how involvement could be improved in future seminars?
+"it was all good."Clarity and Coherence: 1 point
+Relevance: 1 point
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: Your response remains vague and does not provide specific information about the aspects of teamwork that could be improved in future seminars. To provide a more effective evaluation, consider sharing specific examples from your experience, detailing the aspects that worked well, and offering constructive criticism on areas that could be improved. Your input is valuable and can contribute significantly to the enhancement of future seminars.
+Question: How did your mentor influence the outcome of your project?
+Player's answer: nicht so gut!
+Other questions answered: 
+ Q:Mentor was always available when I needed support., A: Strongly Agree 
+ Q:Mentor gave a good introduction to the project topic., A: Agree 
+ Q:Mentor was involved in the project work and helped us with technical and organisational problems., A: Disagree 
+
+"Clarity and Coherence: 1 point
+Relevance: 2 points
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback: Thank you for your response. However, it would be helpful if you could provide more detailed feedback. Your answer "nicht so gut!" is quite vague and doesn't provide specific information about your mentor's influence on the project outcome. It's great to see that you've engaged with the other questions and provided your level of agreement. However, these responses could be further elaborated upon to give a clearer picture of your experiences.
+
+Refining Questions: 
+1. Could you please elaborate on why you thought the mentor's influence on the project was not so good? 
+2. Can you provide a specific example where you felt the mentor's involvement was lacking in technical or organizational problem-solving? 
+3. Despite agreeing that the mentor gave a good introduction to the project topic, why do you think their overall influence was not positive?"das war gut"Clarity and Coherence: 1 point
+Relevance: 1 point
+Specific Examples: 1 point
+Constructive Criticism: 1 point
+
+Feedback:
+Thank you for your response. However, your feedback "das war gut" is too brief and doesn't provide any specific information or examples about your mentor's influence on the project. It would be beneficial if you could provide more detailed feedback, addressing the refining questions asked. This would help us understand your experience better and provide valuable insights for improvements. Please consider the examples given in the criteria for a more effective response."

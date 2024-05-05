@@ -12,6 +12,7 @@ class QAEvaluator:
         pygame.display.set_caption("Question Screen")
         self.round = 0
         self.level = level
+        self.define_max_rounds()
 
     def _init_level(self):
         self.open_question = Question(self.screen, self.level, self.round)
@@ -19,10 +20,17 @@ class QAEvaluator:
         self.introduction_screen = IntroductionScreen(self.screen, self.level, self.round)
         self.artifact = Artifact(screen=self.screen, level=self.level)
 
+    def define_max_rounds(self):
+        if self.level == 1:
+            self.max_rounds = 2
+        else:
+            self.max_rounds = 2
+
+
     def get_answers(self):
         responses = self.multi_scale_question.run()
         answer_open = self.open_question.run()
-        context = f"\nQuestion: {self.open_question.get_question_text()[self.round]}\n" \
+        context = f"\nQuestion: {self.open_question.get_question_text()}\n" \
                 f"Player's answer: {answer_open}\n" \
                 f"Other questions answered: \n"
         questions_scale = self.multi_scale_question.get_scale_questions()
@@ -63,7 +71,7 @@ class QAEvaluator:
         self.scores_refining = self.get_points(llm_answer)
     
     def run(self):
-        while(self.round<1):
+        while(self.round<self.max_rounds):
             self._init_level() 
             self.introduction_screen.run()
             self.get_answers()

@@ -31,9 +31,9 @@ class Question:
     def get_question_text(self):
         if self.level == 1:
             if self.round == 0:
-                return 'Wie war die Teamarbeit?'
+                return 'What aspects of teamwork could be improved in future seminars to increase collaboration and interdisciplinarity?'
             else:
-                return 'Wie war die Arbeit mit Mentor/in?'
+                return 'How did your mentor influence the outcome of your project?'
             
     def set_question_text(self, text):
         self.question_text = text

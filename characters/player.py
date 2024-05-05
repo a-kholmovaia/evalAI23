@@ -28,6 +28,7 @@ class Player(Character):
         self.speed_factor = speed_factor
         self.block_capacity = 10
         self.health = 100
+        self.damage = 0.5
 
     def take_action(self, keys):
         if self.current_action != "dead":
