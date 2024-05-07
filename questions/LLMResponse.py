@@ -25,6 +25,9 @@ class LLMResponseHandler:
         self.visible = False  # Initially, the response and buttons are not visible
         self.background = pygame.transform.scale(pygame.image.load("questions/back_text.png"),
                                                  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.spirit_image = pygame.image.load('questions/sir_code_a_lot.png')
+        self.spirit_image = pygame.transform.scale(self.spirit_image, 
+                                            (self.screen.get_width()//4, self.screen.get_width()//4))
         self.request_sent_llm = False
 
     def fetch_response(self):
@@ -110,10 +113,7 @@ Your Feedback:
         self.screen.fill((200, 200, 200))  # Fill the background
         self.screen.blit(self.background, (0, 0))
         if not self.visible:
-            self.screen.fill((200, 200, 200))  # Fill the background
-            self.screen.blit(self.background, (0, 0))
-            waiting_text = self.font.render("AI Spirit is thinking... Wait a moment...", True, (0, 0, 0))
-            self.screen.blit(waiting_text, (self.SCREEN_WIDTH*0.2, self.SCREEN_HEIGHT*0.3))  # Adjust position as neede
+            self.draw_thinking_spirit() 
             if not self.request_sent_llm:
                 pygame.display.flip()
                 self.fetch_response()
@@ -135,6 +135,13 @@ Your Feedback:
                 button_text = 'Refine Answer' if key == 'refine' else 'submit answer'
                 text_surface = self.font_spirit.render(button_text, True, (255, 255, 255))
                 self.screen.blit(text_surface, (rect.x + 10, rect.y + 10))
+
+    def draw_thinking_spirit(self):
+        self.screen.fill((200, 200, 200))  # Fill the background
+        self.screen.blit(self.background, (0, 0))
+        waiting_text = self.font.render("AI Spirit is thinking... Wait a moment...", True, (0, 0, 0))
+        self.screen.blit(waiting_text, (self.SCREEN_WIDTH*0.2, self.SCREEN_HEIGHT*0.3))  # Adjust position as neede
+        self.screen.blit(self.spirit_image, (self.SCREEN_WIDTH*0.4, self.SCREEN_HEIGHT*0.5))
 
     def handle_event(self, event):
         if not self.visible:
@@ -160,6 +167,7 @@ Your Feedback:
                 if action == 'refine':
                     # Handle the refining of the GPT answer here
                     print("Refine Answer clicked")
+                    self.visible = False
                     return self.answer, True
                 elif action == 'submit':
                     # Handle the submission of the GPT answer here
@@ -303,6 +311,7 @@ Your Feedback:
                 temperature=0.4
             )
             self.answer = response.choices[0].message['content']  # Accessing the content of the response
+            self.visible = True
             print(self.answer)
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -310,4 +319,22 @@ Your Feedback:
         
     def set_context(self, context):
         self.context = context
+
+    def run_refine(self):
+        self.request_sent_llm = False
+        self.visible = False
+        clock = pygame.time.Clock()  # To control the frame rate
+        while not self.visible:
+            self.screen.fill((200, 200, 200))  # Fill the background
+            self.screen.blit(self.background, (0, 0))
+            self.draw_thinking_spirit() 
+            if not self.request_sent_llm:
+                pygame.display.flip()
+                self.refine_evaluate()
+                self.request_sent_llm = True
+
+            pygame.display.flip()  # Update the full display Surface to the screen
+            clock.tick(60)  # Cap the frame rate to 60 frames per second
+
+
 

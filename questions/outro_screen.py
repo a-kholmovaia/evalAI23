@@ -15,6 +15,16 @@ class Artifact(IntroductionScreen):
             path += "synergy_stone.png"
             self.effect = 20
             self.type = "p_health"
+        elif level==2:
+            text.append("Alliance Amulet        30  Damage Increase")
+            path += "alliance_amulet.png"
+            self.effect = 30
+            self.type = "damage"
+        elif level==3:
+            text.append("Resilience Ring       20 Health  Points")
+            path += "resilience_ring.png"
+            self.effect = -20
+            self.type = "e_health"
         else:
             raise NotImplementedError
         self.image = pygame.image.load(path)

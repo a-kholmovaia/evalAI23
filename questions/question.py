@@ -1,7 +1,8 @@
 import pygame
 from constants import IMG_PATH
-
+import os
 class Question:
+    PATH = "questions/questions/"
     def __init__(self, screen, level:int, round_:int, question_type="open", refine=False):
         self.screen = screen
         self.level = level
@@ -29,12 +30,32 @@ class Question:
         self.line_height = self.font.get_height()
 
     def get_question_text(self):
-        if self.level == 1:
-            if self.round == 0:
-                return 'What aspects of teamwork could be improved in future seminars to increase collaboration and interdisciplinarity?'
-            else:
-                return 'How did your mentor influence the outcome of your project?'
-            
+        # Map (level, round) pairs to line numbers
+        question_mapping = {
+            (1, 0): 0,
+            (1, 1): 1,
+            (2, 0): 2,
+            (3, 0): 3
+        }
+
+        # Get the line number using the mapping, or default to None if the pair doesn't exist
+        line = question_mapping.get((self.level, self.round))
+
+        if line is None:
+            raise NotImplementedError("No question available for the specified level and round.")
+        
+        return self.read_question_text(line)
+        
+    def read_question_text(self, line):
+        filename = os.path.join(self.PATH , f"open.txt")
+        try:
+            with open(filename, 'r') as file:
+                question = file.readlines()[line]
+        except FileNotFoundError:
+            question = ""
+            print(f"Error: The file '{filename}' does not exist.")
+        return question
+
     def set_question_text(self, text):
         self.question_text = text
         

@@ -1,7 +1,7 @@
 import pygame
 from questions.question import Question
 from typing import Optional
-
+import os
 class MultiScaleQuestion(Question):
     def __init__(self, screen, level:int, round_:int):
         super().__init__(screen,level=level, round_=round_, question_type="scale")
@@ -97,24 +97,30 @@ class MultiScaleQuestion(Question):
         return self.user_inputs  # Return user inputs for all questions
 
     def get_scale_questions(self):
+        category = ""
         if self.level == 1:
             if self.round == 0:
-                return self.get_scale_questions_teamwork()
-            else:
-                return self.get_scale_questions_mentorship()
+                category = "teamwork"
+            elif self.round == 1:
+                category = "mentorship"
+        elif self.level == 2:
+            category = "project"
+        elif self.level == 3:
+            category = "resources"
+        if category == "":
+            raise NotImplementedError
+        return self.read_scale_questions(category)
 
-    def get_scale_questions_teamwork(self):
-        questions = [
-            "Tasks were fairly and appropriately assigned to team members.",
-            "Our team was successful in combining diverse skills and knowledge to achieve our goals.",
-            "All team members were actively and equally involved in the work process."
-        ]
+
+    def read_scale_questions(self, category):
+        filename = os.path.join(self.PATH , f"multiscale_{category}.txt")
+        try:
+            with open(filename, 'r') as file:
+                questions = file.readlines()
+            questions = [q.strip() for q in questions]  # Strip any whitespace characters, including newlines
+        except FileNotFoundError:
+            questions = []
+            print(f"Error: The file '{filename}' does not exist.")
         return questions
 
-    def get_scale_questions_mentorship(self):
-        return [
-            'Mentor was always available when I needed support.',
-            'Mentor gave a good introduction to the project topic.',
-            'Mentor was involved in the project work and helped us with technical and organisational problems.'
-        ]
 

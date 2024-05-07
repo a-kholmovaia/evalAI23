@@ -11,6 +11,7 @@ class Scene02(ScenePrelevel00):
                  clock : pygame.time.Clock, font : pygame.font.Font, intro_video: Video, FPS=60, display_instructions=False):
         super().__init__(scene_path, save_master, game_screen, clock, font, display_instructions=False)
         self.id = 102
+        self.level = 1
         self.enemy_pos = pygame.Vector2(self.game_screen.get_width()*0.75, self.game_screen.get_height() * 0.5)
         self.enemies = [Wizard(game_screen, self.enemy_pos.copy(), Projectile(game_screen, self.enemy_pos.copy()))]
         self.platform_positions = [(450, 320), (180, 330)]

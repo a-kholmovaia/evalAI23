@@ -39,9 +39,6 @@ class Game:
         # Initialize the save master
         self.save_master = SaveMaster()
 
-        self.attempt = 0 # number of attempts done to complete a level
-        self.level = 0 
-
     def bootstrap(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
         #welcome_menu(self.screen)
@@ -52,12 +49,6 @@ class Game:
 
         scene = self.build_scene(99, True)
         while True:
-            if self.attempt == 0:
-                # place to display intro video with dialogues
-                if self.level > 0:
-                    evaluator = QAEvaluator(screen=self.screen, level=1)
-                    #evaluator.run()
-                    self.attempt += 1
             scene.run()
             scene = self.build_scene(scene.getID(), scene.isDone())
             if scene == None:
@@ -78,7 +69,6 @@ class Game:
 
         if prev_scene_done:
             next_scene_id += 1
-            self.attempt = 0
         else:
             # If the previous scene was not completed then the last checkpoint should be loaded
             value = self.save_master.load_checkpoint()
@@ -88,34 +78,32 @@ class Game:
         print(f"The next scene's id is {next_scene_id}")
         if self.biggest_scene_id >= next_scene_id:
             if next_scene_id == 100:
-                self.level = 0
                 print("created scene")
                 return ScenePrelevel00(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master, 
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 101:
-                self.level = 0
                 return ScenePrelevel01(scene_path=self.SCENE_PATHS + "level0/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 102:
-                self.level = 1
                 return Scene02(scene_path=self.SCENE_PATHS + "level1/", save_master=self.save_master,
-                                     game_screen=self.screen, clock=self.clock, intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
+                                     game_screen=self.screen, clock=self.clock, 
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 103:
-                self.level = 2
                 return Scene03(scene_path=self.SCENE_PATHS + "level2/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 104:
-                self.level = 3
                 return Scene04(scene_path=self.SCENE_PATHS + "level3/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
         return None

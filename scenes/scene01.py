@@ -5,6 +5,7 @@ from constants import BLACK
 from typing import List
 from scenes.scene import Scene
 from masters.save_master import SaveMaster
+from tools import Video
 
 class ScenePrelevel01(Scene):
     def __init__(self, scene_path: str, save_master: SaveMaster, game_screen: pygame.Surface, 
@@ -14,6 +15,7 @@ class ScenePrelevel01(Scene):
         
         # Set ID 
         self.id = 101
+        self.level = 0
 
         # Draw background
         self.background = pygame.transform.scale(pygame.image.load(scene_path + "background0.png"),

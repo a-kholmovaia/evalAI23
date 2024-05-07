@@ -8,6 +8,7 @@ from abc import ABC, abstractmethod
 from masters.save_master import SaveMaster
 from scenes.scene_state import SceneState
 from tools import Video
+from questions.qa_evaluator import QAEvaluator
 
 class Scene(ABC):
     def __init__(self, scene_path: str, save_master: SaveMaster,  game_screen: pygame.Surface, clock: pygame.time.Clock, font: pygame.font.Font, intro_video: Video = None, FPS=60):
@@ -89,6 +90,9 @@ class Scene(ABC):
         """
         if self.intro_video != None:
             self.intro_video.play()
+            if self.level > 0:
+                evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
+                evaluator.run()
         
         try:
             pygame.mixer.music.load(self.scene_background_music_path)

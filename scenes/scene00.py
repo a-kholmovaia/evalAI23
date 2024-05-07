@@ -14,6 +14,7 @@ class ScenePrelevel00(Scene):
 
         # Set ID 
         self.id = 100
+        self.level = 0
 
         # Draw background
         self.background = pygame.transform.scale(pygame.image.load(scene_path + "background0.png"),

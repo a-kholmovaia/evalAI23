@@ -24,7 +24,7 @@ class QAEvaluator:
         if self.level == 1:
             self.max_rounds = 2
         else:
-            self.max_rounds = 2
+            self.max_rounds = 1
 
 
     def get_answers(self):
@@ -65,7 +65,7 @@ class QAEvaluator:
         self.refining_question.set_question_text(self.refining_questions)
         self.context += self.refining_question.run()
         self.llm_handler.set_context(self.context)
-        self.llm_handler.refine_evaluate()
+        self.llm_handler.run_refine()
         llm_answer = self.llm_handler.answer
         self.context += llm_answer
         self.scores_refining = self.get_points(llm_answer)

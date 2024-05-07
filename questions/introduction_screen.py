@@ -15,13 +15,13 @@ class IntroductionScreen:
 
     def set_content(self, level, round):
         text = ["Willkommen  im  Bereich"]
-        if level==1:
-            if round==0:
-                text.append("Arbeit  im  Team")
-            elif round==1:
-                text.append("Arbeit  mit  Mentor:innen")
-        else:
-            raise NotImplementedError
+        topics = {
+            (1,0): "Arbeit  im  Team",
+            (1,1): "Arbeit  mit  Mentor",
+            (2, 0): "Projekt",
+            (3, 0): "Lernunterstuetzung",
+        }
+        text.append(topics.get((level, round)))
         return text
 
     def run(self):
