@@ -2,6 +2,7 @@ import pygame
 from masters.sprite_master import SpriteMaster
 from characters.player import Player
 from characters.enemy import Enemy
+from characters.attack_info import AttackInfo
 from constants import BLACK, BACK_TEXT_PATH, GREEN, BLUE
 from typing import List, Literal
 from abc import ABC, abstractmethod
@@ -90,9 +91,9 @@ class Scene(ABC):
         """
         if self.intro_video != None:
             self.intro_video.play()
-            if self.level > 0:
-                evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
-                evaluator.run()
+            # if self.level > 0:
+            #     evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
+            #     evaluator.run()
         
         try:
             pygame.mixer.music.load(self.scene_background_music_path)
@@ -267,12 +268,14 @@ class Scene(ABC):
         if self.player.current_action == 'fight':
             for enemy in self.enemies:
                 if self.detect_collision(enemy.current_position, self.player.current_position, enemy.collision_distance):
-                    enemy.handle_damage(self.player.get_damage())
+                    attack_info = self.player.get_attack_info()
+                    enemy.handle_damage(attack_info.damage, attack_info.canBeBlocked)
         
         for enemy in self.enemies:
             if enemy.current_action == 'hit':
                 if self.detect_collision(self.player.current_position, enemy.current_position, enemy.collision_distance):
-                    self.player.handle_damage(enemy.get_damage())
+                    attack_info = enemy.get_attack_info()
+                    self.player.handle_damage(attack_info.damage, attack_info.canBeBlocked)
             elif enemy.current_action == "shoot":
                 self.enemies.append(enemy.get_projectile())
     

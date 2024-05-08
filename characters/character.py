@@ -1,5 +1,7 @@
 import pygame
 from masters.sprite_master import SpriteMaster
+from characters.attack_info import AttackInfo
+
 class Character():
     def __init__(self, 
                  sprite_master:SpriteMaster, game_screen, 
@@ -10,7 +12,9 @@ class Character():
         # Battle characteristics
         self.block_capacity = 10
         self.health = 100
-        self.damage = 1
+
+        # Initialize an attack info object with default settings
+        self.attack_info = AttackInfo(1, True)
         # Defaults
         self.game_screen = game_screen
         self.current_position = start_position
@@ -25,15 +29,20 @@ class Character():
         self.reflect = True
         self.size = 128
 
-    def handle_damage(self, damage: int):
-        print(f"handle_damage() entered with damage {damage}")
-        if self.current_action == "block":
+    def handle_damage(self, damage: int, canBeBlocked: bool):
+        """
+        Reduces Charater's health points taking into account whether the damage can be blocked
+        Parameters:
+        damage: int - amount of the damage points
+        canBeBlocked: bool -  flag that indicates if the damage can be blocked
+        """
+        if self.current_action == "block" and canBeBlocked:
             damage_block_diff = damage - self.block_capacity
             damage = damage_block_diff if damage_block_diff > 0 else 0
         self.health -= damage
 
-    def get_damage(self):
-        return self.damage
+    def get_attack_info(self):
+        return self.attack_info
     
     def draw_current_action(self):
         sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (self.size, self.size))
