@@ -5,7 +5,7 @@ from masters.first_boss_sprite_master import FirstBossSpriteMaster
 from scenes.scene_state import SceneState
 
 
-class Wizard(Enemy):
+class FirstBoss(Enemy):
 
     def __init__(self, game_screen, start_position, projectile: Projectile):
         super().__init__(game_screen, start_position, FirstBossSpriteMaster("levels/level1/wizard", 
@@ -118,7 +118,6 @@ class Wizard(Enemy):
         # then update the elapsed time and check if it's bigger than the cooldown time 
         else:
             self.shot_elapsed_time += scene_state.get_elapsed_time()
-            print(f"elapsed time = {self.shot_elapsed_time}")
             # If the cooldown is over then return "fight" to begin a new attack
             # otherwise keep waiting
             if self.shot_elapsed_time >= self.distant_attack_cooldown:

@@ -2,7 +2,8 @@ import pygame
 from scenes.scene00 import ScenePrelevel00
 from masters.save_master import SaveMaster
 from characters.level2.projectile_level2 import Projectile
-from characters.level2.wizard_level2 import Wizard
+from characters.level2.wizard_level2 import SecondBoss
+from characters.level2.ghost import Ghost
 from tools import Video 
 class Scene03(ScenePrelevel00):
 
@@ -12,11 +13,17 @@ class Scene03(ScenePrelevel00):
         self.id = 103
         self.level = 2
         self.enemy_pos = pygame.Vector2(self.game_screen.get_width()*0.75, self.game_screen.get_height() * 0.5)
-        self.enemies = [Wizard(game_screen, self.enemy_pos.copy(), Projectile(game_screen, self.enemy_pos.copy()))]
-        self.platform_positions = [(450, 320), (180, 330)]
+        
+        self.platform_positions = [(450, 320), (180, 320)]
         self.scaled_width_platforms = 110
         self.platforms = []
-        self.intro_video = intro_video
         self.load_platforms()
+
+        self.intro_video = intro_video
+        
+        # Initialize the boss of the scene
+        ghost_start_pos = pygame.Vector2(450, 130)
+        self.enemies = [SecondBoss(game_screen, self.enemy_pos.copy(), 
+                                   Projectile(game_screen, self.enemy_pos.copy()), Ghost(game_screen, ghost_start_pos))]
 
         

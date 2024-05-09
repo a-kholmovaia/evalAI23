@@ -2,7 +2,7 @@ import pygame
 from scenes.scene00 import ScenePrelevel00
 from masters.save_master import SaveMaster
 from characters.level1.projectile_level1 import Projectile
-from characters.level1.wizard_level1 import Wizard
+from characters.level1.wizard_level1 import FirstBoss
 from tools import Video
 
 class Scene02(ScenePrelevel00):
@@ -13,7 +13,7 @@ class Scene02(ScenePrelevel00):
         self.id = 102
         self.level = 1
         self.enemy_pos = pygame.Vector2(self.game_screen.get_width()*0.75, self.game_screen.get_height() * 0.5)
-        self.enemies = [Wizard(game_screen, self.enemy_pos.copy(), Projectile(game_screen, self.enemy_pos.copy()))]
+        self.enemies = [FirstBoss(game_screen, self.enemy_pos.copy(), Projectile(game_screen, self.enemy_pos.copy()))]
         self.platform_positions = [(450, 320), (180, 330)]
         self.scaled_width_platforms = 110
         self.platforms = []
