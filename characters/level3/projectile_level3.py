@@ -16,10 +16,26 @@ class Projectile(Enemy):
         self.text = self.get_text_projectile()
         self.font = pygame.font.Font(None, 23)
 
+        # Initialize the target for the projectile with None value
+        # Must be set when first time entering policy
+        self.target_vec = None
+
+        # Initialize the elapsed life time in milliseconds
+        self.elapsed_time = 0
+
+        # Set the life time in milliseconds
+        self.life_time = 2500
+
     def policy(self, scene_state: SceneState) -> str:
         """
         Moves left and attacks constantly
         """
+
+        # Update the elapsed time
+        self.elapsed_time += scene_state.elapsed_time
+
+        if self.target_vec == None:
+            self.target_vec = scene_state.get_player_pos().copy()
 
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
             self.health = 0
@@ -33,8 +49,40 @@ class Projectile(Enemy):
             self.current_position = (-100, -100)
             return "death"
         
-        self.current_position[0] -= self.speed 
+
+        player_x, player_y = scene_state.get_player_pos()
+        self.move_to_target(player_x, player_y)
+
         return "hit"
+    
+    def move_to_target(self, target_x: float, target_y: float):
+        """
+        Moves the projectile towards a target position and sets its health to 0 if close enough.
+        """
+        projectile_x, projectile_y = self.current_position[0], self.current_position[1]
+
+        vector_x = target_x - projectile_x
+        vector_y = target_y - projectile_y
+
+        # Calculate the distance to the target using the Euclidean distance
+        distance = (vector_x ** 2 + vector_y ** 2) ** 0.5
+    
+        # Normalize the vector (make it unit length)
+        if distance != 0:
+            unit_vector_x = vector_x / distance
+            unit_vector_y = vector_y / distance
+        else:
+            unit_vector_x, unit_vector_y = 0, 0
+
+        # Move the projectile by its speed along the unit vector towards the target
+        self.current_position[0] += unit_vector_x * self.speed
+        self.current_position[1] += unit_vector_y * self.speed
+    
+        # Check if the projectile is close enough to the target to consider it a "hit"
+        if self.life_time < self.elapsed_time:
+            self.health = 0  # Set health to 0 to indicate the projectile should be destroyed or removed
+
+
 
     def copy(self):
         """

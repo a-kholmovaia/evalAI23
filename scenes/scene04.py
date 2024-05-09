@@ -14,10 +14,11 @@ class Scene04(ScenePrelevel00):
         self.level = 3
         self.enemy_pos = pygame.Vector2(self.game_screen.get_width()*0.75, self.game_screen.get_height() * 0.59)
         self.enemies = [ThirdBoss(game_screen, self.enemy_pos.copy(), Projectile(game_screen, self.enemy_pos.copy()))]
-        self.platform_positions = [(450, 320), (180, 330)]
+        self.platform_positions = [(600, 320), (180, 320)]
         self.scaled_width_platforms = 110
         self.platforms = []
         self.intro_video = intro_video
         self.load_platforms()
 
+        self.enemies[0].current_position = pygame.Vector2(550, 80)
         

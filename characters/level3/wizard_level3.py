@@ -62,7 +62,6 @@ class ThirdBoss(Enemy):
         # then update the elapsed time and check if it's bigger than the cooldown time 
         else:
             self.elapsed_time += scene_state.get_elapsed_time()
-            print(f"elapsed time = {self.elapsed_time}")
             # If the cooldown is over then return "fight" to begin a new attack
             # otherwise keep waiting
             if self.elapsed_time >= self.attack_cooldown:
@@ -75,5 +74,7 @@ class ThirdBoss(Enemy):
         """
         Returns a copy of the injected projectile instance
         """
-        return self.projectile.copy()
+        projectile = self.projectile.copy()
+        projectile.current_position = self.current_position.copy()
+        return projectile
     
