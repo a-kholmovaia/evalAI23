@@ -22,7 +22,6 @@ class Scene03(ScenePrelevel00):
         self.intro_video = intro_video
         
         # Initialize the boss of the scene
-        platform_pos = self.platforms[0][0]
         ghost_start_pos = pygame.Vector2(450, 130)
         self.enemies = [SecondBoss(game_screen, self.enemy_pos.copy(), 
                                    Projectile(game_screen, self.enemy_pos.copy()), Ghost(game_screen, ghost_start_pos))]

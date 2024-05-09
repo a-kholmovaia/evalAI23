@@ -13,10 +13,27 @@ class Ghost(Enemy):
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0))
         self.health = 1
-        self.attack_info = AttackInfo(10, True)
+        self.attack_info = AttackInfo(1, True)
     
     def policy(self, scene_state: SceneState) -> str:
-        pass
+
+        if self.health<=0:
+            if self.sprite_master.round_done:
+                self.current_position= (-100, -100)
+            return "death"
+        
+        return self.hit(scene_state) 
+        
+    def hit(self, scene_state: SceneState):
+        if self.current_action in ["fight", "hit"]:
+            if self.sprite_master.round_done:
+                return "idle"
+            elif 3.0 <= self.sprite_master.frame_index < 3.2:
+                return "hit"
+            else:
+                return "fight"
+        elif self.cal_distance2player(scene_state.get_player_pos()) < 50:
+            return "fight"
 
     def copy(self):
         """
