@@ -13,7 +13,7 @@ class Ghost(Enemy):
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0))
         self.health = 1
-        self.speed = self.sprite_master.animation_speed * 5
+        self.speed = self.sprite_master.animation_speed * 10
         self.attack_info = AttackInfo(1, True)
     
     def policy(self, scene_state: SceneState) -> str:

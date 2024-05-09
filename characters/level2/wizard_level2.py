@@ -42,7 +42,7 @@ class SecondBoss(Enemy):
         self.summoning_duration = 1500
 
         # Duration of the shooting phase in milliseconds 
-        self.shooting_duration = 5000
+        self.shooting_duration = 9000
 
         # Duration of the close combat phase in milliseconds 
         self.close_combat_duration = 5000
