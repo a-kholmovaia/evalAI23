@@ -63,7 +63,7 @@ class ScenePrelevel01(Scene):
             
         self.handle_collisions()
 
-        self.draw_health_bars(self.player.health, self.enemies[0].health)
+        self.draw_health_bars(self.player.get_health(), self.enemies[0].get_health())
                 
         if self.display_instructions:
             self.draw_instructions()

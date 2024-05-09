@@ -11,7 +11,8 @@ class Character():
         self.game_screen = game_screen
         # Battle characteristics
         self.block_capacity = 10
-        self.health = 100
+        self.current_health = 100
+        self.max_health = 100
 
         # Initialize an attack info object with default settings
         self.attack_info = AttackInfo(1, True)
@@ -39,10 +40,19 @@ class Character():
         if self.current_action == "block" and canBeBlocked:
             damage_block_diff = damage - self.block_capacity
             damage = damage_block_diff if damage_block_diff > 0 else 0
-        self.health -= damage
+        self.current_health -= damage
 
     def get_attack_info(self):
         return self.attack_info
+    
+    def get_health(self) -> int:
+        """
+        Maps the current health points to the scale from 0 to 100
+        and returns that value
+        """
+        res = int((self.current_health * 100) / self.max_health)
+        return res
+
     
     def draw_current_action(self):
         sprite = pygame.transform.scale(self.sprite_master.get_sprite_frame(self.current_action), (self.size, self.size))

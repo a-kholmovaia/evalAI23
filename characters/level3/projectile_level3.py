@@ -10,9 +10,9 @@ class Projectile(Enemy):
                               idle=0, walk=0, attack=4, 
                               hurt=0, death=3, block=0, start_action="hit"))
         self.current_action = "hit"
-        self.attack_info = AttackInfo(30, False)
+        self.attack_info = AttackInfo(15, False)
         self.speed = 3
-        self.collision_distance = 50
+        self.collision_distance = 80
         self.current_position[1] += 20
         self.text = self.get_text_projectile()
         self.font = pygame.font.Font(None, 23)
@@ -25,7 +25,7 @@ class Projectile(Enemy):
         self.elapsed_time = 0
 
         # Set the life time in milliseconds
-        self.life_time = 2500
+        self.life_time = 2700
 
     def policy(self, scene_state: SceneState) -> str:
         """
@@ -39,14 +39,14 @@ class Projectile(Enemy):
             self.target_vec = scene_state.get_player_pos().copy()
 
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
-            self.health = 0
+            self.current_health = 0
 
-        if self.health<=0 and self.death_counter>0 or self.current_position[0] < 0:
-            self.health = 0
+        if self.current_health<=0 and self.death_counter>0 or self.current_position[0] < 0:
+            self.current_health = 0
             self.death_counter -= self.speed
             return "death"   
         
-        if self.health <= 0 and self.death_counter <= 0:
+        if self.current_health <= 0 and self.death_counter <= 0:
             self.current_position = (-100, -100)
             return "death"
         
@@ -81,7 +81,7 @@ class Projectile(Enemy):
     
         # Check if the projectile is close enough to the target to consider it a "hit"
         if self.life_time < self.elapsed_time:
-            self.health = 0  # Set health to 0 to indicate the projectile should be destroyed or removed
+            self.current_health = 0  # Set health to 0 to indicate the projectile should be destroyed or removed
 
 
 

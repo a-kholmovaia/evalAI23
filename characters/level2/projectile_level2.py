@@ -12,7 +12,7 @@ class Projectile(Enemy):
         self.current_action = "hit"
         self.attack_info = AttackInfo(50, False)
         self.speed = 3
-        self.collision_distance = 50
+        self.collision_distance = 80
         self.current_position[1] += 20
         self.text = self.get_text_projectile()
         self.font = pygame.font.Font(None, 23)
@@ -23,14 +23,14 @@ class Projectile(Enemy):
         """
 
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
-            self.health = 0
+            self.current_health = 0
 
-        if self.health<=0 and self.death_counter>0 or self.current_position[0] < 0:
-            self.health = 0
+        if self.current_health<=0 and self.death_counter>0 or self.current_position[0] < 0:
+            self.current_health = 0
             self.death_counter -= self.speed
             return "death"   
         
-        if self.health <= 0 and self.death_counter <= 0:
+        if self.current_health <= 0 and self.death_counter <= 0:
             self.current_position = (-100, -100)
             return "death"
         

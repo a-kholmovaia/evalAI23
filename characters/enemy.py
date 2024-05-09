@@ -5,7 +5,6 @@ import random
 class Enemy(Character):
     def __init__(self, game_screen, start_position, sprite_master, attack_probability=0.97):
         super().__init__(sprite_master, game_screen, start_position)
-        self.health = 100
         self.attack_probability = attack_probability
         self.collision_distance = 50
 

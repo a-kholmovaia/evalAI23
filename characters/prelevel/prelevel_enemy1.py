@@ -17,15 +17,15 @@ class PrelevelEnemy1(Enemy):
          # Randomly decide to attack or stay idle
         if self.cal_distance2player(scene_state.get_player_pos()) < 100:
             selected_action = self.close_attack()
-        elif self.health<=0 and self.death_counter>0:
+        elif self.current_health<=0 and self.death_counter>0:
             selected_action = "death"
             self.death_counter -= self.speed     
         else:
-            if self.health > 10:
+            if self.current_health > 10:
                 selected_action = 'idle'
             else:
                 selected_action = 'hurt'
-        if self.health<=0 and self.death_counter<=0:     
+        if self.current_health<=0 and self.death_counter<=0:     
             self.current_position = (-100, -100)
             return "death"
             

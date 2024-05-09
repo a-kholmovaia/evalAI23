@@ -24,6 +24,9 @@ class ThirdBoss(Enemy):
         self.collision_distance = 100
         self.size = 220
 
+        self.max_health = 500
+        self.current_health = self.max_health
+
         # Flag indicating that the wizard has already passed the summoning phase
         self.summoning_phase_done = False
 
@@ -37,7 +40,7 @@ class ThirdBoss(Enemy):
         self.summoning_duration = 1500
 
         # Duration of the shooting phase in milliseconds 
-        self.shooting_duration = 9000
+        self.shooting_duration = 7000
 
         # Duration of the close combat phase in milliseconds 
         self.close_combat_duration = 5000
@@ -63,7 +66,7 @@ class ThirdBoss(Enemy):
         Has 4 phases of the fight: shooting, close combat, summoning
         """
         
-        if self.health<=0:
+        if self.current_health<=0:
             if self.sprite_master.round_done:
                 self.current_position= (-100, -100)
             return "death"   

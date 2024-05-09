@@ -27,7 +27,8 @@ class Player(Character):
         
         self.speed_factor = speed_factor
         self.block_capacity = 10
-        self.health = 100
+        self.max_health = 100
+        self.current_health = self.max_health
         self.damage = 0.5
 
     def take_action(self, keys):
@@ -61,11 +62,11 @@ class Player(Character):
             self.__jump()
 
     def set_idle(self):
-        if self.health > 10:
+        if self.current_health > 10:
             self.current_action = 'idle'
-        elif self.health > 0:
+        elif self.current_health > 0:
             self.current_action = 'hurt'
-        elif self.health<=0 and self.death_counter>0:
+        elif self.current_health<=0 and self.death_counter>0:
             self.current_action = "death"
             self.current_position.y = self.ground_level
             self.death_counter -= self.speed

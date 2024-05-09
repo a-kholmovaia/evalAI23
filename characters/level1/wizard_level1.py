@@ -18,6 +18,9 @@ class FirstBoss(Enemy):
         self.collision_distance = 90
         self.size = 220
 
+        self.max_health = 300
+        self.current_health = self.max_health
+
         # Flag indicating that the wizard has already passed the shooting phase
         self.shooting_phase_done = False 
 
@@ -59,7 +62,7 @@ class FirstBoss(Enemy):
         Has 4 phases of the fight: shooting, close combat, being weak, being alert
         """
         
-        if self.health<=0:
+        if self.current_health<=0:
             if self.sprite_master.round_done:
                 self.current_position= (-100, -100)
             return "death"   
