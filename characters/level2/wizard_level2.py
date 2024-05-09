@@ -5,7 +5,7 @@ from masters.second_boss_sprite_master import SecondBossSpriteMaster
 from scenes.scene_state import SceneState
 
 
-class Wizard(Enemy):
+class SecondBoss(Enemy):
 
     def __init__(self, game_screen, start_position, projectile: Projectile):
         super().__init__(game_screen, start_position, SecondBossSpriteMaster("levels/level2/wizard", 
@@ -18,6 +18,9 @@ class Wizard(Enemy):
         self.collision_distance = 90
         self.size = 220
 
+        # Flag indicating that the wizard has already passed the summoning phase
+        self.summoning_phase_done = False
+
         # Flag indicating that the wizard has already passed the shooting phase
         self.shooting_phase_done = False 
 
@@ -29,6 +32,9 @@ class Wizard(Enemy):
 
         # Flag indicating that the wizard has already passed the combat alert phase
         self.combat_alert_phase_done = False 
+
+        # Duration of the summoning phase in milliseconds 
+        self.summoning_duration = 1500
 
         # Duration of the shooting phase in milliseconds 
         self.shooting_duration = 5000
@@ -53,6 +59,9 @@ class Wizard(Enemy):
 
         # Elapsed time since last shot
         self.shot_elapsed_time = 0
+
+        # Flag that indicates if the wizard has already summoned within his summoning_phase
+        self.has_summoned = False
     
     def policy(self, scene_state: SceneState) -> str:
         """
@@ -90,11 +99,20 @@ class Wizard(Enemy):
             else:
                 self.combat_alert_phase_done = True
                 self.elapsed_time = 0
+        elif not self.summoning_phase_done:
+            if self.elapsed_time < self.combat_alert_duration:
+                return self.summon()
+            else:
+                self.summoning_phase_done = True
+                self.elapsed_time = 0
+                # The flag must be set on False here because there must be only one summoned creature during the phase
+                self.has_summoned = False
         else:
             self.shooting_phase_done = False
             self.close_combat_phase_done = False
             self.weakness_phase_done = False
             self.combat_alert_phase_done = False
+            self.summoning_phase_done = False
             self.elapsed_time = 0
 
         return "idle"
@@ -118,7 +136,6 @@ class Wizard(Enemy):
         # then update the elapsed time and check if it's bigger than the cooldown time 
         else:
             self.shot_elapsed_time += scene_state.get_elapsed_time()
-            print(f"elapsed time = {self.shot_elapsed_time}")
             # If the cooldown is over then return "fight" to begin a new attack
             # otherwise keep waiting
             if self.shot_elapsed_time >= self.distant_attack_cooldown:
@@ -143,6 +160,24 @@ class Wizard(Enemy):
     
     def be_alert(self):
         return "idle"
+    
+    def summon(self):
+
+        if self.current_action in ["summon", "commit_summoning"]:
+
+            if 3.0 <= self.sprite_master.frame_index and not self.has_summoned:
+                self.has_summoned = True
+                return "commit_summoning"
+            if not self.sprite_master.round_done:
+                return "summon"
+            else:
+                return "idle"
+        else:
+            if self.has_summoned:
+                return "idle"
+            else:
+                return "summon"
+        
     
     def get_projectile(self):
         """

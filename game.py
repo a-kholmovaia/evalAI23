@@ -47,7 +47,7 @@ class Game:
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
-        scene = self.build_scene(99, True)
+        scene = self.build_scene(99, False)
         while True:
             scene.run()
             scene = self.build_scene(scene.getID(), scene.isDone())

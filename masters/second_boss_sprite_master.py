@@ -34,7 +34,7 @@ class SecondBossSpriteMaster(FirstBossSpriteMaster):
             self.current_images = self.death_images
         elif action == 'block':
             self.current_images = self.block_images
-        elif action == "summon":
+        elif action == "summon" or action == "commit_summoning":
             self.current_images = self.summoning_images
         
 
