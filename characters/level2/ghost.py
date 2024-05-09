@@ -12,13 +12,14 @@ class Ghost(Enemy):
         super().__init__(game_screen, start_position, SpriteMaster("levels/level2/ghost", 
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0))
-        self.health = 1
-        self.speed = self.sprite_master.animation_speed * 10
+        self.max_health = 1
+        self.current_health = self.max_health
+        self.speed = self.sprite_master.animation_speed * 15
         self.attack_info = AttackInfo(1, True)
     
     def policy(self, scene_state: SceneState) -> str:
 
-        if self.health<=0:
+        if self.current_health<=0:
             if self.sprite_master.round_done:
                 self.current_position= (-100, -100)
             return "death"

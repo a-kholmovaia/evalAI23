@@ -311,10 +311,10 @@ class Scene(ABC):
         text = None
         if self.intro:
             text = "Defeat the enemy!"
-        elif self.enemies[0].health <= 0: # in previous version you cant win, because the projectile that are not hit have full health 
+        elif self.enemies[0].get_health() <= 0: # in previous version you cant win, because the projectile that are not hit have full health 
             text = "You   won!"
             self.done = True
-        elif self.player.health <= 0: 
+        elif self.player.get_health() <= 0: 
             text = "You  lose!"
         if text is not None:
             self.battle_info(text)

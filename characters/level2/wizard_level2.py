@@ -17,6 +17,9 @@ class SecondBoss(Enemy):
         self.projectile = projectile
         self.projectile.current_position[1] = self.current_position[1] + self.size * 0.2
 
+        self.max_health = 300
+        self.current_health = self.max_health
+
         # Inject the enemy the wizard will summon
         self.summoned_enemy = summoned_enemy
 
@@ -39,7 +42,7 @@ class SecondBoss(Enemy):
         self.combat_alert_phase_done = False 
 
         # Duration of the summoning phase in milliseconds 
-        self.summoning_duration = 1500
+        self.summoning_duration = 1000
 
         # Duration of the shooting phase in milliseconds 
         self.shooting_duration = 9000
@@ -73,7 +76,7 @@ class SecondBoss(Enemy):
         Has 4 phases of the fight: shooting, close combat, being weak, being alert, summoning
         """
         
-        if self.health<=0:
+        if self.current_health<=0:
             if self.sprite_master.round_done:
                 self.current_position= (-100, -100)
             return "death"   
