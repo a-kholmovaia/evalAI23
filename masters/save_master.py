@@ -44,7 +44,6 @@ class SaveMaster:
 
         # Check if the file exists
         if not os.path.exists(file_path):
-            #raise FileNotFoundError(f"Checkpoint file not found.")
             return 100
 
         value = 0
@@ -96,13 +95,14 @@ class SaveMaster:
         scene_id: int - the scene's ID number
         Returns;
         dict[str, bool] - the scene's flags representing completed question sessions
+        None - if the file doesn't exist
         """
         # Construct the file path
         file_path = os.path.join(self.directory, f"scene_{scene_id}.txt")
 
         # Check if the file exists
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Scene file for ID {scene_id} not found.")
+            return None
         
         # Initialize an empty dictionary to store flags
         flags = {}

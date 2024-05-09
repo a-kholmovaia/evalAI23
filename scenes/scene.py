@@ -18,6 +18,9 @@ class Scene(ABC):
         # (a number should consist of three digits: the first one is the level number)
         self.id = 0
 
+        # Initialize scene's flags
+        self.flags = {"intro_played": False, "questions_asked": False}
+
         # Set the save master
         self.save_master = save_master
 
@@ -89,11 +92,19 @@ class Scene(ABC):
         Returns:
         True if the scene was successfully completed, otherwise False
         """
-        if self.intro_video != None:
+
+        # Load the scene flags if there are any saved
+        flags = self.save_master.load_scene_flags(self.id)
+        if flags != None:
+            self.flags = flags
+
+        if self.intro_video != None and not self.flags["intro_played"]:
             self.intro_video.play()
-            # if self.level > 0:
-            #     evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
-            #     evaluator.run()
+            self.flags["intro_played"] = True
+            
+        # if self.level > 0 and not self.flags["questions_asked"]:
+        #     evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
+        #     evaluator.run()
         
         try:
             pygame.mixer.music.load(self.scene_background_music_path)
@@ -101,8 +112,10 @@ class Scene(ABC):
         except Exception:
             pass
         
-
+        # Save current progress before the game loop starts
         self.save_master.save_checkpoint(self.id)
+        self.save_master.save_scene_flags(self.id, self.flags)
+
         while self.do_continue_game_loop:
             self.draw_scene()
             self.display_system_info()
