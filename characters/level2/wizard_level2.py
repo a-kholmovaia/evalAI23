@@ -70,7 +70,7 @@ class SecondBoss(Enemy):
     
     def policy(self, scene_state: SceneState) -> str:
         """
-        Has 4 phases of the fight: shooting, close combat, being weak, being alert
+        Has 4 phases of the fight: shooting, close combat, being weak, being alert, summoning
         """
         
         if self.health<=0:
@@ -105,7 +105,7 @@ class SecondBoss(Enemy):
                 self.combat_alert_phase_done = True
                 self.elapsed_time = 0
         elif not self.summoning_phase_done:
-            if self.elapsed_time < self.combat_alert_duration:
+            if self.elapsed_time < self.summoning_duration:
                 return self.summon()
             else:
                 self.summoning_phase_done = True

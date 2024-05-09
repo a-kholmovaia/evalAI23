@@ -1,4 +1,5 @@
 from characters.enemy import Enemy
+from characters.attack_info import AttackInfo
 from scenes.scene_state import SceneState
 from masters.sprite_master import SpriteMaster
 import pygame
@@ -9,7 +10,7 @@ class Projectile(Enemy):
                               idle=0, walk=0, attack=4, 
                               hurt=0, death=3, block=0, start_action="hit"))
         self.current_action = "hit"
-        self.damage = 10
+        self.attack_info = AttackInfo(30, False)
         self.speed = 3
         self.collision_distance = 50
         self.current_position[1] += 20
