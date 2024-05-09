@@ -7,6 +7,7 @@ class Enemy(Character):
         super().__init__(sprite_master, game_screen, start_position)
         self.health = 100
         self.attack_probability = attack_probability
+        self.collision_distance = 50
 
 
     def take_action(self, scene_state: SceneState) -> None:

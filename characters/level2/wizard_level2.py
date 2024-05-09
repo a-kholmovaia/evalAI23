@@ -1,13 +1,14 @@
 import pygame
 from characters.enemy import Enemy
 from characters.level1.projectile_level1 import Projectile
+from characters.level2.ghost import Ghost
 from masters.second_boss_sprite_master import SecondBossSpriteMaster
 from scenes.scene_state import SceneState
 
 
 class SecondBoss(Enemy):
 
-    def __init__(self, game_screen, start_position, projectile: Projectile):
+    def __init__(self, game_screen, start_position, projectile: Projectile, summoned_enemy: Ghost):
         super().__init__(game_screen, start_position, SecondBossSpriteMaster("levels/level2/wizard", 
                             idle=3, walk=6, close_attack=12, distant_attack=5, summoning=5, 
                             hurt=2, death=5, block=0, start_action="idle"))
@@ -15,6 +16,10 @@ class SecondBoss(Enemy):
         # Inject the projectile the wizard will use and adjust its position
         self.projectile = projectile
         self.projectile.current_position[1] = self.current_position[1] + self.size * 0.2
+
+        # Inject the enemy the wizard will summon
+        self.summoned_enemy = summoned_enemy
+
         self.collision_distance = 90
         self.size = 220
 
@@ -185,3 +190,8 @@ class SecondBoss(Enemy):
         """
         return self.projectile.copy()
     
+    def get_summoned_creature(self):
+        """
+        Returns a copy of the injected enemy instance
+        """
+        return self.summoned_enemy.copy()

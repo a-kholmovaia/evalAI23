@@ -278,6 +278,8 @@ class Scene(ABC):
                     self.player.handle_damage(attack_info.damage, attack_info.canBeBlocked)
             elif enemy.current_action == "shoot":
                 self.enemies.append(enemy.get_projectile())
+            elif enemy.current_action == "commit_summoning":
+                self.enemies.append(enemy.get_summoned_creature())
     
     def handle_collisions(self): 
         # Update the scene state before handling
