@@ -5,16 +5,18 @@ from masters.sprite_master import SpriteMaster
 import pygame
 import random
 class Projectile(Enemy):
-    def __init__(self, game_screen, start_position):
-        super().__init__(game_screen, start_position, SpriteMaster("levels/level1/projectile", 
+    def __init__(self, game_screen, start_position , 
+                 sprite_master= SpriteMaster("levels/level1/projectile", 
                               idle=0, walk=0, attack=4, 
-                              hurt=0, death=3, block=0, start_action="hit"))
+                              hurt=0, death=3, block=0, start_action="hit")):
+        super().__init__(game_screen, start_position, sprite_master)
         self.current_action = "hit"
         self.attack_info = AttackInfo(10, False)
         self.speed = 3
         self.collision_distance = 50
         self.current_position[1] += 20
         self.text = self.get_text_projectile()
+        self.font = pygame.font.Font(None, 23)
 
     def policy(self, scene_state: SceneState) -> str:
         """
@@ -24,7 +26,8 @@ class Projectile(Enemy):
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
             self.health = 0
 
-        if self.health<=0 and self.death_counter>0:
+        if self.health<=0 and self.death_counter>0 or self.current_position[0] < 0:
+            self.health = 0
             self.death_counter -= self.speed
             return "death"   
         

@@ -24,7 +24,8 @@ class Projectile(Enemy):
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
             self.health = 0
 
-        if self.health<=0 and self.death_counter>0:
+        if self.health<=0 and self.death_counter>0 or self.current_position[0] < 0:
+            self.health = 0
             self.death_counter -= self.speed
             return "death"   
         
