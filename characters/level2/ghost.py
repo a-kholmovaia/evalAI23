@@ -13,6 +13,7 @@ class Ghost(Enemy):
                               idle=3, walk=5, attack=4, 
                               hurt=2, death=5, block=0))
         self.health = 1
+        self.speed = self.sprite_master.animation_speed * 5
         self.attack_info = AttackInfo(1, True)
     
     def policy(self, scene_state: SceneState) -> str:
@@ -22,7 +23,20 @@ class Ghost(Enemy):
                 self.current_position= (-100, -100)
             return "death"
         
-        return self.hit(scene_state) 
+        selected_action = self.hit(scene_state)
+        if selected_action == "idle":
+            player_x_coord = scene_state.get_player_pos()[0]
+            if self.current_position[0] > player_x_coord:
+                self.current_position[0] -= self.speed
+                self.reflect = True
+            else:
+                self.current_position[0] += self.speed
+                self.reflect = False
+            selected_action = "walk"
+        
+        return selected_action
+
+
         
     def hit(self, scene_state: SceneState):
         if self.current_action in ["fight", "hit"]:
@@ -34,6 +48,8 @@ class Ghost(Enemy):
                 return "fight"
         elif self.cal_distance2player(scene_state.get_player_pos()) < 50:
             return "fight"
+        
+        return "idle"
 
     def copy(self):
         """
