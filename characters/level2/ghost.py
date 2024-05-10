@@ -1,3 +1,4 @@
+import pygame
 from characters.enemy import Enemy
 from characters.attack_info import AttackInfo
 from masters.sprite_master import SpriteMaster
@@ -21,8 +22,9 @@ class Ghost(Enemy):
 
         if self.current_health<=0:
             if self.sprite_master.round_done:
-                self.current_position= (-100, -100)
-            return "death"
+                self.current_position= pygame.Vector2((-100, -100))
+                return "death"
+            return "dying"
         
         selected_action = self.hit(scene_state)
         if selected_action == "idle":
