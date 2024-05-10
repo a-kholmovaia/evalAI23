@@ -56,7 +56,8 @@ class Projectile(Enemy):
     def get_text_projectile(self):
         texts = ['…approaching deadline…',"…I’m on vacation…", 
                  '…last-minute changes…','…lost the source code…', '…zoom meeting at 8 AM…',
-                 '…group chat exploded…', '…buggy software…']
+                 '…group chat exploded…', '…buggy software…', "…model overfitting…",
+                 "…misaligned objectives…", "…missing deadlines…", "…motivation draining…", "…unresolved merge conflicts…"]
         return random.choice(texts)
 
 

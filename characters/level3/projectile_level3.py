@@ -10,7 +10,7 @@ class Projectile(Enemy):
                               idle=0, walk=0, attack=4, 
                               hurt=0, death=3, block=0, start_action="hit"))
         self.current_action = "hit"
-        self.attack_info = AttackInfo(15, False)
+        self.attack_info = AttackInfo(10, False)
         self.speed = 3
         self.collision_distance = 80
         self.current_position[1] += 20
@@ -104,7 +104,8 @@ class Projectile(Enemy):
     def get_text_projectile(self):
         texts = ['…approaching deadline…',"…I’m on vacation…", 
                  '…last-minute changes…','…lost the source code…', '…zoom meeting at 8 AM…',
-                 '…group chat exploded…', '…buggy software…']
+                 '…group chat exploded…', '…buggy software…', "…model overfitting…",
+                 "…misaligned objectives…", "…missing deadlines…", "…motivation draining…", "…unresolved merge conflicts…"]
         return random.choice(texts)
 
 

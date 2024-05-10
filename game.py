@@ -11,7 +11,7 @@ from scenes.scene03 import Scene03
 from scenes.scene04 import Scene04
 from questions.qa_evaluator import QAEvaluator
 from masters.save_master import SaveMaster
-
+from menu.outro_screen import OutroScreen
 
 class Game:
     SCENE_PATHS = "levels/" 
@@ -38,12 +38,13 @@ class Game:
 
         # Initialize the save master
         self.save_master = SaveMaster()
+        self.outro_screen = OutroScreen(self.screen)
 
     def bootstrap(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
-        #welcome_menu(self.screen)
-        #main_menu(self.screen)
-        #play_intro_video()
+        welcome_menu(self.screen)
+        main_menu(self.screen)
+        play_intro_video()
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
@@ -54,6 +55,8 @@ class Game:
             if scene == None:
                 print("Game ends")
                 break
+        self.outro_screen.run()
+        
     
     def build_scene(self, prev_scene_id: int, prev_scene_done: bool) -> Scene:
         """
@@ -91,19 +94,19 @@ class Game:
             if next_scene_id == 102:
                 return Scene02(scene_path=self.SCENE_PATHS + "level1/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock, 
-                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 103:
                 return Scene03(scene_path=self.SCENE_PATHS + "level2/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
-                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level2/intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
             if next_scene_id == 104:
                 return Scene04(scene_path=self.SCENE_PATHS + "level3/", save_master=self.save_master,
                                      game_screen=self.screen, clock=self.clock,
-                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level1/scene_01_intro.mp4"),
+                                     intro_video= tools.Video(self.screen, self.SCENE_PATHS + "level3/intro.mp4"),
                                      font=self.font, FPS=self.FPS
                                      )
         return None

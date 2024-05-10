@@ -37,7 +37,7 @@ def main_menu(screen):
         screen.blit(username_text, (username_input.x-250, username_input.y))
         username_input.draw(screen)
 
-        fullname_text = font.render("Enter your full name:", True, WHITE)
+        fullname_text = font.render("Enter your project:", True, WHITE)
         screen.blit(fullname_text, (full_name_input.x-250, full_name_input.y))
         full_name_input.draw(screen)
 

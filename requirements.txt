@@ -3,3 +3,4 @@ psycopg2
 moviepy
 openai==0.28
 python-dotenv
+Pillow==9.5.0

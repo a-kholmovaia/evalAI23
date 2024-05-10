@@ -102,9 +102,12 @@ class Scene(ABC):
             self.intro_video.play()
             self.flags["intro_played"] = True
             
-        # if self.level > 0 and not self.flags["questions_asked"]:
-        #     evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
-        #     evaluator.run()
+        if self.level > 0 and not self.flags["questions_asked"]:
+              evaluator = QAEvaluator(screen=self.game_screen, level=self.level)
+              evaluator.run()
+              self.player.max_health += 10 * self.level
+              self.player.current_health += 10 * self.level
+              self.flags["questions_asked"] = True
         
         try:
             pygame.mixer.music.load(self.scene_background_music_path)
