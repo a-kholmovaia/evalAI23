@@ -1,3 +1,4 @@
+import pygame
 from characters.enemy import Enemy
 from scenes.scene_state import SceneState
 
@@ -13,4 +14,11 @@ class PrelevelEnemy0(Enemy):
         """
         Just stays
         """
+
+        if self.current_health<=0:
+            if self.sprite_master.round_done:
+                self.current_position= pygame.Vector2((-100, -100))
+                return "death"
+            return "dying"
+
         return "idle"

@@ -51,6 +51,12 @@ class Character():
         and returns that value
         """
         res = int((self.current_health * 100) / self.max_health)
+
+        # If the HPs are less than or equal to 0, but the enemy is still dying
+        # return 1 to avoid the premature end of the scene
+        if res <= 0 and not self.current_action == "death":
+            res = 1
+
         return res
 
     
