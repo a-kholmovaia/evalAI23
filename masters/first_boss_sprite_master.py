@@ -31,7 +31,7 @@ class FirstBossSpriteMaster(SpriteMaster):
             self.current_images = self.walk_images
         elif action == 'hurt':
             self.current_images = self.hurt_images
-        elif action == 'death':
+        elif action == 'death' or action == "dying":
             self.current_images = self.death_images
         elif action == 'block':
             self.current_images = self.block_images

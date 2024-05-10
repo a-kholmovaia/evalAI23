@@ -64,8 +64,9 @@ class FirstBoss(Enemy):
         
         if self.current_health<=0:
             if self.sprite_master.round_done:
-                self.current_position= (-100, -100)
-            return "death"   
+                self.current_position= pygame.Vector2((-100, -100))
+                return "death"
+            return "dying" 
     
         self.elapsed_time += scene_state.get_elapsed_time()
 

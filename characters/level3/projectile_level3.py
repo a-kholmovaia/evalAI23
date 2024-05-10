@@ -41,14 +41,11 @@ class Projectile(Enemy):
         if self.cal_distance2player(scene_state.get_player_pos()) < self.collision_distance:
             self.current_health = 0
 
-        if self.current_health<=0 and self.death_counter>0 or self.current_position[0] < 0:
-            self.current_health = 0
-            self.death_counter -= self.speed
-            return "death"   
-        
-        if self.current_health <= 0 and self.death_counter <= 0:
-            self.current_position = (-100, -100)
-            return "death"
+        if self.current_health<=0 or self.current_position[0] < 0:
+            if self.sprite_master.round_done:
+                self.current_position= pygame.Vector2((-100, -100))
+                return "death"
+            return "death" 
         
 
         player_x, player_y = scene_state.get_player_pos()

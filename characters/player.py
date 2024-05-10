@@ -32,7 +32,7 @@ class Player(Character):
         self.damage = 0.5
 
     def take_action(self, keys):
-        if self.current_action != "dead":
+        if self.current_action != "death":
             self.set_current_action(keys)
             self.update_physics()
             self.draw_current_action()
@@ -67,11 +67,11 @@ class Player(Character):
         elif self.current_health > 0:
             self.current_action = 'hurt'
         elif self.current_health<=0 and self.death_counter>0:
-            self.current_action = "death"
+            self.current_action = "dying"
             self.current_position.y = self.ground_level
             self.death_counter -= self.speed
         else:
-            self.current_action = "dead"
+            self.current_action = "death"
             self.current_position = DEAD_POS
     
     def update_position(self):
