@@ -12,3 +12,5 @@ result.txt
 /questions/.env
 saves/*
 .DS_Store
+questions/constants_questions.py
+build
