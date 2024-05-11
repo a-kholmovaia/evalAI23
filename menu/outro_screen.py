@@ -5,13 +5,13 @@ from constants import BLACK, GREEN
 class OutroScreen:
     def __init__(self, screen):
         self.screen = screen
-        self.background = pygame.image.load("menu/back_text.png")
+        self.background = pygame.image.load("img/back_text.png")
         self.background = pygame.transform.scale(self.background, (self.screen.get_width(), self.screen.get_height()))
         self.font = pygame.font.Font('font.TTF', 30)
         self.content = self.set_content()
         self.text_color = BLACK
         self.continue_button_rect = pygame.Rect(screen.get_width() * 0.7, screen.get_height() * 0.85, 180, 40)
-        self.spirit_image = pygame.image.load('menu/sir_code_a_lot.png')
+        self.spirit_image = pygame.image.load('img/sir_code_a_lot.png')
         self.spirit_image = pygame.transform.scale(self.spirit_image, 
                                             (self.screen.get_width()//4, self.screen.get_width()//4))
         self.running = True    

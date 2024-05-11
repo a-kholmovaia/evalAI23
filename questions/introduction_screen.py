@@ -5,7 +5,7 @@ from constants import BLACK, GREEN
 class IntroductionScreen:
     def __init__(self, screen, level=1, round=0):
         self.screen = screen
-        self.background = pygame.image.load("questions/back_text.png")
+        self.background = pygame.image.load("img/back_text.png")
         self.background = pygame.transform.scale(self.background, (self.screen.get_width(), self.screen.get_height()))
         self.font = pygame.font.Font('font.TTF', 36)
         self.content = self.set_content(level, round)

@@ -1,0 +1,3 @@
+#Some text infos about the scene
+player_start_pos=player_pos_level2
+enemy_start_pos=default_enemy_pos

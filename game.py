@@ -12,9 +12,14 @@ from scenes.scene04 import Scene04
 from questions.qa_evaluator import QAEvaluator
 from masters.save_master import SaveMaster
 from menu.outro_screen import OutroScreen
+import os, sys
+def resource_path(relative_path):
+        """ Get absolute path to resource """
+        base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        return os.path.join(base_path, relative_path)
 
 class Game:
-    SCENE_PATHS = "levels/" 
+    SCENE_PATHS = resource_path("levels/")
     def __init__(self, FPS=60, img_path=""):
 
         # Initialize Pygame
@@ -39,6 +44,7 @@ class Game:
         # Initialize the save master
         self.save_master = SaveMaster()
         self.outro_screen = OutroScreen(self.screen)
+        print("Game build")
 
     def bootstrap(self):
         pygame.display.set_caption("AI-Lab: the final Battle")
@@ -110,6 +116,3 @@ class Game:
                                      font=self.font, FPS=self.FPS
                                      )
         return None
-
-
-        
