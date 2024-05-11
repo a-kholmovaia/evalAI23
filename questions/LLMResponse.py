@@ -2,10 +2,8 @@ import pygame
 import openai
 from constants import IMG_PATH
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-openai.api_key = os.getenv('OPENAI_API_KEY')
+from constants_questions import API
+openai.api_key = API
 
 class LLMResponseHandler:
     def __init__(self, screen, context, level:int, round_:int):
@@ -23,9 +21,9 @@ class LLMResponseHandler:
             'submit': pygame.Rect(screen.get_width() - 300, screen.get_height() - 90, 200, 50)
         }
         self.visible = False  # Initially, the response and buttons are not visible
-        self.background = pygame.transform.scale(pygame.image.load("questions/back_text.png"),
+        self.background = pygame.transform.scale(pygame.image.load("img/back_text.png"),
                                                  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.spirit_image = pygame.image.load('questions/sir_code_a_lot.png')
+        self.spirit_image = pygame.image.load('img/sir_code_a_lot.png')
         self.spirit_image = pygame.transform.scale(self.spirit_image, 
                                             (self.screen.get_width()//4, self.screen.get_width()//4))
         self.request_sent_llm = False
@@ -103,7 +101,6 @@ Your Feedback:
                 temperature=0.4
             )
             self.answer = response.choices[0].message['content']  # Accessing the content of the response
-            print(self.answer)
             self.visible = True  # Make the response and buttons visible after fetching the answer
         except Exception as e:
             print(f"An error occurred: {e}")
@@ -166,12 +163,10 @@ Your Feedback:
                 action = self.handle_event(event)
                 if action == 'refine':
                     # Handle the refining of the GPT answer here
-                    print("Refine Answer clicked")
                     self.visible = False
                     return self.answer, True
                 elif action == 'submit':
                     # Handle the submission of the GPT answer here
-                    print("Submit Answer clicked")
                     return self.answer, False
 
             self.screen.fill((200, 200, 200))  # Fill the background
@@ -312,7 +307,6 @@ Your Feedback:
             )
             self.answer = response.choices[0].message['content']  # Accessing the content of the response
             self.visible = True
-            print(self.answer)
         except Exception as e:
             print(f"An error occurred: {e}")
             return "Unable to evaluate the answer at this time."

@@ -49,12 +49,10 @@ class QAEvaluator:
     
     def get_points(self, response):
         response = response.split('Feedback:')[0].split('point')[:4]
-        print(response)
         scores = []
         for i in response:
             score = i.split(':')[1]
             scores.append(int(score))
-        print(scores)
         return scores
     
     def get_refining_questions(self, llm_response):

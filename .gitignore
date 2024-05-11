@@ -13,4 +13,4 @@ result.txt
 saves/*
 .DS_Store
 questions/constants_questions.py
-build
+/build

@@ -24,7 +24,7 @@ class Question:
 
         self.continue_button_rect = pygame.Rect(screen.get_width() * 0.7, screen.get_height() * 0.87, 180, 40)
 
-        self.background = pygame.transform.scale(pygame.image.load("questions/back_text.png"),
+        self.background = pygame.transform.scale(pygame.image.load("img/back_text.png"),
                                                  (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.continue_clicked = False
         self.line_height = self.font.get_height()
@@ -151,7 +151,6 @@ class Question:
         
         # Get lines of text that fit the screen width
         lines = self.split_text_into_lines(self.question_text, self.SCREEN_WIDTH - 80)  # Adjust for some padding
-        print(lines)
         
         # Draw each line of text
         for i, line in enumerate(lines):

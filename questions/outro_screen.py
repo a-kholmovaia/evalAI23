@@ -8,7 +8,7 @@ class Artifact(IntroductionScreen):
         super().__init__(screen, level=level)  
 
     def set_content(self, level, round):
-        path = "questions/artifacts/"
+        path = "img/artifacts/"
         text = ["Congratulations!  You  won"]
         if level==1:
             text.append("Synergy  Stone        20   Health   Points")
